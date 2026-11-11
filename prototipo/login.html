@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
+
   <meta charset="UTF-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Entrar | Voltaqui</title>
 
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap">
@@ -22,7 +25,10 @@
   <div class="autenticacao">
 
     <aside class="marca">
-      <a class="marca-logo" href="login.html">Voltaqui</a>
+
+      <a class="marca-logo" href="login.html">
+        <img src="img/logo-horizontal-escura.svg" alt="Voltaqui" width="159" height="56">
+      </a>
 
       <div class="etiqueta-area" aria-hidden="true">
         <div class="etiqueta">
@@ -34,7 +40,8 @@
       </div>
 
       <div>
-        <p class="marca-slogan">Se é seu, merece voltar.</p>
+
+        <p class="marca-slogan">Se é seu, <span>merece voltar.</span></p>
         <p class="marca-descricao">
           Os achados e perdidos da sua escola em um só lugar.
           Procure o que você perdeu e peça a devolução direto pela plataforma.
@@ -52,20 +59,25 @@
         </header>
 
         <div class="alerta alerta-erro" role="alert" hidden>
+
           <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
           <span>E-mail ou senha não conferem. Confira os dados e tente de novo.</span>
         </div>
 
         <div class="campo">
+
           <label for="email">E-mail</label>
+
           <input id="email" type="email" required
                  autocomplete="email"
                  placeholder="nome@escola.com.br">
+
           <p class="campo-erro" id="email-erro">Digite um e-mail válido, como nome@escola.com.br.</p>
         </div>
 
         <div class="campo">
           <label for="senha">Senha</label>
+
           <input id="senha" type="password" required
                  autocomplete="current-password">
           <p class="campo-erro" id="senha-erro">Digite sua senha.</p>

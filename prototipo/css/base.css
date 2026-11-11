@@ -12,6 +12,7 @@ body {
   line-height: 1.5;
   color: var(--cor-texto);
   background: var(--cor-fundo);
+
   -webkit-font-smoothing: antialiased;
 }
 
