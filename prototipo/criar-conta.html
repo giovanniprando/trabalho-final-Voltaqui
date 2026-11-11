@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conta | Voltaqui</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+  <link rel="stylesheet" href="css/autenticacao.css">
+  <link rel="stylesheet" href="css/criar-conta.css">
+</head>
+<body>
+
+  <div class="autenticacao">
+
+    <aside class="marca">
+      <a class="marca-logo" href="login.html">Voltaqui</a>
+
+      <div class="etiqueta-area" aria-hidden="true">
+        <div class="etiqueta">
+          <p class="etiqueta-numero">Achado nº 0143</p>
+          <p class="etiqueta-objeto">Garrafa térmica verde com adesivos</p>
+          <p class="etiqueta-local">Encontrada na quadra, em 21/10</p>
+          <span class="badge badge-analise">Em análise</span>
+        </div>
+      </div>
+
+      <div>
+        <p class="marca-slogan">Se é seu, merece voltar.</p>
+        <p class="marca-descricao">
+          Crie sua conta para acompanhar os achados da sua escola
+          e pedir a devolução do que é seu.
+        </p>
+      </div>
+    </aside>
+
+    <main class="autenticacao-conteudo">
+
+      <form class="formulario formulario-largo" action="aluno-achados.html">
+
+        <header class="formulario-cabecalho">
+          <h1>Criar conta</h1>
+          <p>Para alunos. Tenha em mãos o código da sua escola.</p>
+        </header>
+
+        <fieldset class="grupo">
+          <legend>Sua escola</legend>
+
+          <div class="linha-campos">
+            <div class="campo">
+              <label for="codigo-escola">Código da escola</label>
+              <input id="codigo-escola" type="text" required
+                     pattern="[A-Za-z0-9]{6}" maxlength="6"
+                     autocapitalize="characters" spellcheck="false"
+                     autocomplete="off"
+                     placeholder="SN7K2P"
+                     aria-describedby="codigo-ajuda">
+              <p class="campo-ajuda" id="codigo-ajuda">Peça o código à secretaria da escola.</p>
+              <p class="campo-erro">O código tem 6 letras ou números, como SN7K2P.</p>
+            </div>
+
+            <div class="campo">
+              <label for="matricula">Matrícula</label>
+              <input id="matricula" type="text" required
+                     inputmode="numeric" pattern="[0-9]{4,12}"
+                     autocomplete="off"
+                     aria-describedby="matricula-ajuda">
+              <p class="campo-ajuda" id="matricula-ajuda">O número da sua carteirinha.</p>
+              <p class="campo-erro">Use só números, de 4 a 12 dígitos.</p>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="curso">Curso <small>(opcional)</small></label>
+            <input id="curso" type="text"
+                   placeholder="Ex.: Desenvolvimento de Sistemas">
+          </div>
+        </fieldset>
+
+        <fieldset class="grupo">
+          <legend>Seus dados</legend>
+
+          <div class="campo">
+            <label for="nome">Nome completo</label>
+            <input id="nome" type="text" required minlength="3"
+                   autocomplete="name">
+            <p class="campo-erro">Digite seu nome completo.</p>
+          </div>
+
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" required
+                   autocomplete="email"
+                   placeholder="nome@escola.com.br">
+            <p class="campo-erro">Digite um e-mail válido, como nome@escola.com.br.</p>
+          </div>
+
+          <div class="linha-campos">
+            <div class="campo">
+              <label for="senha">Senha</label>
+              <input id="senha" type="password" required minlength="6"
+                     autocomplete="new-password"
+                     aria-describedby="senha-ajuda">
+              <p class="campo-ajuda" id="senha-ajuda">Mínimo de 6 caracteres.</p>
+              <p class="campo-erro">A senha precisa ter pelo menos 6 caracteres.</p>
+            </div>
+
+            <div class="campo">
+              <label for="confirmar-senha">Confirmar senha</label>
+              <input id="confirmar-senha" type="password" required minlength="6"
+                     autocomplete="new-password">
+              <p class="campo-erro">Repita a senha que você criou.</p>
+            </div>
+          </div>
+        </fieldset>
+
+        <label class="caixa-selecao">
+          <input type="checkbox" required>
+          <span>
+            Li e aceito os <a class="link" href="#">termos de uso</a>
+            e a <a class="link" href="#">política de privacidade</a>.
+          </span>
+        </label>
+
+        <button class="botao botao-primario botao-bloco" type="submit">Criar conta</button>
+
+        <p class="formulario-rodape">
+          Já tem conta?
+          <a class="link" href="login.html">Entrar</a>
+        </p>
+
+        <p class="aviso-secretaria">
+          É da secretaria? Sua conta é criada pela escola.
+          Fale com o responsável pelo Voltaqui na sua instituição.
+        </p>
+
+      </form>
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+  <script src="js/etiqueta-fisica.js"></script>
+</body>
+</html>
