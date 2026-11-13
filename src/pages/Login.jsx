@@ -47,6 +47,16 @@ export default function Login() {
       {erro && <p className="erro">{erro}</p>}
 
       <button type="submit">Entrar</button>
+
+      <div className="acesso-rapido">
+        <p>Acesso rápido (provisório)</p>
+        <button type="button" onClick={() => entrar('secretaria@senai.br', '123456')}>
+          Entrar como secretaria
+        </button>
+        <button type="button" onClick={() => entrar('ana@aluno.senai.br', '123456')}>
+          Entrar como aluno
+        </button>
+      </div>
     </form>
   )
 }
