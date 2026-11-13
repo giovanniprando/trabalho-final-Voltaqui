@@ -25,6 +25,7 @@
 
   --cor-fundo: var(--cinza-50);
   --cor-superficie: var(--branco);
+  --cor-fundo-sutil: var(--cinza-100);
   --cor-texto: var(--azul-950);
   --cor-texto-secundario: var(--cinza-600);
   --cor-marca: var(--azul-950);

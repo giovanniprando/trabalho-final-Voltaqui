@@ -11,7 +11,8 @@ Para ver uma página: clique direito no `.html` no VS Code → **Open with Live 
 ```
 prototipo/
 ├── index.html                         homepage (apresenta o Voltaqui e leva ao login)
-├── login.html
+├── login.html                         (aba Aluno)
+├── login-secretaria.html              (aba Secretaria; sem "Criar conta", leva ao painel)
 ├── criar-conta.html                   (só alunos; pede o código da escola)
 ├── secretaria-painel.html
 ├── secretaria-achados.html            (inclui o modal de excluir)
@@ -271,6 +272,7 @@ Figma: 07 Solicitações (ainda não desenhada). Menu da barra lateral: Painel, 
 - [ ] **Fase 3 — Secretaria**: painel → achados → cadastrar/editar → solicitações
 - [ ] **Fase 4 — Aluno**: buscar achados → detalhe → solicitar devolução → minhas solicitações
 - [ ] **Fase 5 — Conversão para React**: `class` → `className`, `for` → `htmlFor`, ligar estados
+  - Login com abas: `/login` (Aluno) e `/login?perfil=secretaria`. Se o perfil da conta não for o da aba, mostrar o alerta "Esta conta é de aluno. Use a aba Aluno para entrar."
 
 ## Regras do protótipo
 
