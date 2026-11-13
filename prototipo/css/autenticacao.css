@@ -119,6 +119,11 @@
   gap: var(--esp-6);
 }
 
+.formulario-voltar {
+  align-self: flex-start;
+  font-size: 0.9375rem;
+}
+
 .formulario-largo {
   max-width: 520px;
 }
