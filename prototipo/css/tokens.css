@@ -25,6 +25,7 @@
 
   --cor-fundo: var(--cinza-50);
   --cor-superficie: var(--branco);
+  --cor-fundo-sutil: var(--cinza-100);
   --cor-texto: var(--azul-950);
   --cor-texto-secundario: var(--cinza-600);
   --cor-marca: var(--azul-950);
@@ -39,6 +40,11 @@
   --cor-texto-sobre-destaque: var(--azul-950);
   --cor-borda: var(--cinza-300);
   --cor-borda-forte: var(--cinza-400);
+  --cor-borda-sobre-marca: var(--cinza-400);
+  --cor-ponto-sobre-marca: rgba(255, 255, 255, 0.06);
+  --cor-hover-sobre-marca: rgba(255, 255, 255, 0.08);
+  --cor-destaque-sobre-marca-fundo: rgba(1, 208, 145, 0.12);
+  --cor-destaque-sobre-marca-borda: rgba(1, 208, 145, 0.35);
 
   --cor-borda-campo: var(--cinza-450);
   --cor-borda-campo-hover: var(--cinza-500);
@@ -64,6 +70,8 @@
   --esp-8: 32px;
   --esp-12: 48px;
   --esp-16: 64px;
+  --esp-24: 96px;
+  --largura-conteudo: 1120px;
 
   --raio-sm: 6px;
   --raio-md: 10px;

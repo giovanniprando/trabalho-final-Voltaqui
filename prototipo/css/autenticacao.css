@@ -119,6 +119,46 @@
   gap: var(--esp-6);
 }
 
+.formulario-voltar {
+  align-self: flex-start;
+  font-size: 0.9375rem;
+}
+
+.acesso-abas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-1);
+  padding: var(--esp-1);
+  background: var(--cor-fundo-sutil);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+}
+
+.acesso-aba {
+  display: grid;
+  place-items: center;
+  min-height: 40px;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  text-decoration: none;
+  border-radius: var(--raio-sm);
+}
+
+.acesso-aba:hover {
+  color: var(--cor-texto);
+}
+
+.acesso-aba[aria-current="page"] {
+  color: var(--cor-texto);
+  background: var(--cor-superficie);
+  box-shadow: var(--elevacao-sm);
+}
+
+.acesso-aba:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
 .formulario-largo {
   max-width: 520px;
 }

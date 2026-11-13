@@ -11,7 +11,8 @@ Para ver uma página: clique direito no `.html` no VS Code → **Open with Live 
 ```
 prototipo/
 ├── index.html                         homepage (apresenta o Voltaqui e leva ao login)
-├── login.html
+├── login.html                         (aba Aluno)
+├── login-secretaria.html              (aba Secretaria; sem "Criar conta", leva ao painel)
 ├── criar-conta.html                   (só alunos; pede o código da escola)
 ├── secretaria-painel.html
 ├── secretaria-achados.html            (inclui o modal de excluir)
@@ -71,12 +72,12 @@ de fundo de cada seção.
 
 ### Giovanni — checklist
 
-- [ ] **Cabeçalho**: logo horizontal (link para `index.html`); links
+- [x] **Cabeçalho**: logo horizontal (link para `index.html`); links
       "Como funciona" (`#como-funciona`), "Segurança" (`#seguranca`) e "Sobre" (`#sobre`);
       botões **Entrar** (`botao-secundario`, vai para `login.html`) e
       **Criar conta** (`botao-primario`, vai para `criar-conta.html`).
       No celular (até 768px): somem os links e o "Criar conta"; ficam a logo e o Entrar.
-- [ ] **Abertura (`#inicio`)**: etiqueta pequena, `<h1>`, subtítulo, dois botões
+- [x] **Abertura (`#inicio`)**: etiqueta pequena, `<h1>`, subtítulo, dois botões
       e a etiqueta de achado parada ao lado (mesmo visual do login, sem física).
   - Etiqueta pequena: *Achados e perdidos para escolas*
   - Título: **Se é seu, merece voltar.**
@@ -84,30 +85,30 @@ de fundo de cada seção.
     registra o que foi encontrado, o aluno procura pelo celular e o objeto só é
     devolvido para quem prova que é o dono.*
   - Botões: **Entrar** (`login.html`) e **Ver como funciona** (`#como-funciona`)
-- [ ] **O problema (`#problema`)**: 3 cards lado a lado (um embaixo do outro no celular).
+- [x] **O problema (`#problema`)**: 3 cards lado a lado (um embaixo do outro no celular).
   - *Sem registro*: ninguém sabe o que chegou, quando chegou nem onde foi achado.
   - *Busca no balcão*: o aluno precisa ir até a secretaria e revirar a caixa para saber se o objeto está lá.
   - *Qualquer um leva*: sem conferir quem é o dono, o objeto pode ir para a mão errada.
-- [ ] **Como funciona (`#como-funciona`)**: 3 passos numerados, use uma lista `<ol>`.
+- [x] **Como funciona (`#como-funciona`)**: 3 passos numerados, use uma lista `<ol>`.
   1. *A secretaria cadastra*: registra o objeto com categoria, local, data e um detalhe que só o dono sabe.
   2. *O aluno encontra e pede*: usa os filtros, acha o que é seu e descreve esse detalhe.
   3. *A secretaria confere e devolve*: compara as respostas, aprova o pedido e marca como devolvido.
-- [ ] Link "Voltar ao início" no `login.html` e no `criar-conta.html`.
+- [x] Link "Voltar ao início" no `login.html` e no `criar-conta.html`.
 
 ### Renan — checklist
 
-- [ ] **Para quem (`#para-quem`)**: 2 cards lado a lado, cada um com título e lista `<ul>`.
+- [x] **Para quem (`#para-quem`)**: 2 cards lado a lado, cada um com título e lista `<ul>`.
   - *Secretaria*: cadastra, edita e exclui achados; analisa cada pedido vendo o detalhe
     ao lado da resposta do aluno; acompanha o status de cada objeto.
   - *Aluno*: cria a conta com o código da escola; busca por categoria, local e status;
     acompanha os próprios pedidos.
-- [ ] **Segurança (`#seguranca`)**: texto de um lado, card de exemplo do outro.
+- [x] **Segurança (`#seguranca`)**: texto de um lado, card de exemplo do outro.
   - Texto: *Todo achado tem uma descrição pública e um detalhe oculto, como um adesivo,
     um nome escrito ou uma marca por dentro. O aluno vê só a descrição pública. Para
     pedir o objeto, ele descreve o detalhe, e a secretaria confere antes de devolver.*
   - Card: "Garrafa térmica azul, 500 ml" (público, com `badge badge-disponivel`)
     e "Adesivo de banda na base" (oculto, com o aviso "só a secretaria vê").
-- [ ] **Sobre o Voltaqui (`#sobre`)**: um parágrafo e os 4 valores em grade.
+- [x] **Sobre o Voltaqui (`#sobre`)**: um parágrafo e os 4 valores em grade.
   - Texto: *O Voltaqui nasceu no SENAI, onde está sendo usado pela primeira vez, e foi
     pensado para qualquer instituição de ensino. Cada escola tem um código, e o aluno
     entra ligado à própria escola.*
@@ -115,17 +116,17 @@ de fundo de cada seção.
   - *Proximidade*: a busca fica no celular do aluno, não só no balcão.
   - *Organização*: todo achado tem registro, local, data e status.
   - *Reconexão*: o que se perdeu encontra o caminho de volta.
-- [ ] **Chamada final (`#comece`)**: frase *Entre e veja se ela já está esperando por você.*
+- [x] **Chamada final (`#comece`)**: frase *Entre e veja se ela já está esperando por você.*
       e botões **Entrar** (`login.html`) e **Criar conta** (`criar-conta.html`).
-- [ ] **Rodapé**: logo horizontal, "Projeto final de Desenvolvimento de Sistemas, SENAI, 2026"
+- [x] **Rodapé**: logo horizontal, "Projeto final de Desenvolvimento de Sistemas, SENAI, 2026"
       e os links Entrar e Criar conta.
 - [ ] Tela da homepage no Figma (página "Telas — Secretaria", ao lado do 01 Login).
 
 ### Juntos, no final
 
-- [ ] Testar em 360px, 768px e 1440px (DevTools → ícone de celular).
-- [ ] Navegar só com a tecla Tab: todo link e botão precisa mostrar o anel de foco.
-- [ ] Clicar em todos os links e conferir se levam ao lugar certo.
+- [x] Testar em 360px, 768px e 1440px (DevTools → ícone de celular).
+- [x] Navegar só com a tecla Tab: todo link e botão precisa mostrar o anel de foco.
+- [x] Clicar em todos os links e conferir se levam ao lugar certo.
 
 ## O que vai em cada página
 
@@ -266,11 +267,12 @@ Figma: 07 Solicitações (ainda não desenhada). Menu da barra lateral: Painel, 
 
 - [x] **Fase 1 — Entrada**: `login.html` e `criar-conta.html` prontos
   (base.css, componentes.css e autenticacao.css preenchidos)
-- [ ] **Fase 1.5 — Homepage**: `index.html` (base pronta; Giovanni e Renan dividem as seções)
+- [x] **Fase 1.5 — Homepage**: `index.html` (base pronta; Giovanni e Renan dividem as seções)
 - [ ] **Fase 2 — Estrutura comum** (`layout.css`): barra lateral e cabeçalho da página
 - [ ] **Fase 3 — Secretaria**: painel → achados → cadastrar/editar → solicitações
 - [ ] **Fase 4 — Aluno**: buscar achados → detalhe → solicitar devolução → minhas solicitações
 - [ ] **Fase 5 — Conversão para React**: `class` → `className`, `for` → `htmlFor`, ligar estados
+  - Login com abas: `/login` (Aluno) e `/login?perfil=secretaria`. Se o perfil da conta não for o da aba, mostrar o alerta "Esta conta é de aluno. Use a aba Aluno para entrar."
 
 ## Regras do protótipo
 
