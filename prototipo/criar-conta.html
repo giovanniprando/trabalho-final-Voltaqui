@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criar conta | Voltaqui</title>
 
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap">
@@ -20,7 +22,10 @@
   <div class="autenticacao">
 
     <aside class="marca">
-      <a class="marca-logo" href="login.html">Voltaqui</a>
+
+      <a class="marca-logo" href="login.html">
+        <img src="img/logo-horizontal-escura.svg" alt="Voltaqui" width="159" height="56">
+      </a>
 
       <div class="etiqueta-area" aria-hidden="true">
         <div class="etiqueta">
@@ -32,7 +37,7 @@
       </div>
 
       <div>
-        <p class="marca-slogan">Se é seu, merece voltar.</p>
+        <p class="marca-slogan">Se é seu, <span>merece voltar.</span></p>
         <p class="marca-descricao">
           Crie sua conta para acompanhar os achados da sua escola
           e pedir a devolução do que é seu.
@@ -55,6 +60,7 @@
           <div class="linha-campos">
             <div class="campo">
               <label for="codigo-escola">Código da escola</label>
+
               <input id="codigo-escola" type="text" required
                      pattern="[A-Za-z0-9]{6}" maxlength="6"
                      autocapitalize="characters" spellcheck="false"
@@ -67,6 +73,7 @@
 
             <div class="campo">
               <label for="matricula">Matrícula</label>
+
               <input id="matricula" type="text" required
                      inputmode="numeric" pattern="[0-9]{4,12}"
                      autocomplete="off"
@@ -77,6 +84,7 @@
           </div>
 
           <div class="campo">
+
             <label for="curso">Curso <small>(opcional)</small></label>
             <input id="curso" type="text"
                    placeholder="Ex.: Desenvolvimento de Sistemas">
@@ -88,6 +96,7 @@
 
           <div class="campo">
             <label for="nome">Nome completo</label>
+
             <input id="nome" type="text" required minlength="3"
                    autocomplete="name">
             <p class="campo-erro">Digite seu nome completo.</p>
@@ -104,6 +113,7 @@
           <div class="linha-campos">
             <div class="campo">
               <label for="senha">Senha</label>
+
               <input id="senha" type="password" required minlength="6"
                      autocomplete="new-password"
                      aria-describedby="senha-ajuda">
@@ -113,6 +123,7 @@
 
             <div class="campo">
               <label for="confirmar-senha">Confirmar senha</label>
+
               <input id="confirmar-senha" type="password" required minlength="6"
                      autocomplete="new-password">
               <p class="campo-erro">Repita a senha que você criou.</p>
