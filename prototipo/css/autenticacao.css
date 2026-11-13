@@ -15,24 +15,36 @@
 }
 
 .marca-logo {
-  font-family: var(--fonte-titulo);
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: inherit;
-  text-decoration: none;
+  display: inline-block;
+  justify-self: start;
+  border-radius: var(--raio-sm);
+}
+
+.marca-logo img {
+  height: 56px;
+  width: auto;
+}
+
+.marca-logo:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
 }
 
 .marca-slogan {
+  color: var(--cor-titulo-sobre-marca);
   font-size: clamp(2rem, 3vw, 2.75rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: var(--esp-3);
 }
 
+.marca-slogan span {
+  color: var(--cor-destaque);
+}
+
 .marca-descricao {
   max-width: 36ch;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--cor-texto-sobre-marca-suave);
 }
 
 .etiqueta-area {
@@ -141,6 +153,10 @@
   .etiqueta-area,
   .marca-descricao {
     display: none;
+  }
+
+  .marca-logo img {
+    height: 36px;
   }
 
   .marca-slogan {
