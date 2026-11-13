@@ -1,0 +1,139 @@
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.lateral {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-8);
+  height: 100vh;
+  padding: var(--esp-6);
+  background: var(--cor-marca);
+}
+
+.lateral-logo {
+  display: inline-block;
+  align-self: flex-start;
+  border-radius: var(--raio-sm);
+}
+
+.lateral-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.lateral-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lateral-menu a,
+.lateral-sair {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4);
+  font-weight: 500;
+  color: var(--cor-texto-sobre-marca-suave);
+  text-decoration: none;
+  border-radius: var(--raio-md);
+}
+
+.lateral-menu a:hover,
+.lateral-sair:hover {
+  color: var(--cor-texto-sobre-marca);
+  background: var(--cor-hover-sobre-marca);
+}
+
+.lateral-menu a[aria-current="page"] {
+  color: var(--cor-destaque);
+  background: var(--cor-hover-sobre-marca);
+}
+
+.lateral-menu a:focus-visible,
+.lateral-sair:focus-visible,
+.lateral-logo:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
+.lateral-menu svg,
+.lateral-sair svg {
+  flex-shrink: 0;
+}
+
+.lateral-sair {
+  margin-top: auto;
+}
+
+.app-conteudo {
+  min-width: 0;
+  padding: var(--esp-12);
+}
+
+.pagina-cabecalho {
+  margin-bottom: var(--esp-8);
+}
+
+.pagina-cabecalho h1 {
+  margin-bottom: var(--esp-1);
+  font-size: 1.75rem;
+}
+
+.pagina-cabecalho p {
+  color: var(--cor-texto-secundario);
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .lateral {
+    position: relative;
+    height: auto;
+    gap: var(--esp-4);
+    padding: var(--esp-4);
+  }
+
+  .lateral-logo img {
+    height: 32px;
+  }
+
+  .lateral-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .lateral-menu a,
+  .lateral-sair {
+    padding: var(--esp-2) var(--esp-3);
+  }
+
+  .lateral-sair {
+    position: absolute;
+    top: var(--esp-4);
+    right: var(--esp-4);
+    margin-top: 0;
+  }
+
+  .app-conteudo {
+    padding: var(--esp-6) var(--esp-4);
+  }
+}
+
+@media (max-width: 560px) {
+  .lateral-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

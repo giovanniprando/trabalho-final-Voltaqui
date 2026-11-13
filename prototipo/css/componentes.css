@@ -271,3 +271,23 @@
   color: var(--status-recusada-texto);
   background: var(--status-recusada-fundo);
 }
+
+.pular-link {
+  position: absolute;
+  top: var(--esp-2);
+  left: var(--esp-2);
+  z-index: 20;
+  padding: var(--esp-2) var(--esp-4);
+  font-weight: 600;
+  color: var(--cor-texto-sobre-destaque);
+  background: var(--cor-destaque);
+  border-radius: var(--raio-md);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.pular-link:focus-visible {
+  transform: none;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--cor-fundo), 0 0 0 4px var(--cor-texto);
+}
