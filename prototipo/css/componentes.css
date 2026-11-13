@@ -52,6 +52,21 @@
   background: var(--cor-fundo);
 }
 
+.botao-sobre-marca {
+  color: var(--cor-texto-sobre-marca);
+  background: transparent;
+  border-color: var(--cor-borda-sobre-marca);
+}
+
+.botao-sobre-marca:hover {
+  background: var(--cor-hover-sobre-marca);
+  border-color: var(--cor-texto-sobre-marca);
+}
+
+.botao-sobre-marca:focus-visible {
+  box-shadow: 0 0 0 2px var(--cor-marca), 0 0 0 4px var(--cor-texto-sobre-marca);
+}
+
 .campo {
 
   display: flex;

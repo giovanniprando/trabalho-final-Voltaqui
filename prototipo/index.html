@@ -58,7 +58,7 @@
           <p class="hero-texto">O Voltaqui organiza os achados e perdidos da sua escola. A secretaria registra o que foi encontrado, o aluno procura pelo celular e o objeto só é devolvido para quem prova que é o dono.</p>
           <div class="hero-botoes">
             <a class="botao botao-primario" href="login.html">Entrar</a>
-            <a class="botao hero-botao-claro" href="#como-funciona">Ver como funciona</a>
+            <a class="botao botao-sobre-marca" href="#como-funciona">Ver como funciona</a>
           </div>
         </div>
         <div class="hero-cartao" aria-hidden="true">
@@ -117,37 +117,115 @@
 
     <section id="para-quem" class="secao perfis" aria-labelledby="para-quem-titulo">
       <div class="container">
+        <p class="secao-etiqueta">Para quem</p>
         <h2 id="para-quem-titulo" class="secao-titulo">Feito para os dois lados do balcão.</h2>
-
+        <div class="perfis-grade">
+          <article class="perfis-card">
+            <div class="perfis-cabecalho">
+              <span class="perfis-icone"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span>
+              <h3>Secretaria</h3>
+            </div>
+            <ul class="perfis-lista">
+              <li><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cadastra, edita e exclui achados.</li>
+              <li><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Analisa cada pedido vendo o detalhe ao lado da resposta do aluno.</li>
+              <li><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Acompanha o status de cada objeto.</li>
+            </ul>
+          </article>
+          <article class="perfis-card">
+            <div class="perfis-cabecalho">
+              <span class="perfis-icone"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
+              <h3>Aluno</h3>
+            </div>
+            <ul class="perfis-lista">
+              <li><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cria a conta com o código da escola.</li>
+              <li><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Busca por categoria, local e status.</li>
+              <li><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Acompanha os próprios pedidos.</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 
     <section id="seguranca" class="secao seguranca" aria-labelledby="seguranca-titulo">
-      <div class="container">
-        <h2 id="seguranca-titulo" class="secao-titulo">Só o dono sabe o detalhe.</h2>
-
+      <div class="container seguranca-grade">
+        <div>
+          <p class="secao-etiqueta">Segurança</p>
+          <h2 id="seguranca-titulo" class="secao-titulo">Só o dono sabe o detalhe.</h2>
+          <p class="seguranca-texto">Todo achado tem uma descrição pública e um detalhe oculto, como um adesivo, um nome escrito ou uma marca por dentro. O aluno vê só a descrição pública. Para pedir o objeto, ele descreve o detalhe, e a secretaria confere antes de devolver.</p>
+        </div>
+        <figure class="seguranca-exemplo">
+          <figcaption class="seguranca-legenda">Exemplo de achado</figcaption>
+          <div class="seguranca-parte">
+            <p class="seguranca-rotulo">Descrição pública</p>
+            <p class="seguranca-valor">Garrafa térmica azul, 500&nbsp;ml</p>
+            <span class="badge badge-disponivel">Disponível</span>
+          </div>
+          <div class="seguranca-parte seguranca-oculto">
+            <p class="seguranca-rotulo"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Detalhe oculto</p>
+            <p class="seguranca-valor">Adesivo de banda na base</p>
+            <p class="seguranca-aviso"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>Só a secretaria vê</p>
+          </div>
+        </figure>
       </div>
     </section>
 
     <section id="sobre" class="secao sobre" aria-labelledby="sobre-titulo">
-      <div class="container">
-        <h2 id="sobre-titulo" class="secao-titulo">Feito para reconectar pessoas aos seus pertences.</h2>
-
+      <div class="container sobre-grade">
+        <div>
+          <p class="secao-etiqueta">Sobre o Voltaqui</p>
+          <h2 id="sobre-titulo" class="secao-titulo">Feito para reconectar pessoas aos seus pertences.</h2>
+          <p class="sobre-texto">O Voltaqui nasceu no SENAI, onde está sendo usado pela primeira vez, e foi pensado para qualquer instituição de ensino. Cada escola tem um código, e o aluno entra ligado à própria escola.</p>
+        </div>
+        <ul class="sobre-valores">
+          <li class="sobre-valor">
+            <span class="sobre-icone"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <h3>Confiança</h3>
+            <p>O objeto só volta para quem prova que é o dono.</p>
+          </li>
+          <li class="sobre-valor">
+            <span class="sobre-icone"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></span>
+            <h3>Proximidade</h3>
+            <p>A busca fica no celular do aluno, não só no balcão.</p>
+          </li>
+          <li class="sobre-valor">
+            <span class="sobre-icone"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span>
+            <h3>Organização</h3>
+            <p>Todo achado tem registro, local, data e status.</p>
+          </li>
+          <li class="sobre-valor">
+            <span class="sobre-icone"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg></span>
+            <h3>Reconexão</h3>
+            <p>O que se perdeu encontra o caminho de volta.</p>
+          </li>
+        </ul>
       </div>
     </section>
 
     <section id="comece" class="secao chamada" aria-labelledby="comece-titulo">
       <div class="container">
         <h2 id="comece-titulo" class="secao-titulo">Perdeu alguma coisa na escola?</h2>
-
+        <p class="chamada-texto">Entre e veja se ela já está esperando por você.</p>
+        <div class="chamada-botoes">
+          <a class="botao botao-primario" href="login.html">Entrar</a>
+          <a class="botao botao-sobre-marca" href="criar-conta.html">Criar conta</a>
+        </div>
       </div>
     </section>
 
   </main>
 
   <footer class="rodape">
-    <div class="container">
-
+    <div class="container rodape-conteudo">
+      <a class="rodape-logo" href="index.html">
+        <img src="img/logo-horizontal.svg" alt="Voltaqui, voltar ao início" width="114" height="40">
+      </a>
+      <p>Projeto final de Desenvolvimento de Sistemas, SENAI, 2026</p>
+      <nav aria-label="Rodapé">
+        <ul class="rodape-links">
+          <li><a href="login.html">Entrar</a></li>
+          <li><a href="criar-conta.html">Criar conta</a></li>
+        </ul>
+      </nav>
     </div>
   </footer>
 

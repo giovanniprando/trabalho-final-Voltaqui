@@ -34,10 +34,15 @@ Escala: título da abertura `clamp(2.5rem, 5.5vw, 4rem)`, título de seção `cl
 
 ## Componentes
 
-- Botão primário verde, secundário branco com borda; sobre fundo escuro, o secundário é transparente com borda clara. Foco sempre visível (anel).
+- Botão primário verde, secundário branco com borda; sobre fundo escuro, usa `.botao-sobre-marca` (transparente com borda clara, em `componentes.css`). Foco sempre visível (anel).
 - Cabeçalho fixo no topo, branco, com borda inferior. Até 768px: some o menu e o "Criar conta".
 - Cards do problema: ícone em quadrado suave + título + texto. Passos: números em círculo ligados por linha (só no desktop).
-- Etiqueta de seção em caixa-alta pequena acima do `<h2>`.
+- Para quem: 2 cards (Secretaria e Aluno) com ícone + título separados da lista por uma linha; itens com ícone de check.
+- Segurança e Sobre: texto à esquerda, conteúdo à direita (`1fr 1fr` e `5fr 7fr`); viram 1 coluna até 768px.
+- Card de exemplo da segurança: parte pública com borda contínua, parte oculta com fundo cinza e borda tracejada.
+- Chamada final: fundo azul da marca, centralizada, sem pontinhos.
+- Rodapé: logo, texto do projeto e links; empilha até 768px.
+- Etiqueta de seção em caixa-alta pequena acima do `<h2>` (não usar em fundo escuro: o verde #007A55 não tem contraste lá).
 
 ## Imagens e ícones
 
@@ -46,4 +51,4 @@ Escala: título da abertura `clamp(2.5rem, 5.5vw, 4rem)`, título de seção `cl
 ## Pendências
 
 - Grafia: logo usa "voltAqui", textos usam "Voltaqui".
-- Seções do Renan (para quem, segurança, sobre, chamada, rodapé) seguem estes tokens.
+- Tela da homepage no Figma.
