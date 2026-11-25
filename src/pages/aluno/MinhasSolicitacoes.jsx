@@ -7,12 +7,13 @@ import { useAuth } from '../../context/useAuth'
 import { useDados } from '../../context/useDados'
 import { STATUS_ACHADO } from '../../services/storage'
 import { formatarData, formatarNumero } from '../../utils/formatar'
+import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-minhas-solicitacoes.css'
 
 // A mensagem muda conforme a resposta da secretaria.
 function mensagem(solicitacao, achado) {
   if (solicitacao.status === 'pendente') {
-    return { icone: 'relogio', classe: '', texto: 'Esperando a secretaria analisar.' }
+    return { icone: 'relogio', classe: '', texto: 'A secretaria vai conferir o detalhe que você descreveu. Quando ela responder, o sino avisa.' }
   }
   if (solicitacao.status === 'recusada') {
     return {
@@ -36,6 +37,7 @@ function mensagem(solicitacao, achado) {
 }
 
 export default function MinhasSolicitacoes() {
+  useTitulo('Minhas solicitações')
   const { usuario } = useAuth()
   const { solicitacoes, buscarAchado } = useDados()
 
@@ -55,8 +57,8 @@ export default function MinhasSolicitacoes() {
       {minhas.length === 0 ? (
         <EstadoVazio
           icone="prancheta"
-          titulo="Você ainda não fez nenhuma solicitação"
-          texto="Quando achar algo seu na lista, peça a devolução por lá."
+          titulo="Sua mochila sente sua falta?"
+          texto="Você ainda não pediu nenhuma devolução. Quando achar algo seu na lista, peça por lá."
         >
           <Link className="botao botao-primario" to="/achados">Buscar achados</Link>
         </EstadoVazio>
