@@ -1,0 +1,127 @@
+.detalhe {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--esp-6);
+  align-items: start;
+}
+
+.detalhe-achado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--esp-3);
+  padding: var(--esp-8);
+}
+
+.detalhe-categoria {
+  margin-top: var(--esp-2);
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+}
+
+.detalhe-achado h1 {
+  font-size: 1.75rem;
+}
+
+.detalhe-dados {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--esp-4);
+  width: 100%;
+  margin: var(--esp-4) 0 0;
+  padding-top: var(--esp-6);
+  border-top: 1px solid var(--cinza-200);
+}
+
+.detalhe-dados dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--cor-texto-secundario);
+}
+
+.detalhe-dados dd {
+  margin: var(--esp-1) 0 0;
+  font-weight: 600;
+}
+
+.detalhe-oculto-aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  width: 100%;
+  margin-top: var(--esp-2);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+  background: var(--cor-fundo);
+  border: 1px dashed var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+}
+
+.detalhe-como {
+  padding: var(--esp-6);
+}
+
+.detalhe-como h2 {
+  margin-bottom: var(--esp-4);
+  font-size: 1.125rem;
+}
+
+.devolucao-passos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  margin: 0 0 var(--esp-6);
+  padding: 0;
+  list-style: none;
+  counter-reset: passo;
+}
+
+.devolucao-passos li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 44px;
+  counter-increment: passo;
+}
+
+.devolucao-passos li::before {
+  content: counter(passo);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  font-family: var(--fonte-titulo);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--cor-texto-sobre-destaque);
+  background: var(--cor-destaque);
+  border-radius: var(--raio-full);
+}
+
+.devolucao-passos span {
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+}
+
+@media (max-width: 1100px) {
+  .detalhe {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .detalhe-achado {
+    padding: var(--esp-6);
+  }
+
+  .detalhe-dados {
+    grid-template-columns: 1fr;
+  }
+}
