@@ -1,21 +1,29 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Badge } from '../../components/Badge'
+import { DiasParado } from '../../components/DiasParado'
 import { Icone } from '../../components/Icone'
-import { IconeCategoria } from '../../components/IconeCategoria'
+import { FotoOuIcone } from '../../components/FotoOuIcone'
 import { Modal } from '../../components/Modal'
 import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { CATEGORIAS, buscarCategoria } from '../../data/categorias'
 import { NOMES_STATUS } from '../../data/status'
-import { LOCAIS, buscarLocal } from '../../data/locais'
+import { STATUS_ACHADO } from '../../services/storage'
+import { ORDENS, ordenarAchados } from '../../utils/ordenar'
+import { locaisUsados, nomeDoLocal } from '../../data/locais'
 import { formatarData, formatarNumero, normalizar } from '../../utils/formatar'
+import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-achados.css'
 
 export default function Achados() {
+  useTitulo('Achados')
   const { achados, removerAchado } = useDados()
   const avisar = useAviso()
-  const [filtros, setFiltros] = useState({ busca: '', categoria: '', local: '', status: '' })
+  // O painel pode abrir esta página já filtrada: /secretaria/achados?local=cantina
+  const [parametros] = useSearchParams()
+  const [filtros, setFiltros] = useState({ busca: '', categoria: '', local: parametros.get('local') ?? '', status: '' })
+  const [ordem, setOrdem] = useState('recentes')
   const [paraExcluir, setParaExcluir] = useState(null)
 
   function mudarFiltro(evento) {
@@ -23,12 +31,12 @@ export default function Achados() {
   }
 
   const termo = normalizar(filtros.busca)
-  const lista = achados
+  const filtrados = achados
     .filter((a) => !filtros.categoria || a.categoria === filtros.categoria)
-    .filter((a) => !filtros.local || a.local === filtros.local)
+    .filter((a) => !filtros.local || normalizar(nomeDoLocal(a.local)) === filtros.local)
     .filter((a) => !filtros.status || a.status === filtros.status)
     .filter((a) => !termo || normalizar(`${a.descricao} ${a.numero} ${formatarNumero(a.numero)}`).includes(termo))
-    .sort((a, b) => b.criadoEm.localeCompare(a.criadoEm))
+  const lista = ordenarAchados(filtrados, ordem)
 
   const temFiltro = Object.values(filtros).some(Boolean)
 
@@ -43,7 +51,7 @@ export default function Achados() {
       <header className="pagina-cabecalho pagina-cabecalho-com-acao">
         <div>
           <h1>Achados</h1>
-          <p>Tudo o que chegou na secretaria, do mais novo ao mais antigo.</p>
+          <p>Tudo o que chegou na secretaria.</p>
         </div>
         <Link className="botao botao-primario" to="/secretaria/novo">
           <Icone nome="mais" />
@@ -72,7 +80,7 @@ export default function Achados() {
           <label className="visualmente-oculto" htmlFor="filtro-local">Local</label>
           <select id="filtro-local" name="local" value={filtros.local} onChange={mudarFiltro}>
             <option value="">Todos os locais</option>
-            {LOCAIS.map((l) => <option key={l.id} value={l.id}>{l.nome}</option>)}
+            {locaisUsados(achados).map((nome) => <option key={nome} value={normalizar(nome)}>{nome}</option>)}
           </select>
         </div>
         <div className="campo">
@@ -85,6 +93,13 @@ export default function Achados() {
           </select>
         </div>
       </form>
+
+      <div className="ordenar ordenar-tabela">
+        <label htmlFor="ordem">Ordenar</label>
+        <select id="ordem" value={ordem} onChange={(e) => setOrdem(e.target.value)}>
+          {ORDENS.map((o) => <option key={o.id} value={o.id}>{o.nome}</option>)}
+        </select>
+      </div>
 
       <div className="cartao tabela-rolagem">
         <table className="tabela">
@@ -109,7 +124,7 @@ export default function Achados() {
               <tr key={achado.id}>
                 <td>
                   <span className="tabela-categoria">
-                    <IconeCategoria categoria={achado.categoria} tamanho="pequeno" />
+                    <FotoOuIcone achado={achado} tamanho="pequeno" />
                     {buscarCategoria(achado.categoria)?.nome}
                   </span>
                 </td>
@@ -117,8 +132,12 @@ export default function Achados() {
                   <p className="tabela-descricao">{achado.descricao}</p>
                   <p className="numero-achado tabela-numero">{formatarNumero(achado.numero)}</p>
                 </td>
-                <td>{buscarLocal(achado.local)?.nome}</td>
-                <td>{formatarData(achado.dataEncontrado)}</td>
+                <td>{nomeDoLocal(achado.local)}</td>
+                <td>
+                  {formatarData(achado.dataEncontrado)}
+                  {/* Devolvido já saiu da secretaria: não conta mais os dias */}
+                  {achado.status !== STATUS_ACHADO.DEVOLVIDO && <DiasParado data={achado.dataEncontrado} />}
+                </td>
                 <td><Badge status={achado.status} /></td>
                 <td>
                   <div className="tabela-acoes">
