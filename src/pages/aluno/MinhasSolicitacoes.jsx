@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom'
-import { Badge } from '../../components/Badge'
+import { Link } from 'react-router'
+import { SeloStatus } from '../../components/SeloStatus'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { IconeCategoria } from '../../components/IconeCategoria'
 import { useAuth } from '../../context/useAuth'
 import { useDados } from '../../context/useDados'
 import { STATUS_ACHADO } from '../../services/storage'
-import { formatarData, formatarNumero } from '../../utils/formatar'
+import { formatarNumero } from '../../utils/formatar'
+import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-minhas-solicitacoes.css'
 
@@ -19,20 +20,22 @@ function mensagem(solicitacao, achado) {
     return {
       icone: 'x',
       classe: 'mensagem-recusada',
-      texto: 'Os detalhes não conferiram. Se ele for seu mesmo, fale com a secretaria.',
+      texto: solicitacao.motivo === 'outro-aprovado'
+        ? 'A secretaria confirmou outra pessoa como dona deste objeto. Se ele é seu, fale com a secretaria.'
+        : 'Os detalhes não conferiram. Se o objeto é seu, fale com a secretaria.',
     }
   }
   if (achado.status === STATUS_ACHADO.DEVOLVIDO) {
     return {
       icone: 'check_circulo',
       classe: 'mensagem-aprovada',
-      texto: `Retirado em ${formatarData(achado.atualizadoEm)}. Que bom que voltou!`,
+      texto: `Retirado em ${formatarData(achado.devolvidoEm ?? achado.atualizadoEm)}.`,
     }
   }
   return {
     icone: 'check_circulo',
     classe: 'mensagem-aprovada',
-    texto: 'Pode retirar! Vá à secretaria, de segunda a sexta, das 8h às 17h, com a carteirinha.',
+    texto: 'Pode retirar na secretaria, de segunda a sexta, das 8h às 17h. Leve a carteirinha.',
   }
 }
 
@@ -45,7 +48,7 @@ export default function MinhasSolicitacoes() {
     .filter((s) => s.alunoId === usuario.id)
     .map((s) => ({ ...s, achado: buscarAchado(s.achadoId) }))
     .filter((s) => s.achado)
-    .sort((a, b) => b.criadaEm.localeCompare(a.criadaEm))
+    .toSorted((a, b) => b.criadaEm.localeCompare(a.criadaEm))
 
   return (
     <>
@@ -77,7 +80,7 @@ export default function MinhasSolicitacoes() {
                       <span className="numero-achado">{formatarNumero(s.achado.numero)}</span>
                     </p>
                   </div>
-                  <Badge status={s.status} />
+                  <SeloStatus status={s.status} />
                 </div>
                 <p className={`mensagem ${msg.classe}`}>
                   <Icone nome={msg.icone} tamanho={16} />

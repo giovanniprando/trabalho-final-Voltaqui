@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Badge } from '../../components/Badge'
+import { Link } from 'react-router'
+import { SeloStatus } from '../../components/SeloStatus'
 import { DiasParado } from '../../components/DiasParado'
 import { Icone } from '../../components/Icone'
 import { IconeCategoria } from '../../components/IconeCategoria'
@@ -9,7 +9,8 @@ import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { nomeDoLocal } from '../../data/locais'
 import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
-import { formatarData, formatarNumero, normalizar } from '../../utils/formatar'
+import { formatarNumero, normalizar } from '../../utils/formatar'
+import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-painel.css'
 
@@ -22,7 +23,7 @@ function contarPorLocal(achados) {
     if (!contagem[chave]) contagem[chave] = { nome, chave, quantidade: 0 }
     contagem[chave].quantidade += 1
   }
-  return Object.values(contagem).sort((a, b) => b.quantidade - a.quantidade).slice(0, 6)
+  return Object.values(contagem).toSorted((a, b) => b.quantidade - a.quantidade).slice(0, 6)
 }
 
 export default function Painel() {
@@ -32,21 +33,20 @@ export default function Painel() {
   const [confirmarRestauro, setConfirmarRestauro] = useState(false)
 
   function restaurar() {
-    restaurarExemplos()
     setConfirmarRestauro(false)
-    avisar('Dados de exemplo restaurados.')
+    if (restaurarExemplos()) avisar('Dados de exemplo restaurados.')
   }
 
   const contar = (status) => achados.filter((a) => a.status === status).length
   const pendentes = solicitacoes
     .filter((s) => s.status === STATUS_SOLICITACAO.PENDENTE)
-    .sort((a, b) => a.criadaEm.localeCompare(b.criadaEm))
-  const ultimos = [...achados].sort((a, b) => b.criadoEm.localeCompare(a.criadoEm)).slice(0, 4)
+    .toSorted((a, b) => a.criadaEm.localeCompare(b.criadaEm))
+  const ultimos = achados.toSorted((a, b) => b.criadoEm.localeCompare(a.criadoEm)).slice(0, 4)
 
   // Itens que ainda estão na secretaria, do que chegou há mais tempo para o mais novo.
   const parados = achados
     .filter((a) => a.status === STATUS_ACHADO.DISPONIVEL)
-    .sort((a, b) => a.dataEncontrado.localeCompare(b.dataEncontrado))
+    .toSorted((a, b) => a.dataEncontrado.localeCompare(b.dataEncontrado))
     .slice(0, 4)
 
   // Quantos achados apareceram em cada local, do maior para o menor.
@@ -100,7 +100,7 @@ export default function Painel() {
             </header>
 
             {pendentes.length === 0 ? (
-              <p className="recente-meta">Nenhum pedido esperando. Tudo em dia!</p>
+              <p className="recente-meta">Nenhum pedido esperando análise.</p>
             ) : (
               <ul className="recentes">
                 {pendentes.slice(0, 4).map((s) => {
@@ -116,7 +116,7 @@ export default function Painel() {
                           <span className="numero-achado">{formatarNumero(achado.numero)}</span>
                         </p>
                       </div>
-                      <Badge status={s.status} />
+                      <SeloStatus status={s.status} />
                     </li>
                   )
                 })}
@@ -189,7 +189,7 @@ export default function Painel() {
                       {nomeDoLocal(achado.local)} · {formatarData(achado.dataEncontrado)}
                     </p>
                   </div>
-                  <Badge status={achado.status} />
+                  <SeloStatus status={achado.status} />
                 </li>
               ))}
             </ul>
@@ -214,7 +214,7 @@ export default function Painel() {
         >
           Os achados e as solicitações voltam a ser os 7 achados e os 4 pedidos de exemplo. Tudo o
           que foi cadastrado, editado ou excluído depois disso se perde. As contas de aluno criadas
-          continuam.
+          e o seu login continuam. Os próximos números de achado seguem a contagem, sem repetir.
         </Modal>
       )}
     </>

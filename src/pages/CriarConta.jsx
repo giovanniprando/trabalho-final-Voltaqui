@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router'
 import { Campo } from '../components/Campo'
 import { InputSenha } from '../components/InputSenha'
 import { PainelMarca } from '../components/PainelMarca'
@@ -19,7 +19,7 @@ const VAZIO = {
 
 const ETIQUETA = {
   numero: '0151', objeto: 'Garrafa térmica verde com adesivos',
-  local: 'Encontrada no pátio, em 21/10', status: 'Em análise', classe: 'badge-analise',
+  local: 'Encontrada no pátio, em 21/10', status: 'Em análise', classe: 'selo-analise',
 }
 
 export default function CriarConta() {
@@ -32,7 +32,6 @@ export default function CriarConta() {
 
   if (usuario) return <Navigate to={paginaInicial(usuario)} replace />
 
-  // Um único "onChange" para todos os campos: usa o name do campo.
   function aoMudar(evento) {
     const { name, value, type, checked } = evento.target
     setDados({ ...dados, [name]: type === 'checkbox' ? checked : value })
@@ -49,8 +48,14 @@ export default function CriarConta() {
       return
     }
 
-    const conta = cadastrar(dados)
-    avisar(`Conta criada. Bem-vindo(a), ${conta.nome.split(' ')[0]}!`)
+    let conta
+    try {
+      conta = cadastrar(dados)
+    } catch {
+      avisar('Não deu para criar a conta: o armazenamento do navegador está cheio.', 'erro')
+      return
+    }
+    avisar(`Conta criada. Olá, ${conta.nome.split(' ')[0]}.`)
     navigate(paginaInicial(conta))
   }
 

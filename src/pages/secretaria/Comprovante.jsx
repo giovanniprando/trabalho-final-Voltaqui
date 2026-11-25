@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { useDados } from '../../context/useDados'
@@ -6,7 +6,8 @@ import { buscarCategoria } from '../../data/categorias'
 import { USUARIOS } from '../../data/usuarios'
 import { useTitulo } from '../../hooks/useTitulo'
 import { listarContas, STATUS_ACHADO } from '../../services/storage'
-import { formatarData, formatarHora, formatarNumero, protocoloDevolucao } from '../../utils/formatar'
+import { formatarNumero } from '../../utils/formatar'
+import { formatarData, formatarHora, protocoloDevolucao } from '../../utils/datas'
 
 // Comprovante de devolução: aparece depois de "Marcar como devolvido".
 // A secretaria imprime ou salva em PDF pelo próprio navegador (Ctrl + P).

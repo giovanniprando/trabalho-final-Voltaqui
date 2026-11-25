@@ -1,5 +1,5 @@
-import { Link, useParams } from 'react-router-dom'
-import { Badge } from '../../components/Badge'
+import { Link, useParams } from 'react-router'
+import { SeloStatus } from '../../components/SeloStatus'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { FotoOuIcone } from '../../components/FotoOuIcone'
@@ -7,8 +7,9 @@ import { useAuth } from '../../context/useAuth'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
 import { nomeDoLocal } from '../../data/locais'
-import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
-import { formatarData, formatarNumero } from '../../utils/formatar'
+import { motivoParaNaoPedir, STATUS_ACHADO } from '../../services/storage'
+import { formatarNumero } from '../../utils/formatar'
+import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-detalhe-achado.css'
 
@@ -30,10 +31,9 @@ export default function DetalheAchado() {
     )
   }
 
-  // O aluno já pediu este achado? Não deixa pedir de novo.
-  const meuPedido = solicitacoes.find(
-    (s) => s.achadoId === achado.id && s.alunoId === usuario.id && s.status !== STATUS_SOLICITACAO.RECUSADA,
-  )
+  // Pode pedir? As regras ficam em services/storage.js (motivoParaNaoPedir).
+  const motivo = motivoParaNaoPedir(achado, solicitacoes, usuario.id)
+  const meuPedido = solicitacoes.find((s) => s.achadoId === achado.id && s.alunoId === usuario.id)
 
   return (
     <>
@@ -50,7 +50,7 @@ export default function DetalheAchado() {
             <span className="numero-achado">{formatarNumero(achado.numero)}</span>
           </p>
           <h1>{achado.descricao}</h1>
-          <Badge status={achado.status} />
+          <SeloStatus status={achado.status} />
 
           <dl className="detalhe-dados">
             <div>
@@ -90,20 +90,33 @@ export default function DetalheAchado() {
             </li>
           </ol>
 
-          {meuPedido ? (
+          {motivo === null && (
+            <Link className="botao botao-primario botao-bloco" to={`/achados/${achado.id}/solicitar`}>
+              Pedir devolução
+            </Link>
+          )}
+
+          {motivo === 'ja-pediu' && (
             <>
               <div className="alerta alerta-info detalhe-aviso">
                 <Icone nome="info" />
-                <span>Você já pediu este objeto. A resposta aparece em Minhas solicitações.</span>
+                <span>
+                  {meuPedido.status === 'recusada'
+                    ? 'Seu pedido deste objeto foi recusado. Se ele é seu, fale com a secretaria.'
+                    : 'Você já pediu este objeto. A resposta aparece em Minhas solicitações.'}
+                </span>
               </div>
               <Link className="botao botao-secundario botao-bloco" to="/minhas-solicitacoes">
                 Ver minhas solicitações
               </Link>
             </>
-          ) : (
-            <Link className="botao botao-primario botao-bloco" to={`/achados/${achado.id}/solicitar`}>
-              É meu, quero solicitar
-            </Link>
+          )}
+
+          {motivo === 'reservado' && (
+            <div className="alerta alerta-info detalhe-aviso">
+              <Icone nome="info" />
+              <span>A secretaria já aprovou o pedido do dono. O objeto está esperando a retirada.</span>
+            </div>
           )}
         </aside>
       </div>
