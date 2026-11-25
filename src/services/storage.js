@@ -9,6 +9,7 @@ const CHAVES = {
   contas: 'voltaqui:contas',
   ultimoNumero: 'voltaqui:ultimoNumero',
   sessao: 'voltaqui:sessao',
+  leituras: 'voltaqui:notificacoesLidas',
 }
 
 export const STATUS_ACHADO = {
@@ -208,7 +209,8 @@ export function recusarSolicitacao(id) {
 }
 
 export function marcarDevolvido(achadoId) {
-  return atualizarAchado(achadoId, { status: STATUS_ACHADO.DEVOLVIDO })
+  // devolvidoEm guarda o momento da entrega (aparece no comprovante).
+  return atualizarAchado(achadoId, { status: STATUS_ACHADO.DEVOLVIDO, devolvidoEm: agora() })
 }
 
 // ---------- contas de aluno criadas no site ----------
@@ -235,4 +237,17 @@ export function salvarSessao(usuario) {
 
 export function limparSessao() {
   localStorage.removeItem(CHAVES.sessao)
+}
+
+// ---------- notificações do aluno ----------
+
+// Guarda, para cada aluno, quando ele abriu o sino pela última vez.
+// Respostas da secretaria depois dessa data contam como "não lidas".
+export function lerUltimaLeitura(usuarioId) {
+  return ler(CHAVES.leituras, {})[usuarioId] ?? null
+}
+
+export function marcarNotificacoesLidas(usuarioId) {
+  const leituras = ler(CHAVES.leituras, {})
+  gravar(CHAVES.leituras, { ...leituras, [usuarioId]: agora() })
 }
