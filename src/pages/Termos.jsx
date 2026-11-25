@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useTitulo } from '../hooks/useTitulo'
 
 export default function Termos() {
+  useTitulo('Termos e privacidade')
   return (
     <main className="termos">
       <Link className="termos-logo" to="/">
