@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom'
 import { Campo } from '../components/Campo'
+import { InputSenha } from '../components/InputSenha'
 import { Icone } from '../components/Icone'
 import { PainelMarca } from '../components/PainelMarca'
 import { useAuth } from '../context/useAuth'
 import { PERFIS, USUARIOS, paginaInicial } from '../data/usuarios'
 import { ligarCampo } from '../utils/campo'
 import { temErros, validarLogin } from '../utils/validacao'
+import { useTitulo } from '../hooks/useTitulo'
 import '../styles/autenticacao.css'
 
 const TEXTOS = {
@@ -37,6 +39,7 @@ const TEXTOS = {
 }
 
 export default function Login({ perfil }) {
+  useTitulo(perfil === PERFIS.SECRETARIA ? 'Entrar na secretaria' : 'Entrar')
   const { usuario, entrar } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
@@ -110,9 +113,8 @@ export default function Login({ perfil }) {
           </Campo>
 
           <Campo id="senha" rotulo="Senha" erro={erros.senha}>
-            <input
+            <InputSenha
               {...ligarCampo('senha', erros.senha)}
-              type="password"
               autoComplete="current-password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}

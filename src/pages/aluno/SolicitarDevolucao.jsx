@@ -6,16 +6,18 @@ import { IconeCategoria } from '../../components/IconeCategoria'
 import { useAuth } from '../../context/useAuth'
 import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
-import { buscarLocal } from '../../data/locais'
+import { nomeDoLocal } from '../../data/locais'
 import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
 import { formatarData, formatarNumero } from '../../utils/formatar'
 import { ligarCampo } from '../../utils/campo'
 import { temErros, validarSolicitacao } from '../../utils/validacao'
+import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-solicitar-devolucao.css'
 
 const MAXIMO = 300
 
 export default function SolicitarDevolucao() {
+  useTitulo('Pedir devolução')
   const { id } = useParams()
   const { usuario } = useAuth()
   const { buscarAchado, solicitacoes, solicitarDevolucao } = useDados()
@@ -53,7 +55,7 @@ export default function SolicitarDevolucao() {
       alunoNome: usuario.nome,
       descricaoDono: descricaoDono.trim(),
     })
-    avisar('Solicitação enviada. A secretaria vai analisar.')
+    avisar('Pedido enviado. Se for seu, ele já está a caminho de voltar.')
     setEnviado(true)
   }
 
@@ -75,7 +77,7 @@ export default function SolicitarDevolucao() {
           <div>
             <p className="resumo-titulo">{achado.descricao}</p>
             <p className="resumo-meta">
-              {buscarLocal(achado.local)?.nome} · {formatarData(achado.dataEncontrado)} ·{' '}
+              {nomeDoLocal(achado.local)} · {formatarData(achado.dataEncontrado)} ·{' '}
               <span className="numero-achado">{formatarNumero(achado.numero)}</span>
             </p>
           </div>
@@ -86,7 +88,9 @@ export default function SolicitarDevolucao() {
             id="descricaoDono"
             rotulo="Descreva um detalhe que só o dono saberia"
             erro={erros.descricaoDono}
-            ajuda={`Pense em cor de um adesivo, um nome escrito, um arranhão ou o que estava dentro. ${descricaoDono.length}/${MAXIMO}`}
+            ajuda="Pense em cor de um adesivo, um nome escrito, um arranhão ou o que estava dentro."
+            limite={MAXIMO}
+            valor={descricaoDono}
           >
             <textarea
               {...ligarCampo('descricaoDono', erros.descricaoDono, true)}

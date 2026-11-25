@@ -1,16 +1,18 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { LayoutApp } from './components/LayoutApp'
 import { RotaProtegida } from './components/RotaProtegida'
 import { PERFIS } from './data/usuarios'
 import CriarConta from './pages/CriarConta'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import NaoEncontrada from './pages/NaoEncontrada'
 import Termos from './pages/Termos'
 import BuscarAchados from './pages/aluno/BuscarAchados'
 import DetalheAchado from './pages/aluno/DetalheAchado'
 import MinhasSolicitacoes from './pages/aluno/MinhasSolicitacoes'
 import SolicitarDevolucao from './pages/aluno/SolicitarDevolucao'
 import AchadosSecretaria from './pages/secretaria/Achados'
+import Comprovante from './pages/secretaria/Comprovante'
 import Etiqueta from './pages/secretaria/Etiqueta'
 import FormularioAchado from './pages/secretaria/FormularioAchado'
 import Painel from './pages/secretaria/Painel'
@@ -54,9 +56,11 @@ export default function App() {
         <Route path="/secretaria/editar/:id" element={<FormularioAchado />} />
         <Route path="/secretaria/solicitacoes" element={<Solicitacoes />} />
         <Route path="/secretaria/etiqueta/:id" element={<Etiqueta />} />
+        <Route path="/secretaria/comprovante/:id" element={<Comprovante />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* Qualquer endereço que não existe */}
+      <Route path="*" element={<NaoEncontrada />} />
     </Routes>
   )
 }

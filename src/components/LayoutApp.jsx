@@ -5,6 +5,8 @@ import { PERFIS, paginaInicial } from '../data/usuarios'
 import { STATUS_SOLICITACAO } from '../services/storage'
 import { iniciais } from '../utils/formatar'
 import { Icone } from './Icone'
+import { Notificacoes } from './Notificacoes'
+import { TrocaDemonstracao } from './TrocaDemonstracao'
 import '../styles/layout.css'
 
 const MENUS = {
@@ -40,9 +42,13 @@ export function LayoutApp() {
       <a className="pular-link" href="#conteudo">Pular para o conteúdo</a>
 
       <aside className="lateral">
-        <Link className="lateral-logo" to={paginaInicial(usuario)}>
-          <img src="/img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="114" height="40" />
-        </Link>
+        <div className="lateral-topo">
+          <Link className="lateral-logo" to={paginaInicial(usuario)}>
+            <img src="/img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="114" height="40" />
+          </Link>
+          {/* O sino só existe para o aluno: é ele quem espera a resposta */}
+          {!ehSecretaria && <Notificacoes usuario={usuario} />}
+        </div>
 
         <nav aria-label={ehSecretaria ? 'Menu da secretaria' : 'Menu do aluno'}>
           <ul className="lateral-menu">
@@ -78,8 +84,12 @@ export function LayoutApp() {
         </div>
       </aside>
 
+      <TrocaDemonstracao />
+
       <main id="conteudo" className="app-conteudo">
-        <Outlet />
+        <div className="app-pagina">
+          <Outlet />
+        </div>
       </main>
     </div>
   )

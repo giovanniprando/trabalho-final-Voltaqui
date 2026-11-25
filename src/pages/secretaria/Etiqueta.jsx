@@ -3,12 +3,14 @@ import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
-import { buscarLocal } from '../../data/locais'
+import { nomeDoLocal } from '../../data/locais'
 import { formatarData, formatarNumero } from '../../utils/formatar'
+import { useTitulo } from '../../hooks/useTitulo'
 
 // Etiqueta para imprimir e colar no objeto. Aparece logo depois do cadastro
 // e também pelo botão de impressora na lista de achados.
 export default function Etiqueta() {
+  useTitulo('Etiqueta')
   const { id } = useParams()
   const [parametros] = useSearchParams()
   const { buscarAchado } = useDados()
@@ -57,7 +59,7 @@ export default function Etiqueta() {
             <dt>Categoria</dt>
             <dd>{buscarCategoria(achado.categoria)?.nome}</dd>
             <dt>Encontrado</dt>
-            <dd>{buscarLocal(achado.local)?.nome}, {formatarData(achado.dataEncontrado)}</dd>
+            <dd>{nomeDoLocal(achado.local)}, {formatarData(achado.dataEncontrado)}</dd>
           </dl>
           <p className="etiqueta-impressao-rodape">
             É seu? Entre no Voltaqui e peça a devolução. Se é seu, merece voltar.

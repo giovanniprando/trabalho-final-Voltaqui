@@ -50,7 +50,8 @@ export function validarAchado(dados) {
   const erros = {}
 
   if (!dados.categoria) erros.categoria = 'Escolha uma categoria.'
-  if (!dados.local) erros.local = 'Escolha o local onde foi encontrado.'
+  if (!dados.local.trim()) erros.local = 'Escreva o local onde foi encontrado.'
+  else if (dados.local.trim().length < 3) erros.local = 'Escreva pelo menos 3 letras.'
 
   if (!dados.dataEncontrado) {
     erros.dataEncontrado = 'Informe a data em que o objeto foi encontrado.'
