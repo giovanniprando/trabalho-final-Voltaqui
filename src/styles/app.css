@@ -5,7 +5,7 @@
 .lateral-contador {
   min-width: 22px;
   margin-left: auto;
-  padding: 0 6px;
+  padding: 0 var(--esp-2);
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 20px;
@@ -13,6 +13,13 @@
   color: var(--cor-texto-sobre-destaque);
   background: var(--cor-destaque);
   border-radius: var(--raio-full);
+}
+
+.carregando {
+  display: block;
+  padding: var(--esp-12) var(--esp-6);
+  text-align: center;
+  color: var(--cor-texto-secundario);
 }
 
 .avisos {
@@ -48,10 +55,10 @@
 }
 
 .aviso-erro svg {
-  color: #f87171;
+  color: var(--vermelho-200);
 }
 
-.aviso p {
+.aviso-texto {
   flex: 1;
 }
 
@@ -125,10 +132,6 @@
   grid-column: 1 / -1;
 }
 
-.modal-aberto {
-  display: grid;
-}
-
 .contas-teste {
   margin-top: var(--esp-2);
   padding: var(--esp-3) var(--esp-4);
@@ -174,10 +177,6 @@
 .tabela-vazia td {
   padding: var(--esp-12) var(--esp-6);
   text-align: center;
-}
-
-.filtros-limpar {
-  align-self: center;
 }
 
 .etiqueta-pagina {
@@ -292,7 +291,7 @@
   }
 
   body {
-    background: #fff;
+    background: var(--branco);
   }
 
   .etiqueta-impressao,
@@ -434,7 +433,7 @@ button.lateral-sair {
 
 .input-senha input {
   width: 100%;
-  padding-right: 48px;
+  padding-right: var(--esp-12);
 }
 
 .input-senha-botao {
@@ -554,7 +553,7 @@ button.lateral-sair {
 .dias-parado {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--esp-1);
   margin-top: 2px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -823,7 +822,7 @@ button.lateral-sair {
   font-weight: 600;
   text-align: left;
   color: var(--azul-950);
-  background: var(--laranja-marca);
+  background: var(--cor-laranja);
   border: 0;
   border-radius: var(--raio-full);
   box-shadow: var(--elevacao-lg);
@@ -839,12 +838,12 @@ button.lateral-sair {
 }
 
 .troca-demonstracao:hover {
-  background: #ff9a33;
+  filter: brightness(1.08);
 }
 
 .troca-demonstracao:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--cor-superficie), 0 0 0 6px var(--laranja-marca);
+  box-shadow: 0 0 0 3px var(--cor-superficie), 0 0 0 6px var(--cor-laranja);
 }
 
 @media (max-width: 900px) {

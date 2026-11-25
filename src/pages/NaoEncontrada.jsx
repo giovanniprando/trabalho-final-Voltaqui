@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useAuth } from '../context/useAuth'
 import { paginaInicial } from '../data/usuarios'
 import { useTitulo } from '../hooks/useTitulo'

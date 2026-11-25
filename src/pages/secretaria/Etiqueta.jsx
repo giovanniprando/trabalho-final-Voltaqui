@@ -1,10 +1,11 @@
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
 import { nomeDoLocal } from '../../data/locais'
-import { formatarData, formatarNumero } from '../../utils/formatar'
+import { formatarNumero } from '../../utils/formatar'
+import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 
 // Etiqueta para imprimir e colar no objeto. Aparece logo depois do cadastro
@@ -39,19 +40,19 @@ export default function Etiqueta() {
 
       <div className="etiqueta-pagina">
         {acabouDeCadastrar && (
-          <div className="alerta alerta-info etiqueta-sucesso" role="status">
+          <output className="alerta alerta-info etiqueta-sucesso">
             <Icone nome="check_circulo" />
             <span>
               <strong>Achado cadastrado.</strong> Ele já aparece para os alunos como{' '}
               {formatarNumero(achado.numero)}.
             </span>
-          </div>
+          </output>
         )}
 
         <div className="etiqueta-impressao">
           <div className="etiqueta-impressao-topo">
             <img src="/img/logo-horizontal.svg" alt="Voltaqui" width="91" height="32" />
-            <span className="badge badge-devolvido">Achados e perdidos</span>
+            <span className="selo selo-devolvido">Achados e perdidos</span>
           </div>
           <p className="etiqueta-impressao-numero">{formatarNumero(achado.numero)}</p>
           <p className="etiqueta-impressao-objeto">{achado.descricao}</p>

@@ -1,5 +1,5 @@
 import { textoDosDias, tomDosDias } from '../utils/dias'
-import { diasDesde } from '../utils/formatar'
+import { diasDesde } from '../utils/datas'
 import { Icone } from './Icone'
 
 // Etiqueta "Há 12 dias aqui" (as regras de cor ficam em utils/dias.js).
