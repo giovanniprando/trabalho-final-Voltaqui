@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { iniciarEtiquetaFisica } from '../lib/etiquetaFisica'
 
 // Painel azul da esquerda no login e no criar conta, com a etiqueta que voa.
@@ -19,7 +19,7 @@ export function PainelMarca({ etiqueta, descricao }) {
           <p className="etiqueta-numero">Achado nº {etiqueta.numero}</p>
           <p className="etiqueta-objeto">{etiqueta.objeto}</p>
           <p className="etiqueta-local">{etiqueta.local}</p>
-          <span className={`badge ${etiqueta.classe}`}>{etiqueta.status}</span>
+          <span className={`selo ${etiqueta.classe}`}>{etiqueta.status}</span>
         </div>
       </div>
 

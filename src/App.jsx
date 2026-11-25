@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { Route, Routes } from 'react-router'
 import { LayoutApp } from './components/LayoutApp'
 import { RotaProtegida } from './components/RotaProtegida'
 import { PERFIS } from './data/usuarios'
@@ -7,60 +8,81 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import NaoEncontrada from './pages/NaoEncontrada'
 import Termos from './pages/Termos'
-import BuscarAchados from './pages/aluno/BuscarAchados'
-import DetalheAchado from './pages/aluno/DetalheAchado'
-import MinhasSolicitacoes from './pages/aluno/MinhasSolicitacoes'
-import SolicitarDevolucao from './pages/aluno/SolicitarDevolucao'
-import AchadosSecretaria from './pages/secretaria/Achados'
-import Comprovante from './pages/secretaria/Comprovante'
-import Etiqueta from './pages/secretaria/Etiqueta'
-import FormularioAchado from './pages/secretaria/FormularioAchado'
-import Painel from './pages/secretaria/Painel'
-import Solicitacoes from './pages/secretaria/Solicitacoes'
+
+// As páginas do aluno e as da secretaria viram arquivos separados no build:
+// quem só abre a homepage ou o login não baixa o código delas.
+// As páginas públicas ficam no arquivo principal. Carregadas aos poucos, o botão
+// Voltar do navegador depois de sair ficava com a tela em branco (o redirecionamento
+// para o login não acontecia enquanto o login ainda carregava).
+const aluno = () => import('./pages/aluno')
+const secretaria = () => import('./pages/secretaria')
+
+// lazy espera um módulo com "default"; aqui escolhemos qual página do grupo usar.
+function pagina(grupo, nome) {
+  return lazy(() => grupo().then((modulo) => ({ default: modulo[nome] })))
+}
+
+const BuscarAchados = pagina(aluno, 'BuscarAchados')
+const DetalheAchado = pagina(aluno, 'DetalheAchado')
+const SolicitarDevolucao = pagina(aluno, 'SolicitarDevolucao')
+const MinhasSolicitacoes = pagina(aluno, 'MinhasSolicitacoes')
+
+const Painel = pagina(secretaria, 'Painel')
+const AchadosSecretaria = pagina(secretaria, 'Achados')
+const FormularioAchado = pagina(secretaria, 'FormularioAchado')
+const Solicitacoes = pagina(secretaria, 'Solicitacoes')
+const Etiqueta = pagina(secretaria, 'Etiqueta')
+const Comprovante = pagina(secretaria, 'Comprovante')
+
+function Carregando() {
+  return <output className="carregando">Carregando...</output>
+}
 
 export default function App() {
   return (
-    <Routes>
-      {/* Públicas */}
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login key="aluno" perfil={PERFIS.ALUNO} />} />
-      <Route path="/login/secretaria" element={<Login key="secretaria" perfil={PERFIS.SECRETARIA} />} />
-      <Route path="/criar-conta" element={<CriarConta />} />
-      <Route path="/termos" element={<Termos />} />
+    <Suspense fallback={<Carregando />}>
+      <Routes>
+        {/* Públicas */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login key="aluno" perfil={PERFIS.ALUNO} />} />
+        <Route path="/login/secretaria" element={<Login key="secretaria" perfil={PERFIS.SECRETARIA} />} />
+        <Route path="/criar-conta" element={<CriarConta />} />
+        <Route path="/termos" element={<Termos />} />
 
-      {/* Só aluno */}
-      <Route
-        element={
-          <RotaProtegida perfil={PERFIS.ALUNO}>
-            <LayoutApp />
-          </RotaProtegida>
-        }
-      >
-        <Route path="/achados" element={<BuscarAchados />} />
-        <Route path="/achados/:id" element={<DetalheAchado />} />
-        <Route path="/achados/:id/solicitar" element={<SolicitarDevolucao />} />
-        <Route path="/minhas-solicitacoes" element={<MinhasSolicitacoes />} />
-      </Route>
+        {/* Só aluno */}
+        <Route
+          element={
+            <RotaProtegida perfil={PERFIS.ALUNO}>
+              <LayoutApp />
+            </RotaProtegida>
+          }
+        >
+          <Route path="/achados" element={<BuscarAchados />} />
+          <Route path="/achados/:id" element={<DetalheAchado />} />
+          <Route path="/achados/:id/solicitar" element={<SolicitarDevolucao />} />
+          <Route path="/minhas-solicitacoes" element={<MinhasSolicitacoes />} />
+        </Route>
 
-      {/* Só secretaria */}
-      <Route
-        element={
-          <RotaProtegida perfil={PERFIS.SECRETARIA}>
-            <LayoutApp />
-          </RotaProtegida>
-        }
-      >
-        <Route path="/secretaria" element={<Painel />} />
-        <Route path="/secretaria/achados" element={<AchadosSecretaria />} />
-        <Route path="/secretaria/novo" element={<FormularioAchado />} />
-        <Route path="/secretaria/editar/:id" element={<FormularioAchado />} />
-        <Route path="/secretaria/solicitacoes" element={<Solicitacoes />} />
-        <Route path="/secretaria/etiqueta/:id" element={<Etiqueta />} />
-        <Route path="/secretaria/comprovante/:id" element={<Comprovante />} />
-      </Route>
+        {/* Só secretaria */}
+        <Route
+          element={
+            <RotaProtegida perfil={PERFIS.SECRETARIA}>
+              <LayoutApp />
+            </RotaProtegida>
+          }
+        >
+          <Route path="/secretaria" element={<Painel />} />
+          <Route path="/secretaria/achados" element={<AchadosSecretaria />} />
+          <Route path="/secretaria/novo" element={<FormularioAchado />} />
+          <Route path="/secretaria/editar/:id" element={<FormularioAchado />} />
+          <Route path="/secretaria/solicitacoes" element={<Solicitacoes />} />
+          <Route path="/secretaria/etiqueta/:id" element={<Etiqueta />} />
+          <Route path="/secretaria/comprovante/:id" element={<Comprovante />} />
+        </Route>
 
-      {/* Qualquer endereço que não existe */}
-      <Route path="*" element={<NaoEncontrada />} />
-    </Routes>
+        {/* Qualquer endereço que não existe */}
+        <Route path="*" element={<NaoEncontrada />} />
+      </Routes>
+    </Suspense>
   )
 }
