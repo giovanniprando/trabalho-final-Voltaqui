@@ -1,8 +1,8 @@
 .minhas {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
+  align-items: start;
   gap: var(--esp-4);
-  max-width: 860px;
   margin: 0;
   padding: 0;
   list-style: none;
