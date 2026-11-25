@@ -1,13 +1,17 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
+import { PERFIS, paginaInicial } from '../data/usuarios'
 
-// Sem login: volta para a tela de login.
-// Com "perfil" definido: só esse perfil entra; os outros vão para /achados.
+// Sem login: vai para o login certo.
+// Logado com outro perfil: volta para a página inicial dele.
 export function RotaProtegida({ perfil, children }) {
   const { usuario } = useAuth()
 
-  if (!usuario) return <Navigate to="/" replace />
-  if (perfil && usuario.perfil !== perfil) return <Navigate to="/achados" replace />
+  if (!usuario) {
+    const login = perfil === PERFIS.SECRETARIA ? '/login/secretaria' : '/login'
+    return <Navigate to={login} replace />
+  }
+  if (perfil && usuario.perfil !== perfil) return <Navigate to={paginaInicial(usuario)} replace />
 
   return children
 }

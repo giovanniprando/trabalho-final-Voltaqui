@@ -1,71 +1,62 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Header } from './components/Header'
+import { LayoutApp } from './components/LayoutApp'
 import { RotaProtegida } from './components/RotaProtegida'
 import { PERFIS } from './data/usuarios'
-import Achados from './pages/Achados'
-import CadastroAchado from './pages/CadastroAchado'
-import DetalheAchado from './pages/DetalheAchado'
+import CriarConta from './pages/CriarConta'
+import Home from './pages/Home'
 import Login from './pages/Login'
-import PainelSecretaria from './pages/PainelSecretaria'
-import SolicitarDevolucao from './pages/SolicitarDevolucao'
+import Termos from './pages/Termos'
+import BuscarAchados from './pages/aluno/BuscarAchados'
+import DetalheAchado from './pages/aluno/DetalheAchado'
+import MinhasSolicitacoes from './pages/aluno/MinhasSolicitacoes'
+import SolicitarDevolucao from './pages/aluno/SolicitarDevolucao'
+import AchadosSecretaria from './pages/secretaria/Achados'
+import Etiqueta from './pages/secretaria/Etiqueta'
+import FormularioAchado from './pages/secretaria/FormularioAchado'
+import Painel from './pages/secretaria/Painel'
+import Solicitacoes from './pages/secretaria/Solicitacoes'
 
 export default function App() {
   return (
-    <>
-      <Header />
-      <main className="conteudo">
-        <Routes>
-          <Route path="/" element={<Login />} />
+    <Routes>
+      {/* Públicas */}
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login key="aluno" perfil={PERFIS.ALUNO} />} />
+      <Route path="/login/secretaria" element={<Login key="secretaria" perfil={PERFIS.SECRETARIA} />} />
+      <Route path="/criar-conta" element={<CriarConta />} />
+      <Route path="/termos" element={<Termos />} />
 
-          {/* Aluno e secretaria */}
-          <Route
-            path="/achados"
-            element={<RotaProtegida><Achados /></RotaProtegida>}
-          />
-          <Route
-            path="/achados/:id"
-            element={<RotaProtegida><DetalheAchado /></RotaProtegida>}
-          />
+      {/* Só aluno */}
+      <Route
+        element={
+          <RotaProtegida perfil={PERFIS.ALUNO}>
+            <LayoutApp />
+          </RotaProtegida>
+        }
+      >
+        <Route path="/achados" element={<BuscarAchados />} />
+        <Route path="/achados/:id" element={<DetalheAchado />} />
+        <Route path="/achados/:id/solicitar" element={<SolicitarDevolucao />} />
+        <Route path="/minhas-solicitacoes" element={<MinhasSolicitacoes />} />
+      </Route>
 
-          {/* Só aluno */}
-          <Route
-            path="/achados/:id/solicitar"
-            element={
-              <RotaProtegida perfil={PERFIS.ALUNO}>
-                <SolicitarDevolucao />
-              </RotaProtegida>
-            }
-          />
+      {/* Só secretaria */}
+      <Route
+        element={
+          <RotaProtegida perfil={PERFIS.SECRETARIA}>
+            <LayoutApp />
+          </RotaProtegida>
+        }
+      >
+        <Route path="/secretaria" element={<Painel />} />
+        <Route path="/secretaria/achados" element={<AchadosSecretaria />} />
+        <Route path="/secretaria/novo" element={<FormularioAchado />} />
+        <Route path="/secretaria/editar/:id" element={<FormularioAchado />} />
+        <Route path="/secretaria/solicitacoes" element={<Solicitacoes />} />
+        <Route path="/secretaria/etiqueta/:id" element={<Etiqueta />} />
+      </Route>
 
-          {/* Só secretaria */}
-          <Route
-            path="/secretaria"
-            element={
-              <RotaProtegida perfil={PERFIS.SECRETARIA}>
-                <PainelSecretaria />
-              </RotaProtegida>
-            }
-          />
-          <Route
-            path="/secretaria/novo"
-            element={
-              <RotaProtegida perfil={PERFIS.SECRETARIA}>
-                <CadastroAchado />
-              </RotaProtegida>
-            }
-          />
-          <Route
-            path="/secretaria/editar/:id"
-            element={
-              <RotaProtegida perfil={PERFIS.SECRETARIA}>
-                <CadastroAchado />
-              </RotaProtegida>
-            }
-          />
-
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-    </>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }

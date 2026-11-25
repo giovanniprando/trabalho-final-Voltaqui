@@ -1,9 +1,13 @@
 // Toda leitura e gravação no localStorage passa por aqui.
-// Nenhum outro arquivo deve usar localStorage diretamente.
+// Nenhum outro arquivo usa localStorage diretamente.
+
+import { ACHADOS_EXEMPLO, SOLICITACOES_EXEMPLO } from '../data/exemplos'
 
 const CHAVES = {
   achados: 'voltaqui:achados',
   solicitacoes: 'voltaqui:solicitacoes',
+  contas: 'voltaqui:contas',
+  ultimoNumero: 'voltaqui:ultimoNumero',
   sessao: 'voltaqui:sessao',
 }
 
@@ -42,12 +46,31 @@ function agora() {
   return new Date().toISOString()
 }
 
+// Coloca os dados de exemplo na primeira vez que o site abre.
+const ULTIMO_NUMERO_EXEMPLO = Math.max(...ACHADOS_EXEMPLO.map((a) => a.numero))
+
+export function inicializarDados() {
+  if (localStorage.getItem(CHAVES.achados) === null) {
+    gravar(CHAVES.achados, ACHADOS_EXEMPLO)
+    gravar(CHAVES.ultimoNumero, ULTIMO_NUMERO_EXEMPLO)
+  }
+  if (localStorage.getItem(CHAVES.solicitacoes) === null) gravar(CHAVES.solicitacoes, SOLICITACOES_EXEMPLO)
+}
+
+// Apaga tudo e volta para os dados de exemplo (útil antes da apresentação).
+export function restaurarExemplos() {
+  gravar(CHAVES.ultimoNumero, ULTIMO_NUMERO_EXEMPLO)
+  gravar(CHAVES.achados, ACHADOS_EXEMPLO)
+  gravar(CHAVES.solicitacoes, SOLICITACOES_EXEMPLO)
+}
+
 // ---------- achados ----------
 
 /**
  * Formato de um achado:
  * {
  *   id: string,
+ *   numero: number,          // número da etiqueta (Nº 0158)
  *   categoria: string,       // id de src/data/categorias.js
  *   descricao: string,       // texto público
  *   detalheOculto: string,   // só a secretaria vê; usado para conferir o dono
@@ -68,14 +91,22 @@ export function buscarAchado(id) {
 }
 
 export function criarAchado(dados) {
+  const achados = listarAchados()
+
+  // O número nunca se repete, nem se o último achado for excluído.
+  const maiorNaLista = achados.reduce((maior, a) => Math.max(maior, a.numero ?? 0), 0)
+  const numero = Math.max(maiorNaLista, ler(CHAVES.ultimoNumero, 0)) + 1
+  gravar(CHAVES.ultimoNumero, numero)
+
   const achado = {
     ...dados,
     id: gerarId(),
+    numero,
     status: STATUS_ACHADO.DISPONIVEL,
     criadoEm: agora(),
     atualizadoEm: agora(),
   }
-  gravar(CHAVES.achados, [...listarAchados(), achado])
+  gravar(CHAVES.achados, [...achados, achado])
   return achado
 }
 
@@ -166,11 +197,11 @@ export function recusarSolicitacao(id) {
   })
   if (!recusada) return null
 
-  // Sem outra solicitação pendente, o achado volta a ficar disponível.
-  const aindaPendente = listarSolicitacoesDoAchado(recusada.achadoId).some(
-    (s) => s.status === STATUS_SOLICITACAO.PENDENTE,
+  // Sem outro pedido pendente ou aprovado, o achado volta a ficar disponível.
+  const aindaEmAnalise = listarSolicitacoesDoAchado(recusada.achadoId).some(
+    (s) => s.status === STATUS_SOLICITACAO.PENDENTE || s.status === STATUS_SOLICITACAO.APROVADA,
   )
-  if (!aindaPendente) {
+  if (!aindaEmAnalise) {
     atualizarAchado(recusada.achadoId, { status: STATUS_ACHADO.DISPONIVEL })
   }
   return recusada
@@ -178,6 +209,18 @@ export function recusarSolicitacao(id) {
 
 export function marcarDevolvido(achadoId) {
   return atualizarAchado(achadoId, { status: STATUS_ACHADO.DEVOLVIDO })
+}
+
+// ---------- contas de aluno criadas no site ----------
+
+export function listarContas() {
+  return ler(CHAVES.contas, [])
+}
+
+export function criarConta(dados) {
+  const conta = { ...dados, id: gerarId(), criadaEm: agora() }
+  gravar(CHAVES.contas, [...listarContas(), conta])
+  return conta
 }
 
 // ---------- sessão (login simulado) ----------

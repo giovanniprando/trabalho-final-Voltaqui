@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minhas solicitações | Voltaqui</title>
 
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap">
@@ -18,6 +19,113 @@
   <link rel="stylesheet" href="css/aluno-minhas-solicitacoes.css">
 </head>
 <body>
+
+  <a class="pular-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="app">
+
+    <aside class="lateral">
+
+      <a class="lateral-logo" href="aluno-achados.html">
+        <img src="img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="114" height="40">
+      </a>
+
+      <nav aria-label="Menu do aluno">
+        <ul class="lateral-menu">
+          <li>
+            <a href="aluno-achados.html">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              Buscar achados
+            </a>
+          </li>
+          <li>
+            <a href="aluno-minhas-solicitacoes.html" aria-current="page">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+              Minhas solicitações
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="lateral-rodape">
+        <div class="lateral-usuario">
+          <span class="avatar" aria-hidden="true">AS</span>
+          <span>
+            <strong>Ana Souza</strong>
+            <small>Aluna · SENAI</small>
+          </span>
+        </div>
+
+        <a class="lateral-sair" href="login.html">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+          Sair
+        </a>
+      </div>
+
+    </aside>
+
+    <main id="conteudo" class="app-conteudo">
+
+      <header class="pagina-cabecalho">
+        <h1>Minhas solicitações</h1>
+        <p>Acompanhe a resposta da secretaria para cada pedido.</p>
+      </header>
+
+      <ul class="minhas">
+        <li class="cartao minha">
+          <div class="minha-topo">
+            <span class="icone-categoria"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></svg></span>
+            <div class="minha-achado">
+              <h2>Garrafa térmica azul, 500 ml</h2>
+              <p>Pedido em 12/11/2026 · <span class="numero-achado">Nº&nbsp;0158</span></p>
+            </div>
+            <span class="badge badge-analise">Pendente</span>
+          </div>
+          <p class="mensagem">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Esperando a secretaria analisar.
+          </p>
+        </li>
+        <li class="cartao minha">
+          <div class="minha-topo">
+            <span class="icone-categoria"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg></span>
+            <div class="minha-achado">
+              <h2>Mochila preta com chaveiro de dinossauro</h2>
+              <p>Pedido em 16/10/2026 · <span class="numero-achado">Nº&nbsp;0142</span></p>
+            </div>
+            <span class="badge badge-disponivel">Aprovada</span>
+          </div>
+          <p class="mensagem mensagem-aprovada">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            Pode retirar! Vá à secretaria (Bloco A), de segunda a sexta, das 8h às 17h, com a carteirinha.
+          </p>
+        </li>
+        <li class="cartao minha">
+          <div class="minha-topo">
+            <span class="icone-categoria"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></svg></span>
+            <div class="minha-achado">
+              <h2>Garrafa térmica verde com adesivos</h2>
+              <p>Pedido em 23/10/2026 · <span class="numero-achado">Nº&nbsp;0151</span></p>
+            </div>
+            <span class="badge badge-recusada">Recusada</span>
+          </div>
+          <p class="mensagem mensagem-recusada">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            Os detalhes não conferiram. Se ela for sua mesmo, fale com a secretaria.
+          </p>
+        </li>
+      </ul>
+
+      <div class="estado-vazio" hidden>
+        <span class="estado-vazio-icone"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span>
+        <h2>Você ainda não fez nenhuma solicitação</h2>
+        <p>Quando achar algo seu na lista, peça a devolução por lá.</p>
+        <a class="botao botao-primario" href="aluno-achados.html">Buscar achados</a>
+      </div>
+
+    </main>
+
+  </div>
 
 </body>
 </html>
