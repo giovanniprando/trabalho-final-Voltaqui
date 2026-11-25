@@ -16,7 +16,7 @@
   --verde-600: #00b37c;
   --verde-700: #007a55;
   --verde-50: #e6faf3;
-  --laranja-marca: #fe8302;
+  --cor-laranja: #fe8302;
   --laranja-50: #fff7ed;
   --laranja-700: #c2410c;
   --vermelho-600: #dc2626;
@@ -46,6 +46,8 @@
   --cor-hover-sobre-marca: rgba(255, 255, 255, 0.08);
   --cor-destaque-sobre-marca-fundo: rgba(1, 208, 145, 0.12);
   --cor-destaque-sobre-marca-borda: rgba(1, 208, 145, 0.35);
+  --cor-fundo-modal: rgba(15, 23, 42, 0.55);
+  --cor-trilho: rgba(15, 23, 42, 0.08);
 
   --cor-borda-campo: var(--cinza-450);
   --cor-borda-campo-hover: var(--cinza-500);
@@ -84,6 +86,7 @@
   --elevacao-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
 
   --anel-foco: 0 0 0 3px rgba(1, 208, 145, 0.45);
+  --anel-foco-erro: 0 0 0 3px rgba(220, 38, 38, 0.25);
 
   /* Cor de cada categoria: fundo claro + desenho escuro (contraste 4,5:1 ou mais). */
   --cat-eletronicos-fundo: #e0f2fe;
