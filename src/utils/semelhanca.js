@@ -28,9 +28,17 @@ function batem(a, b) {
 // Compara o que o aluno escreveu com o detalhe oculto do achado.
 // Devolve o nível (alta, média ou baixa) e as palavras em comum.
 // É só uma ajuda: quem decide é sempre a secretaria.
-export function compararDescricoes(textoAluno, detalheOculto) {
+//
+// Palavras do detalhe que também estão na descrição pública não contam:
+// o aluno vê a descrição na tela e poderia ganhar pontos só copiando.
+// Elas voltam em "publicas" para a secretaria saber que foram ignoradas.
+export function compararDescricoes(textoAluno, detalheOculto, descricaoPublica = '') {
   const doAluno = palavrasChave(textoAluno)
-  const doDetalhe = palavrasChave(detalheOculto)
+  const daDescricao = palavrasChave(descricaoPublica)
+  const todasDoDetalhe = palavrasChave(detalheOculto)
+
+  const publicas = todasDoDetalhe.filter((p) => daDescricao.some((q) => batem(p, q)))
+  const doDetalhe = todasDoDetalhe.filter((p) => !publicas.includes(p))
 
   const emComum = doDetalhe.filter((p) => doAluno.some((q) => batem(p, q)))
   const proporcao = doDetalhe.length === 0 ? 0 : emComum.length / doDetalhe.length
@@ -39,7 +47,7 @@ export function compararDescricoes(textoAluno, detalheOculto) {
   if (proporcao >= 0.5) nivel = 'alta'
   else if (proporcao >= 0.25) nivel = 'media'
 
-  return { nivel, emComum, total: doDetalhe.length, proporcao }
+  return { nivel, emComum, publicas, total: doDetalhe.length, proporcao }
 }
 
 // Diz se uma palavra do texto está entre as palavras em comum (para destacar).
