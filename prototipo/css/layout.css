@@ -146,7 +146,7 @@
   margin-top: auto;
 }
 
-.lateral-usuario{
+.lateral-usuario {
   display: flex;
   align-items: center;
   gap: var(--esp-3);
