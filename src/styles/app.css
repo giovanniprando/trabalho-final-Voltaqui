@@ -370,3 +370,48 @@ button.lateral-sair {
   margin-top: var(--esp-1);
   padding-left: 26px;
 }
+
+@media (max-width: 900px) {
+  button.lateral-sair {
+    width: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .abas {
+    gap: var(--esp-4);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .abas .aba {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+.app {
+  grid-template-columns: 260px minmax(0, 1fr);
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.tabela-rolagem {
+  position: relative;
+}
+
+@media (max-width: 560px) {
+  .lateral-menu a {
+    white-space: normal;
+  }
+}
+
+.painel-rodape {
+  margin-top: var(--esp-8);
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+}
