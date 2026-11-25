@@ -85,6 +85,26 @@
 
   --anel-foco: 0 0 0 3px rgba(1, 208, 145, 0.45);
 
+  /* Cor de cada categoria: fundo claro + desenho escuro (contraste 4,5:1 ou mais). */
+  --cat-eletronicos-fundo: #e0f2fe;
+  --cat-eletronicos-texto: #0369a1;
+  --cat-documentos-fundo: #ede9fe;
+  --cat-documentos-texto: #6d28d9;
+  --cat-roupas-fundo: #fce7f3;
+  --cat-roupas-texto: #be185d;
+  --cat-material-escolar-fundo: #fef3c7;
+  --cat-material-escolar-texto: #b45309;
+  --cat-garrafas-fundo: #ccfbf1;
+  --cat-garrafas-texto: #0f766e;
+  --cat-chaves-fundo: #ffedd5;
+  --cat-chaves-texto: #c2410c;
+  --cat-acessorios-fundo: #ffe4e6;
+  --cat-acessorios-texto: #be123c;
+  --cat-outros-fundo: #e2e8f0;
+  --cat-outros-texto: #334155;
+
+  --largura-app: 1600px;
+
   --fonte-titulo: 'Montserrat', system-ui, sans-serif;
   --fonte-texto: 'Inter', system-ui, sans-serif;
 }

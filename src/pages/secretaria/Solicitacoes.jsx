@@ -1,24 +1,29 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Badge } from '../../components/Badge'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { IconeCategoria } from '../../components/IconeCategoria'
+import { Semelhanca, TextoDestacado } from '../../components/Semelhanca'
 import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
-import { buscarLocal } from '../../data/locais'
+import { nomeDoLocal } from '../../data/locais'
 import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
 import { formatarData, formatarNumero } from '../../utils/formatar'
+import { compararDescricoes } from '../../utils/semelhanca'
+import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-solicitacoes.css'
 
 const ABAS = [
-  { status: STATUS_SOLICITACAO.PENDENTE, nome: 'Pendentes', vazio: 'Nenhum pedido esperando análise.' },
-  { status: STATUS_SOLICITACAO.APROVADA, nome: 'Aprovadas', vazio: 'Nenhum pedido aprovado ainda.' },
-  { status: STATUS_SOLICITACAO.RECUSADA, nome: 'Recusadas', vazio: 'Nenhum pedido recusado.' },
+  { status: STATUS_SOLICITACAO.PENDENTE, nome: 'Pendentes', titulo: 'Tudo em dia', vazio: 'Nenhum pedido esperando análise. Quando um aluno pedir algo, ele aparece aqui.' },
+  { status: STATUS_SOLICITACAO.APROVADA, nome: 'Aprovadas', titulo: 'Nada aprovado ainda', vazio: 'Os pedidos que você aprovar ficam aqui até o aluno retirar.' },
+  { status: STATUS_SOLICITACAO.RECUSADA, nome: 'Recusadas', titulo: 'Nenhum pedido recusado', vazio: 'Ótimo sinal: até agora todo mundo pediu só o que era seu.' },
 ]
 
 function CardSolicitacao({ solicitacao, achado, onAprovar, onRecusar, onDevolver }) {
   const devolvido = achado.status === STATUS_ACHADO.DEVOLVIDO
+  const comparacao = compararDescricoes(solicitacao.descricaoDono, achado.detalheOculto)
 
   return (
     <article className="cartao solicitacao">
@@ -27,7 +32,7 @@ function CardSolicitacao({ solicitacao, achado, onAprovar, onRecusar, onDevolver
         <div className="solicitacao-achado">
           <h3>{achado.descricao}</h3>
           <p>
-            {buscarCategoria(achado.categoria)?.nome} · {buscarLocal(achado.local)?.nome} ·{' '}
+            {buscarCategoria(achado.categoria)?.nome} · {nomeDoLocal(achado.local)} ·{' '}
             <span className="numero-achado">{formatarNumero(achado.numero)}</span>
           </p>
         </div>
@@ -42,13 +47,15 @@ function CardSolicitacao({ solicitacao, achado, onAprovar, onRecusar, onDevolver
       <div className="conferencia">
         <div className="conferencia-bloco">
           <h4>O que o aluno descreveu</h4>
-          <p>{solicitacao.descricaoDono}</p>
+          <p><TextoDestacado texto={solicitacao.descricaoDono} emComum={comparacao.emComum} /></p>
         </div>
         <div className="conferencia-bloco conferencia-oculto">
           <h4><Icone nome="cadeado" tamanho={16} /> Detalhe oculto</h4>
-          <p>{achado.detalheOculto}</p>
+          <p><TextoDestacado texto={achado.detalheOculto} emComum={comparacao.emComum} /></p>
         </div>
       </div>
+
+      <Semelhanca resultado={comparacao} />
 
       <div className="solicitacao-acoes">
         {solicitacao.status === STATUS_SOLICITACAO.PENDENTE && (
@@ -77,7 +84,15 @@ function CardSolicitacao({ solicitacao, achado, onAprovar, onRecusar, onDevolver
         )}
 
         {solicitacao.status === STATUS_SOLICITACAO.APROVADA && devolvido && (
-          <p className="solicitacao-nota">Entregue ao aluno em {formatarData(achado.atualizadoEm)}.</p>
+          <>
+            <p className="solicitacao-nota">
+              Entregue ao aluno em {formatarData(achado.devolvidoEm ?? achado.atualizadoEm)}.
+            </p>
+            <Link className="botao botao-secundario" to={`/secretaria/comprovante/${solicitacao.id}`}>
+              <Icone nome="impressora" />
+              Ver comprovante
+            </Link>
+          </>
         )}
 
         {solicitacao.status === STATUS_SOLICITACAO.RECUSADA && (
@@ -89,8 +104,10 @@ function CardSolicitacao({ solicitacao, achado, onAprovar, onRecusar, onDevolver
 }
 
 export default function Solicitacoes() {
+  useTitulo('Solicitações')
   const { solicitacoes, buscarAchado, aprovar, recusar, marcarDevolvido } = useDados()
   const avisar = useAviso()
+  const navigate = useNavigate()
   const [aba, setAba] = useState(STATUS_SOLICITACAO.PENDENTE)
 
   const comAchado = solicitacoes
@@ -105,7 +122,7 @@ export default function Solicitacoes() {
 
   function aoAprovar(solicitacao) {
     aprovar(solicitacao.id)
-    avisar(`Pedido de ${solicitacao.alunoNome} aprovado. Ele já pode retirar.`)
+    avisar(`Pedido de ${solicitacao.alunoNome} aprovado. Agora é só esperar a retirada.`)
   }
 
   function aoRecusar(solicitacao) {
@@ -116,6 +133,7 @@ export default function Solicitacoes() {
   function aoDevolver(solicitacao, achado) {
     marcarDevolvido(achado.id)
     avisar(`${formatarNumero(achado.numero)} entregue para ${solicitacao.alunoNome}.`)
+    navigate(`/secretaria/comprovante/${solicitacao.id}`)
   }
 
   // Setas do teclado trocam de aba (padrão de acessibilidade para abas).
@@ -156,7 +174,7 @@ export default function Solicitacoes() {
 
       <section id="painel-solicitacoes" className="abas-painel" role="tabpanel" aria-labelledby={`aba-${aba}`}>
         {lista.length === 0 ? (
-          <EstadoVazio icone="caixa_entrada" titulo="Nada por aqui" texto={abaAtual.vazio} />
+          <EstadoVazio icone="caixa_entrada" titulo={abaAtual.titulo} texto={abaAtual.vazio} />
         ) : (
           lista.map(({ solicitacao, achado }) => (
             <CardSolicitacao

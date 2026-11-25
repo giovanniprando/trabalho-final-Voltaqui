@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Campo } from '../components/Campo'
+import { InputSenha } from '../components/InputSenha'
 import { PainelMarca } from '../components/PainelMarca'
 import { useAuth } from '../context/useAuth'
 import { useAviso } from '../context/useAviso'
 import { paginaInicial } from '../data/usuarios'
 import { ligarCampo } from '../utils/campo'
 import { temErros, validarConta } from '../utils/validacao'
+import { useTitulo } from '../hooks/useTitulo'
 import '../styles/autenticacao.css'
 import '../styles/criar-conta.css'
 
@@ -21,6 +23,7 @@ const ETIQUETA = {
 }
 
 export default function CriarConta() {
+  useTitulo('Criar conta')
   const { usuario, cadastrar, emailJaExiste } = useAuth()
   const avisar = useAviso()
   const navigate = useNavigate()
@@ -121,17 +124,17 @@ export default function CriarConta() {
 
             <div className="linha-campos">
               <Campo id="senha" rotulo="Senha" erro={erros.senha} ajuda="Mínimo de 6 caracteres.">
-                <input
+                <InputSenha
                   {...ligarCampo('senha', erros.senha, true)}
-                  name="senha" type="password" autoComplete="new-password"
+                  name="senha" autoComplete="new-password"
                   value={dados.senha} onChange={aoMudar}
                 />
               </Campo>
 
               <Campo id="confirmarSenha" rotulo="Confirmar senha" erro={erros.confirmarSenha}>
-                <input
+                <InputSenha
                   {...ligarCampo('confirmarSenha', erros.confirmarSenha)}
-                  name="confirmarSenha" type="password" autoComplete="new-password"
+                  name="confirmarSenha" autoComplete="new-password"
                   value={dados.confirmarSenha} onChange={aoMudar}
                 />
               </Campo>

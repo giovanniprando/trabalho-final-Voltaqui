@@ -6,24 +6,27 @@ import { Icone } from '../../components/Icone'
 import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { CATEGORIAS } from '../../data/categorias'
-import { LOCAIS } from '../../data/locais'
+import { nomeDoLocal, padronizarLocal, sugestoesDeLocal } from '../../data/locais'
 import { formatarNumero, hojeISO } from '../../utils/formatar'
 import { ligarCampo } from '../../utils/campo'
+import { reduzirImagem } from '../../utils/imagem'
 import { temErros, validarAchado } from '../../utils/validacao'
+import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-cadastrar-achado.css'
 
-const VAZIO = { categoria: '', local: '', dataEncontrado: hojeISO(), descricao: '', detalheOculto: '' }
+const VAZIO = { categoria: '', local: '', dataEncontrado: hojeISO(), descricao: '', detalheOculto: '', foto: '' }
 
 // A mesma tela serve para cadastrar (/secretaria/novo)
 // e para editar (/secretaria/editar/:id).
 // A "key" faz o React começar o formulário do zero quando o id muda.
 export default function FormularioAchado() {
   const { id } = useParams()
+  useTitulo(id ? 'Editar achado' : 'Cadastrar achado')
   return <Formulario key={id ?? 'novo'} id={id} />
 }
 
 function Formulario({ id }) {
-  const { buscarAchado, cadastrarAchado, editarAchado } = useDados()
+  const { achados, buscarAchado, cadastrarAchado, editarAchado } = useDados()
   const avisar = useAviso()
   const navigate = useNavigate()
 
@@ -34,10 +37,11 @@ function Formulario({ id }) {
     original
       ? {
           categoria: original.categoria,
-          local: original.local,
+          local: nomeDoLocal(original.local),
           dataEncontrado: original.dataEncontrado,
           descricao: original.descricao,
           detalheOculto: original.detalheOculto,
+          foto: original.foto ?? '',
         }
       : { ...VAZIO, dataEncontrado: hojeISO() },
   )
@@ -49,6 +53,19 @@ function Formulario({ id }) {
         <Link className="botao botao-primario" to="/secretaria/achados">Ver achados</Link>
       </EstadoVazio>
     )
+  }
+
+  async function aoEscolherFoto(evento) {
+    const arquivo = evento.target.files[0]
+    evento.target.value = '' // deixa escolher a mesma foto de novo, se precisar
+    if (!arquivo) return
+    try {
+      const foto = await reduzirImagem(arquivo)
+      setDados((atual) => ({ ...atual, foto }))
+      setErros((atual) => ({ ...atual, foto: undefined }))
+    } catch (erro) {
+      setErros((atual) => ({ ...atual, foto: erro.message }))
+    }
   }
 
   function aoMudar(evento) {
@@ -66,8 +83,22 @@ function Formulario({ id }) {
       return
     }
 
-    const limpos = { ...dados, descricao: dados.descricao.trim(), detalheOculto: dados.detalheOculto.trim() }
+    const limpos = {
+      ...dados,
+      local: padronizarLocal(dados.local, achados),
+      descricao: dados.descricao.trim(),
+      detalheOculto: dados.detalheOculto.trim(),
+    }
 
+    // Se o armazenamento do navegador estiver cheio, o salvar falha.
+    try {
+      salvar(limpos)
+    } catch {
+      setErros({ foto: 'Não coube no armazenamento do navegador. Tente salvar sem a foto.' })
+    }
+  }
+
+  function salvar(limpos) {
     if (editando) {
       editarAchado(id, limpos)
       avisar(`Alterações de ${formatarNumero(original.numero)} salvas.`)
@@ -110,14 +141,19 @@ function Formulario({ id }) {
           </Campo>
         </div>
 
-        <Campo id="local" rotulo="Local onde foi encontrado" erro={erros.local}>
-          <select {...ligarCampo('local', erros.local)} name="local" value={dados.local} onChange={aoMudar}>
-            <option value="">Selecione</option>
-            {LOCAIS.map((l) => <option key={l.id} value={l.id}>{l.nome}</option>)}
-          </select>
+        <Campo id="local" rotulo="Local onde foi encontrado" erro={erros.local}
+               ajuda="Escreva o lugar do jeito que a escola chama. Ex.: Bloco B, Quadra coberta.">
+          <input {...ligarCampo('local', erros.local, true)} name="local" list="sugestoes-local"
+                 maxLength={60} autoComplete="off" placeholder="Ex.: Cantina"
+                 value={dados.local} onChange={aoMudar} />
+          {/* datalist: o navegador mostra estas sugestões enquanto a pessoa digita */}
+          <datalist id="sugestoes-local">
+            {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome} />)}
+          </datalist>
         </Campo>
 
         <Campo id="descricao" rotulo="Descrição pública" erro={erros.descricao}
+               limite={120} valor={dados.descricao}
                ajuda="Todo mundo vê este texto. Diga o que é, a cor e a marca, sem entregar detalhes únicos.">
           <textarea {...ligarCampo('descricao', erros.descricao, true)} name="descricao" maxLength={120}
                     placeholder="Ex.: Garrafa térmica azul, 500 ml" value={dados.descricao} onChange={aoMudar} />
@@ -128,11 +164,39 @@ function Formulario({ id }) {
           className="campo-oculto"
           rotulo={<><Icone nome="cadeado" tamanho={16} /> Detalhe oculto</>}
           erro={erros.detalheOculto}
+          limite={160}
+          valor={dados.detalheOculto}
           ajuda="Só a secretaria vê. Na hora da devolução, o aluno precisa descrever este detalhe para provar que é o dono."
         >
           <textarea {...ligarCampo('detalheOculto', erros.detalheOculto, true)} name="detalheOculto" maxLength={160}
                     placeholder="Ex.: adesivo de banda na base" value={dados.detalheOculto} onChange={aoMudar} />
         </Campo>
+
+        <div className="campo campo-foto">
+          <span className="campo-foto-rotulo">Foto (opcional)</span>
+          <div className="campo-foto-linha">
+            {dados.foto ? (
+              <img className="foto-achado foto-grande" src={dados.foto} alt="Prévia da foto do achado" />
+            ) : (
+              <span className="campo-foto-vazio" aria-hidden="true"><Icone nome="camera" tamanho={28} /></span>
+            )}
+            <div className="campo-foto-acoes">
+              <label className="botao botao-secundario" htmlFor="foto">
+                <Icone nome="camera" />
+                {dados.foto ? 'Trocar foto' : 'Escolher foto'}
+              </label>
+              {/* O input fica escondido; o label acima funciona como botão */}
+              <input id="foto" className="visualmente-oculto" type="file" accept="image/*" onChange={aoEscolherFoto} />
+              {dados.foto && (
+                <button className="link botao-link" type="button" onClick={() => setDados({ ...dados, foto: '' })}>
+                  Remover foto
+                </button>
+              )}
+              <p className="campo-ajuda">Fotografe o objeto inteiro, sem mostrar o detalhe oculto.</p>
+              {erros.foto && <p className="campo-erro campo-erro-visivel" role="alert">{erros.foto}</p>}
+            </div>
+          </div>
+        </div>
 
         <div className="formulario-acoes">
           <Link className="botao botao-secundario" to="/secretaria/achados">Cancelar</Link>

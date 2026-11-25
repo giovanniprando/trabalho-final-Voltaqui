@@ -29,10 +29,18 @@ Cada achado recebe um número (Nº 0158) e uma etiqueta para imprimir e prender 
 - Buscar achados por texto (sem precisar de acento) e filtrar por categoria
 - Ver o detalhe do achado e pedir a devolução
 - Acompanhar os pedidos: pendente, aprovado (com instruções de retirada) ou recusado
+- "Perdeu algo?": informa o que perdeu, onde e quando, e vê os achados mais parecidos primeiro
+- Sino de notificações quando a secretaria aprova ou recusa um pedido
+- Ordenar a lista (mais recentes, há mais tempo na secretaria ou pelo número)
 
 **Secretaria**
-- Painel com números do dia e pedidos esperando análise
-- Cadastrar, editar e excluir achados, com validação dos campos
+- Painel com números do dia, pedidos esperando análise, locais onde mais se perde e itens parados há mais tempo
+- Cadastrar, editar e excluir achados, com validação dos campos e contador de caracteres
+- Local digitável (cada escola tem os seus lugares), com sugestões dos locais já usados
+- Foto em miniatura do achado, reduzida para poucos KB antes de salvar
+- "Há 12 dias aqui" em cada achado, com cor que muda conforme o tempo
+- Pontuação de semelhança: compara o que o aluno escreveu com o detalhe oculto e marca as palavras em comum
+- Comprovante de devolução com protocolo, para imprimir ou salvar em PDF
 - Imprimir a etiqueta do achado
 - Buscar e filtrar por categoria, local e status
 - Aprovar ou recusar pedidos e marcar como devolvido
@@ -40,6 +48,9 @@ Cada achado recebe um número (Nº 0158) e uma etiqueta para imprimir e prender 
 
 **Geral**
 - Login separado para aluno e secretaria, com páginas protegidas por perfil
+- Botão de mostrar e esconder a senha
+- Página 404 e título da aba diferente em cada página
+- Botão "Demonstração" (só nas contas de teste) para trocar entre aluno e secretaria na apresentação
 - Avisos na tela depois de cada ação
 - Página de termos de uso e privacidade
 - Layout responsivo (computador, tablet e celular)
@@ -106,6 +117,8 @@ O site já começa com 7 achados e 4 pedidos de exemplo. Para voltar a eles, use
 | `/secretaria/editar/:id` | secretaria | Editar achado |
 | `/secretaria/solicitacoes` | secretaria | Analisar pedidos |
 | `/secretaria/etiqueta/:id` | secretaria | Etiqueta para imprimir |
+| `/secretaria/comprovante/:id` | secretaria | Comprovante de devolução |
+| qualquer outra | todos | Página não encontrada (404) |
 
 ## Estrutura
 
@@ -113,12 +126,13 @@ O site já começa com 7 achados e 4 pedidos de exemplo. Para voltar a eles, use
 src/
 ├── components/   peças reutilizáveis (Badge, Campo, Modal, barra lateral...)
 ├── context/      login, dados e avisos compartilhados entre as páginas
-├── data/         categorias, locais, escolas, contas e dados de exemplo
+├── data/         categorias, sugestões de locais, escolas, contas e dados de exemplo
+├── hooks/        useTitulo (título da aba)
 ├── lib/          física da etiqueta (Matter.js)
 ├── pages/        páginas públicas, aluno/ e secretaria/
 ├── services/     storage.js: único arquivo que lê e grava no localStorage
 ├── styles/       CSS de cada página e dos componentes
-└── utils/        validações e formatação (datas, números)
+└── utils/        validações, formatação, semelhança, parecidos, ordenação e foto
 
 prototipo/        as telas feitas primeiro em HTML e CSS, antes do React
 ```
@@ -154,6 +168,13 @@ Regras:
 | Pedir devolução com menos de 10 letras | Mostra o erro |
 | Aprovar, recusar e marcar devolvido | Status, contador do menu e painel mudam juntos |
 | Recarregar a página | Nada se perde |
+| Pedido "adesivo de banda" contra o detalhe "Adesivo de banda na base" | Alta semelhança, com as palavras em comum marcadas |
+| Cadastrar o local "  cantina " quando já existe "Cantina" | Salva como "Cantina" e o filtro não repete o local |
+| "Perdeu algo?" com garrafa, pátio e 20/10 | A garrafa do pátio aparece primeiro como "Muito parecido" |
+| Secretaria aprova o pedido da Ana | O sino da Ana mostra 1 notificação nova |
+| Marcar como devolvido | Abre o comprovante com protocolo `VQ-AAAAMMDD-NNNN` |
+| Foto de 1600 × 1200 no cadastro | Vira uma miniatura de uns 3 KB |
+| Endereço que não existe | Mostra a página 404 |
 | Telas em 390 px (celular) | Nada passa da largura da tela; a tabela rola para o lado |
 
 ## Organização

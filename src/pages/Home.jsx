@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+import { useTitulo } from '../hooks/useTitulo'
 import '../styles/home.css'
 
 export default function Home() {
+  useTitulo(null)
   return (
     <>
       <a className="pular-link" href="#conteudo">Pular para o conteúdo</a>
