@@ -2,16 +2,18 @@ import { Link, useParams } from 'react-router-dom'
 import { Badge } from '../../components/Badge'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
-import { IconeCategoria } from '../../components/IconeCategoria'
+import { FotoOuIcone } from '../../components/FotoOuIcone'
 import { useAuth } from '../../context/useAuth'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
-import { buscarLocal } from '../../data/locais'
+import { nomeDoLocal } from '../../data/locais'
 import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
 import { formatarData, formatarNumero } from '../../utils/formatar'
+import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-detalhe-achado.css'
 
 export default function DetalheAchado() {
+  useTitulo('Detalhe do achado')
   const { id } = useParams()
   const { usuario } = useAuth()
   const { buscarAchado, solicitacoes } = useDados()
@@ -42,7 +44,7 @@ export default function DetalheAchado() {
 
       <div className="detalhe">
         <article className="cartao detalhe-achado">
-          <IconeCategoria categoria={achado.categoria} tamanho="grande" />
+          <FotoOuIcone achado={achado} tamanho="grande" />
           <p className="detalhe-categoria">
             {buscarCategoria(achado.categoria)?.nome} ·{' '}
             <span className="numero-achado">{formatarNumero(achado.numero)}</span>
@@ -53,7 +55,7 @@ export default function DetalheAchado() {
           <dl className="detalhe-dados">
             <div>
               <dt><Icone nome="local" tamanho={16} /> Encontrado em</dt>
-              <dd>{buscarLocal(achado.local)?.nome}</dd>
+              <dd>{nomeDoLocal(achado.local)}</dd>
             </div>
             <div>
               <dt><Icone nome="calendario" tamanho={16} /> Data</dt>
