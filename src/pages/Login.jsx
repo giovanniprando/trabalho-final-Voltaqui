@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { PERFIS } from '../data/usuarios'
 
 export default function Login() {
   const { usuario, entrar } = useAuth()
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [erro, setErro] = useState('')
@@ -19,9 +18,7 @@ export default function Login() {
     evento.preventDefault()
     if (!entrar(email, senha)) {
       setErro('E-mail ou senha incorretos.')
-      return
     }
-    navigate('/achados')
   }
 
   return (
@@ -50,6 +47,16 @@ export default function Login() {
       {erro && <p className="erro">{erro}</p>}
 
       <button type="submit">Entrar</button>
+
+      <div className="acesso-rapido">
+        <p>Acesso rápido (provisório)</p>
+        <button type="button" onClick={() => entrar('secretaria@senai.br', '123456')}>
+          Entrar como secretaria
+        </button>
+        <button type="button" onClick={() => entrar('ana@aluno.senai.br', '123456')}>
+          Entrar como aluno
+        </button>
+      </div>
     </form>
   )
 }

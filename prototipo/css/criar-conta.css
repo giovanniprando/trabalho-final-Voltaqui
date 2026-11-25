@@ -1,4 +1,5 @@
 .grupo {
+
   margin: 0;
   padding: 0;
   border: none;
@@ -8,6 +9,7 @@
 }
 
 .grupo legend {
+
   padding: 0;
   margin-bottom: var(--esp-4);
   font-family: var(--fonte-titulo);
