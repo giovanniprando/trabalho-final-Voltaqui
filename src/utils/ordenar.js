@@ -5,11 +5,14 @@ export const ORDENS = [
   { id: 'numero', nome: 'Pelo número' },
 ]
 
-// Devolve uma cópia ordenada (sort mexe no array original, por isso o [...lista]).
+// Na mesma data, o número desempata (quem foi cadastrado depois tem número maior).
+function porData(a, b) {
+  return a.dataEncontrado.localeCompare(b.dataEncontrado) || a.numero - b.numero
+}
+
+// toSorted devolve uma cópia ordenada e não mexe na lista original.
 export function ordenarAchados(lista, ordem) {
-  const copia = [...lista]
-  if (ordem === 'antigos') return copia.sort((a, b) => a.dataEncontrado.localeCompare(b.dataEncontrado))
-  if (ordem === 'numero') return copia.sort((a, b) => a.numero - b.numero)
-  // 'recentes': quem foi encontrado por último aparece primeiro
-  return copia.sort((a, b) => b.dataEncontrado.localeCompare(a.dataEncontrado))
+  if (ordem === 'antigos') return lista.toSorted(porData)
+  if (ordem === 'numero') return lista.toSorted((a, b) => a.numero - b.numero)
+  return lista.toSorted((a, b) => porData(b, a))
 }
