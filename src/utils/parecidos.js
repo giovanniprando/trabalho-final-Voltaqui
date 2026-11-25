@@ -1,5 +1,6 @@
 import { nomeDoLocal } from '../data/locais'
-import { diasDesde, normalizar } from './formatar'
+import { normalizar } from './formatar'
+import { dataLocal, diasDesde } from './datas'
 
 // Dá pontos para um achado conforme ele combina com o que o aluno perdeu.
 //   categoria igual ............................ 3 pontos
@@ -35,11 +36,10 @@ export function ordenarParecidos(achados, perdido) {
   return achados
     .map((achado) => ({ achado, pontos: pontuarAchado(achado, perdido) }))
     .filter((item) => item.pontos > 0)
-    .sort((a, b) => b.pontos - a.pontos)
+    .toSorted((a, b) => b.pontos - a.pontos)
 }
 
 // Quantos dias do início até o fim (as duas no formato 'AAAA-MM-DD').
 function diasEntre(inicioISO, fimISO) {
-  const [ano, mes, dia] = fimISO.split('-').map(Number)
-  return diasDesde(inicioISO, new Date(ano, mes - 1, dia))
+  return diasDesde(inicioISO, dataLocal(fimISO))
 }

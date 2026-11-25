@@ -9,7 +9,7 @@ const NIVEIS = {
 
 // Faixa que resume a comparação entre o texto do aluno e o detalhe oculto.
 export function Semelhanca({ resultado }) {
-  const { nivel, emComum, total } = resultado
+  const { nivel, emComum, publicas, total } = resultado
   const { texto, icone } = NIVEIS[nivel]
 
   return (
@@ -17,8 +17,15 @@ export function Semelhanca({ resultado }) {
       <Icone nome={icone} tamanho={18} />
       <p>
         <strong>{texto}.</strong>
-        {' '}{emComum.length} de {total} palavras do detalhe oculto aparecem no pedido.
+        {total === 0
+          ? ' O detalhe oculto só repete a descrição pública, então não dá para comparar.'
+          : ` ${emComum.length} de ${total} palavras do detalhe oculto aparecem no pedido.`}
         {' '}Use como apoio: a decisão é sua.
+        {publicas.length > 0 && (
+          <span className="semelhanca-publicas">
+            Não contam porque já estão na descrição pública: {publicas.join(', ')}.
+          </span>
+        )}
       </p>
       {/* Barrinha que enche conforme a proporção de palavras em comum */}
       <span className="semelhanca-barra" aria-hidden="true">
@@ -31,7 +38,11 @@ export function Semelhanca({ resultado }) {
 // Mostra o texto com as palavras em comum marcadas com <mark>.
 export function TextoDestacado({ texto, emComum }) {
   // split com parênteses mantém os espaços, para o texto voltar igual.
-  return texto.split(/(\s+)/).map((pedaco, i) =>
-    palavraEmComum(pedaco, emComum) ? <mark key={i}>{pedaco}</mark> : pedaco,
-  )
+  // A posição de cada pedaço no texto serve de key: ela nunca se repete.
+  let posicao = 0
+  return texto.split(/(\s+)/).map((pedaco) => {
+    const key = posicao
+    posicao += pedaco.length
+    return palavraEmComum(pedaco, emComum) ? <mark key={key}>{pedaco}</mark> : pedaco
+  })
 }

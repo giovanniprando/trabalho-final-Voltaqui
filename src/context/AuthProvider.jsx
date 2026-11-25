@@ -13,6 +13,11 @@ function semSenha(conta) {
   return dados
 }
 
+function emailJaExiste(email) {
+  const limpo = email.trim().toLowerCase()
+  return todasAsContas().some((c) => c.email === limpo)
+}
+
 export function AuthProvider({ children }) {
   const [usuario, setUsuario] = useState(() => lerSessao())
 
@@ -32,11 +37,6 @@ export function AuthProvider({ children }) {
 
     iniciarSessao(conta)
     return { ok: true, usuario: semSenha(conta) }
-  }
-
-  function emailJaExiste(email) {
-    const limpo = email.trim().toLowerCase()
-    return todasAsContas().some((c) => c.email === limpo)
   }
 
   // Só aluno cria conta pelo site. A conta da secretaria é criada pela escola.

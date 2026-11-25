@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Badge } from '../../components/Badge'
+import { Link, useNavigate } from 'react-router'
+import { SeloStatus } from '../../components/SeloStatus'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { IconeCategoria } from '../../components/IconeCategoria'
@@ -10,7 +10,8 @@ import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
 import { nomeDoLocal } from '../../data/locais'
 import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
-import { formatarData, formatarNumero } from '../../utils/formatar'
+import { formatarNumero } from '../../utils/formatar'
+import { formatarData } from '../../utils/datas'
 import { compararDescricoes } from '../../utils/semelhanca'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-solicitacoes.css'
@@ -23,7 +24,7 @@ const ABAS = [
 
 function CardSolicitacao({ solicitacao, achado, onAprovar, onRecusar, onDevolver }) {
   const devolvido = achado.status === STATUS_ACHADO.DEVOLVIDO
-  const comparacao = compararDescricoes(solicitacao.descricaoDono, achado.detalheOculto)
+  const comparacao = compararDescricoes(solicitacao.descricaoDono, achado.detalheOculto, achado.descricao)
 
   return (
     <article className="cartao solicitacao">
@@ -36,7 +37,7 @@ function CardSolicitacao({ solicitacao, achado, onAprovar, onRecusar, onDevolver
             <span className="numero-achado">{formatarNumero(achado.numero)}</span>
           </p>
         </div>
-        <Badge status={solicitacao.status} />
+        <SeloStatus status={solicitacao.status} />
       </header>
 
       <p className="solicitacao-pedido">
@@ -118,20 +119,28 @@ export default function Solicitacoes() {
   const abaAtual = ABAS.find((a) => a.status === aba)
   const lista = comAchado
     .filter((item) => item.solicitacao.status === aba)
-    .sort((a, b) => b.solicitacao.criadaEm.localeCompare(a.solicitacao.criadaEm))
+    .toSorted((a, b) => b.solicitacao.criadaEm.localeCompare(a.solicitacao.criadaEm))
 
+  // Aprovar recusa os outros pedidos pendentes do mesmo achado (regra em storage.js).
   function aoAprovar(solicitacao) {
-    aprovar(solicitacao.id)
-    avisar(`Pedido de ${solicitacao.alunoNome} aprovado. Agora é só esperar a retirada.`)
+    const outros = solicitacoes.filter(
+      (s) => s.achadoId === solicitacao.achadoId && s.id !== solicitacao.id && s.status === STATUS_SOLICITACAO.PENDENTE,
+    ).length
+    if (!aprovar(solicitacao.id)) {
+      avisar('Este achado já tem um pedido aprovado.', 'erro')
+      return
+    }
+    const extra = outros === 1 ? ' O outro pedido deste achado foi recusado.'
+      : outros > 1 ? ` Os outros ${outros} pedidos deste achado foram recusados.` : ''
+    avisar(`Pedido de ${solicitacao.alunoNome} aprovado.${extra}`)
   }
 
   function aoRecusar(solicitacao) {
-    recusar(solicitacao.id)
-    avisar(`Pedido de ${solicitacao.alunoNome} recusado.`)
+    if (recusar(solicitacao.id)) avisar(`Pedido de ${solicitacao.alunoNome} recusado.`)
   }
 
   function aoDevolver(solicitacao, achado) {
-    marcarDevolvido(achado.id)
+    if (!marcarDevolvido(achado.id)) return
     avisar(`${formatarNumero(achado.numero)} entregue para ${solicitacao.alunoNome}.`)
     navigate(`/secretaria/comprovante/${solicitacao.id}`)
   }
@@ -154,7 +163,7 @@ export default function Solicitacoes() {
         <p>Compare o que o aluno descreveu com o detalhe oculto antes de aprovar.</p>
       </header>
 
-      <div className="abas" role="tablist" aria-label="Situação dos pedidos" onKeyDown={aoApertarTecla}>
+      <div className="abas" role="tablist" aria-label="Situação dos pedidos">
         {ABAS.map((a) => (
           <button
             key={a.status}
@@ -166,6 +175,7 @@ export default function Solicitacoes() {
             aria-controls="painel-solicitacoes"
             tabIndex={aba === a.status ? 0 : -1}
             onClick={() => setAba(a.status)}
+            onKeyDown={aoApertarTecla}
           >
             {a.nome} <span className="aba-contagem">{contar(a.status)}</span>
           </button>

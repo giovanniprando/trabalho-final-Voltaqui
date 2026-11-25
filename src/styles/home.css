@@ -206,53 +206,31 @@ html {
   }
 }
 
+/* Seção curta: menos espaço em cima e embaixo, para não parecer vazia. */
 .problema {
+  padding: var(--esp-16) 0;
   background: var(--cor-fundo);
 }
 
-.problema-lista {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--esp-6);
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.problema .secao-titulo {
+  margin-bottom: var(--esp-4);
 }
 
-.problema-card {
-  padding: var(--esp-8) var(--esp-6);
-  background: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-lg);
-  box-shadow: var(--elevacao-sm);
+.problema-texto {
+  max-width: 60ch;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--cor-texto-secundario);
 }
 
-.problema-icone,
-.perfis-icone,
-.sobre-icone {
+.perfis-icone {
   display: grid;
   place-items: center;
   width: 48px;
   height: 48px;
-  margin-bottom: var(--esp-4);
   color: var(--cor-link);
   background: var(--cor-destaque-suave);
   border-radius: var(--raio-md);
-}
-
-.problema-card h3 {
-  margin-bottom: var(--esp-2);
-  font-size: 1.125rem;
-}
-
-.problema-card p {
-  color: var(--cor-texto-secundario);
-}
-
-@media (max-width: 768px) {
-  .problema-lista {
-    grid-template-columns: 1fr;
-  }
 }
 
 .passos {
@@ -469,59 +447,6 @@ html {
   .seguranca-grade {
     grid-template-columns: 1fr;
     gap: var(--esp-8);
-  }
-}
-
-.sobre {
-  background: var(--cor-fundo);
-}
-
-.sobre-grade {
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  align-items: start;
-  gap: var(--esp-16);
-}
-
-.sobre .secao-titulo {
-  margin-bottom: var(--esp-6);
-}
-
-.sobre-texto {
-  max-width: 52ch;
-  font-size: 1.125rem;
-  line-height: 1.65;
-  color: var(--cor-texto-secundario);
-}
-
-.sobre-valores {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--esp-8) var(--esp-6);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.sobre-valor h3 {
-  margin-bottom: var(--esp-2);
-  font-size: 1.125rem;
-}
-
-.sobre-valor p {
-  color: var(--cor-texto-secundario);
-}
-
-@media (max-width: 768px) {
-  .sobre-grade {
-    grid-template-columns: 1fr;
-    gap: var(--esp-12);
-  }
-}
-
-@media (max-width: 480px) {
-  .sobre-valores {
-    grid-template-columns: 1fr;
   }
 }
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Badge } from '../../components/Badge'
+import { Link } from 'react-router'
+import { SeloStatus } from '../../components/SeloStatus'
 import { DiasParado } from '../../components/DiasParado'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
@@ -9,7 +9,8 @@ import { useDados } from '../../context/useDados'
 import { CATEGORIAS, buscarCategoria } from '../../data/categorias'
 import { nomeDoLocal, sugestoesDeLocal } from '../../data/locais'
 import { STATUS_ACHADO } from '../../services/storage'
-import { formatarData, formatarNumero, hojeISO, normalizar } from '../../utils/formatar'
+import { formatarNumero, normalizar } from '../../utils/formatar'
+import { formatarData, hojeISO } from '../../utils/datas'
 import { ORDENS, ordenarAchados } from '../../utils/ordenar'
 import { ordenarParecidos } from '../../utils/parecidos'
 import { useTitulo } from '../../hooks/useTitulo'
@@ -49,7 +50,7 @@ function CartaoAchado({ achado, pontos }) {
           <span><Icone nome="calendario" tamanho={16} /> {formatarData(achado.dataEncontrado)}</span>
         </span>
         <span className="achado-card-rodape">
-          <Badge status={achado.status} />
+          <SeloStatus status={achado.status} />
           <DiasParado data={achado.dataEncontrado} />
         </span>
       </span>
@@ -143,7 +144,7 @@ export default function BuscarAchados() {
             <input id="perdi-local" name="local" list="perdi-sugestoes" autoComplete="off"
                    placeholder="Ex.: Cantina" value={perdido.local} onChange={mudarPerdido} />
             <datalist id="perdi-sugestoes">
-              {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome} />)}
+              {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome}>{nome}</option>)}
             </datalist>
           </div>
           <div className="campo">
@@ -158,7 +159,7 @@ export default function BuscarAchados() {
         </form>
       </section>
 
-      <form className="busca-aluno" role="search" onSubmit={(e) => e.preventDefault()}>
+      <search className="busca-aluno">
         <div className="campo campo-busca">
           <label className="visualmente-oculto" htmlFor="busca">Buscar achado</label>
           <Icone nome="busca" />
@@ -186,7 +187,7 @@ export default function BuscarAchados() {
             </label>
           ))}
         </fieldset>
-      </form>
+      </search>
 
       <div className="resultado-barra">
         <p className="resultado-contagem" aria-live="polite">{contagem}</p>
@@ -209,7 +210,7 @@ export default function BuscarAchados() {
         <EstadoVazio
           icone="check_circulo"
           titulo="Nenhum achado por aqui"
-          texto="Que bom que ninguém perdeu nada! Se você perdeu, volte amanhã: objetos novos chegam todo dia."
+          texto="A secretaria ainda não cadastrou nenhum objeto. Objetos novos chegam todo dia."
         />
       )}
 

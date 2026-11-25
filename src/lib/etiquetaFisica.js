@@ -1,10 +1,11 @@
-import Matter from 'matter-js'
-
 // Etiqueta do painel azul do login: clique = "tapa", o barbante arrebenta,
 // ela voa, quica no logo e nas paredes e o barbante a recolhe.
 // Recebe o painel (.marca) e devolve uma função que desliga tudo.
+// O Matter.js (uns 84 KB) só é baixado quando a física vai mesmo rodar:
+// tela larga e sem a opção "reduzir movimento" ligada.
 export function iniciarEtiquetaFisica(painel) {
-  const { Engine, Bodies, Body, Composite, Constraint, Vector } = Matter
+  let Engine, Bodies, Body, Composite, Constraint, Vector
+  let carregando = null
 
   const etiqueta = painel.querySelector('.etiqueta')
   if (!etiqueta) return () => {}
@@ -53,9 +54,20 @@ export function iniciarEtiquetaFisica(painel) {
     );
   }
 
+  function carregarMatter() {
+    carregando ??= import('matter-js').then(({ default: Matter }) => {
+      ({ Engine, Bodies, Body, Composite, Constraint, Vector } = Matter);
+      if (ativo) montar();
+    });
+  }
+
   function montar() {
     desmontar();
     if (!telaLarga.matches || reduzirMovimento.matches) return;
+    if (!Engine) {
+      carregarMatter();
+      return;
+    }
 
     const base = painel.getBoundingClientRect();
     const r = etiqueta.getBoundingClientRect();
@@ -114,6 +126,10 @@ export function iniciarEtiquetaFisica(painel) {
     etiqueta.style.transform = '';
     if (linha) linha.remove();
     linha = null;
+    if (engine) {
+      Composite.clear(engine.world, false);
+      Engine.clear(engine);
+    }
     engine = corpo = barbante = null;
   }
 

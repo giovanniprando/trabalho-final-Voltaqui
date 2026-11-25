@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router'
 import { Campo } from '../../components/Campo'
 import { Icone } from '../../components/Icone'
 import { IconeCategoria } from '../../components/IconeCategoria'
@@ -7,8 +7,9 @@ import { useAuth } from '../../context/useAuth'
 import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { nomeDoLocal } from '../../data/locais'
-import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
-import { formatarData, formatarNumero } from '../../utils/formatar'
+import { motivoParaNaoPedir } from '../../services/storage'
+import { formatarNumero } from '../../utils/formatar'
+import { formatarData } from '../../utils/datas'
 import { ligarCampo } from '../../utils/campo'
 import { temErros, validarSolicitacao } from '../../utils/validacao'
 import { useTitulo } from '../../hooks/useTitulo'
@@ -28,15 +29,13 @@ export default function SolicitarDevolucao() {
   const [enviado, setEnviado] = useState(false)
 
   const achado = buscarAchado(id)
-  const jaPediu = solicitacoes.some(
-    (s) => s.achadoId === id && s.alunoId === usuario.id && s.status !== STATUS_SOLICITACAO.RECUSADA,
-  )
 
   // Depois de enviar, vai para Minhas solicitações.
   if (enviado) return <Navigate to="/minhas-solicitacoes" replace />
 
-  // Achado inexistente, devolvido ou já pedido: volta para o detalhe.
-  if (!achado || achado.status === STATUS_ACHADO.DEVOLVIDO || jaPediu) {
+  // Mesmo digitando o endereço, quem não pode pedir volta para o detalhe,
+  // que explica o motivo (já pediu, reservado, devolvido ou não existe).
+  if (motivoParaNaoPedir(achado, solicitacoes, usuario.id)) {
     return <Navigate to={`/achados/${id}`} replace />
   }
 
@@ -49,13 +48,14 @@ export default function SolicitarDevolucao() {
       return
     }
 
-    solicitarDevolucao({
+    const pedido = solicitarDevolucao({
       achadoId: achado.id,
       alunoId: usuario.id,
       alunoNome: usuario.nome,
       descricaoDono: descricaoDono.trim(),
     })
-    avisar('Pedido enviado. Se for seu, ele já está a caminho de voltar.')
+    if (!pedido) return
+    avisar('Pedido enviado. A secretaria vai conferir o detalhe.')
     setEnviado(true)
   }
 

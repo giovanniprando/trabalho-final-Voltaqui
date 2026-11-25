@@ -1,5 +1,5 @@
 import { buscarEscola } from '../data/escolas'
-import { hojeISO } from './formatar'
+import { hojeISO } from './datas'
 
 // Cada função devolve um objeto { campo: 'mensagem de erro' }.
 // Objeto vazio = formulário válido.
@@ -72,8 +72,11 @@ export function validarAchado(dados) {
 
 export function validarSolicitacao({ descricaoDono }) {
   const erros = {}
-  if (descricaoDono.trim().length < 10) {
+  const texto = descricaoDono.trim()
+  if (texto.length < 10) {
     erros.descricaoDono = 'Escreva pelo menos 10 caracteres para a secretaria conseguir conferir.'
+  } else if (!/\p{L}{3}/u.test(texto)) {
+    erros.descricaoDono = 'Descreva com palavras, não só com números ou símbolos.'
   }
   return erros
 }

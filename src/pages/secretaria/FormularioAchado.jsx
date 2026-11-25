@@ -1,20 +1,22 @@
 import { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router'
 import { Campo } from '../../components/Campo'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { CATEGORIAS } from '../../data/categorias'
+import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
 import { nomeDoLocal, padronizarLocal, sugestoesDeLocal } from '../../data/locais'
-import { formatarNumero, hojeISO } from '../../utils/formatar'
+import { formatarNumero } from '../../utils/formatar'
+import { hojeISO } from '../../utils/datas'
 import { ligarCampo } from '../../utils/campo'
 import { reduzirImagem } from '../../utils/imagem'
 import { temErros, validarAchado } from '../../utils/validacao'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-cadastrar-achado.css'
 
-const VAZIO = { categoria: '', local: '', dataEncontrado: hojeISO(), descricao: '', detalheOculto: '', foto: '' }
+const VAZIO = { categoria: '', local: '', descricao: '', detalheOculto: '', foto: '' }
 
 // A mesma tela serve para cadastrar (/secretaria/novo)
 // e para editar (/secretaria/editar/:id).
@@ -26,12 +28,15 @@ export default function FormularioAchado() {
 }
 
 function Formulario({ id }) {
-  const { achados, buscarAchado, cadastrarAchado, editarAchado } = useDados()
+  const { achados, solicitacoes, buscarAchado, cadastrarAchado, editarAchado } = useDados()
   const avisar = useAviso()
   const navigate = useNavigate()
 
   const editando = Boolean(id)
   const original = editando ? buscarAchado(id) : null
+  const aprovado = editando
+    ? solicitacoes.find((s) => s.achadoId === id && s.status === STATUS_SOLICITACAO.APROVADA)
+    : null
 
   const [dados, setDados] = useState(() =>
     original
@@ -90,22 +95,14 @@ function Formulario({ id }) {
       detalheOculto: dados.detalheOculto.trim(),
     }
 
-    // Se o armazenamento do navegador estiver cheio, o salvar falha.
-    try {
-      salvar(limpos)
-    } catch {
-      setErros({ foto: 'Não coube no armazenamento do navegador. Tente salvar sem a foto.' })
-    }
-  }
-
-  function salvar(limpos) {
+    // Com o armazenamento do navegador cheio, as ações devolvem null e um aviso aparece.
     if (editando) {
-      editarAchado(id, limpos)
+      if (!editarAchado(id, limpos)) return
       avisar(`Alterações de ${formatarNumero(original.numero)} salvas.`)
       navigate('/secretaria/achados')
     } else {
       const novo = cadastrarAchado(limpos)
-      navigate(`/secretaria/etiqueta/${novo.id}?novo=1`)
+      if (novo) navigate(`/secretaria/etiqueta/${novo.id}?novo=1`)
     }
   }
 
@@ -124,6 +121,16 @@ function Formulario({ id }) {
             : 'Registre o objeto assim que ele chegar na secretaria.'}
         </p>
       </header>
+
+      {aprovado && original.status !== STATUS_ACHADO.DEVOLVIDO && (
+        <div className="alerta alerta-info formulario-aviso">
+          <Icone nome="info" />
+          <span>
+            O pedido de {aprovado.alunoNome} já foi aprovado e o aluno ainda vai retirar. Se mudar a
+            descrição, confira o objeto na hora da entrega.
+          </span>
+        </div>
+      )}
 
       <form className="cartao formulario-achado" onSubmit={aoEnviar} noValidate>
         <div className="formulario-grade">
@@ -148,7 +155,7 @@ function Formulario({ id }) {
                  value={dados.local} onChange={aoMudar} />
           {/* datalist: o navegador mostra estas sugestões enquanto a pessoa digita */}
           <datalist id="sugestoes-local">
-            {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome} />)}
+            {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome}>{nome}</option>)}
           </datalist>
         </Campo>
 
@@ -186,7 +193,7 @@ function Formulario({ id }) {
                 {dados.foto ? 'Trocar foto' : 'Escolher foto'}
               </label>
               {/* O input fica escondido; o label acima funciona como botão */}
-              <input id="foto" className="visualmente-oculto" type="file" accept="image/*" onChange={aoEscolherFoto} />
+              <input id="foto" className="visualmente-oculto" type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={aoEscolherFoto} />
               {dados.foto && (
                 <button className="link botao-link" type="button" onClick={() => setDados({ ...dados, foto: '' })}>
                   Remover foto

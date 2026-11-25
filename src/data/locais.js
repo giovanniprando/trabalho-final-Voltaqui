@@ -38,7 +38,7 @@ export function locaisUsados(achados) {
     const chave = normalizar(nome)
     if (chave && !porChave.has(chave)) porChave.set(chave, nome)
   }
-  return [...porChave.values()].sort((a, b) => a.localeCompare(b, 'pt-BR'))
+  return [...porChave.values()].toSorted((a, b) => a.localeCompare(b, 'pt-BR'))
 }
 
 // Sugestões do campo: os locais já usados + a lista padrão, sem repetir.

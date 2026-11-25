@@ -132,7 +132,7 @@
 .campo input:user-invalid:focus,
 .campo select:user-invalid:focus,
 .campo textarea:user-invalid:focus {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
+  box-shadow: var(--anel-foco-erro);
 }
 
 .campo input:disabled,
@@ -233,18 +233,18 @@
   box-shadow: var(--anel-foco);
 }
 
-.badge {
+.selo {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 2px 10px;
+  gap: var(--esp-2);
+  padding: 2px var(--esp-3);
   font-size: 0.8125rem;
   font-weight: 600;
   border-radius: var(--raio-full);
   white-space: nowrap;
 }
 
-.badge::before {
+.selo::before {
   content: '';
   width: 6px;
   height: 6px;
@@ -252,22 +252,22 @@
   background: currentColor;
 }
 
-.badge-disponivel {
+.selo-disponivel {
   color: var(--status-disponivel-texto);
   background: var(--status-disponivel-fundo);
 }
 
-.badge-analise {
+.selo-analise {
   color: var(--status-analise-texto);
   background: var(--status-analise-fundo);
 }
 
-.badge-devolvido {
+.selo-devolvido {
   color: var(--status-devolvido-texto);
   background: var(--status-devolvido-fundo);
 }
 
-.badge-recusada {
+.selo-recusada {
   color: var(--status-recusada-texto);
   background: var(--status-recusada-fundo);
 }
@@ -504,7 +504,7 @@
 .link-voltar {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--esp-2);
   margin-bottom: var(--esp-6);
   font-size: 0.875rem;
 }
@@ -512,5 +512,58 @@
 .link-com-icone {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--esp-2);
+}
+
+/* Caixa de confirmação (components/Modal.jsx). Só existe na tela quando está aberta. */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: var(--esp-4);
+  background: var(--cor-fundo-modal);
+}
+
+.modal-caixa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  width: min(100%, 440px);
+  padding: var(--esp-8);
+  background: var(--cor-superficie);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--elevacao-lg);
+}
+
+.modal-icone {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--cor-erro);
+  background: var(--cor-erro-fundo);
+  border-radius: var(--raio-full);
+}
+
+.modal-caixa h2 {
+  font-size: 1.25rem;
+}
+
+.modal-caixa p {
+  color: var(--cor-texto-secundario);
+}
+
+.modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--esp-3);
+  margin-top: var(--esp-3);
+}
+
+.modal-alerta {
+  display: block;
+  margin-top: var(--esp-2);
+  color: var(--cor-erro);
 }
