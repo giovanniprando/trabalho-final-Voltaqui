@@ -1,14 +1,14 @@
-// O campo "icone" é provisório (emoji). Pode ser trocado por ícones de src/assets.
+// "icone" é o nome de um desenho em components/Icone.jsx
 
 export const CATEGORIAS = [
-  { id: 'eletronicos', nome: 'Eletrônicos', icone: '📱' },
-  { id: 'documentos', nome: 'Documentos', icone: '🪪' },
-  { id: 'roupas', nome: 'Roupas', icone: '🧥' },
-  { id: 'material-escolar', nome: 'Material escolar', icone: '📚' },
-  { id: 'garrafas', nome: 'Garrafas e potes', icone: '🧴' },
-  { id: 'chaves', nome: 'Chaves', icone: '🔑' },
-  { id: 'acessorios', nome: 'Acessórios', icone: '👓' },
-  { id: 'outros', nome: 'Outros', icone: '📦' },
+  { id: 'eletronicos', nome: 'Eletrônicos', icone: 'cel' },
+  { id: 'documentos', nome: 'Documentos', icone: 'documento' },
+  { id: 'roupas', nome: 'Roupas', icone: 'camisa' },
+  { id: 'material-escolar', nome: 'Material escolar', icone: 'livro' },
+  { id: 'garrafas', nome: 'Garrafas e potes', icone: 'garrafa' },
+  { id: 'chaves', nome: 'Chaves', icone: 'chave' },
+  { id: 'acessorios', nome: 'Acessórios', icone: 'oculos' },
+  { id: 'outros', nome: 'Outros', icone: 'pacote' },
 ]
 
 export function buscarCategoria(id) {

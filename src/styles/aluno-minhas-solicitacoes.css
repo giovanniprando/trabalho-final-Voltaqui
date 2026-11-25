@@ -1,0 +1,74 @@
+.minhas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  max-width: 860px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.minha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+}
+
+.minha-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-4);
+}
+
+.minha-achado {
+  flex: 1;
+  min-width: 0;
+}
+
+.minha-achado h2 {
+  font-family: var(--fonte-texto);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.minha-achado p {
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+}
+
+.mensagem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-2);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+  background: var(--cor-fundo);
+  border-radius: var(--raio-md);
+}
+
+.mensagem svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.mensagem-aprovada {
+  color: var(--azul-800);
+  background: var(--cor-destaque-suave);
+}
+
+.mensagem-aprovada svg {
+  color: var(--cor-link);
+}
+
+.mensagem-recusada {
+  color: var(--vermelho-700);
+  background: var(--cor-erro-fundo);
+}
+
+@media (max-width: 560px) {
+  .minha-topo {
+    flex-wrap: wrap;
+  }
+}

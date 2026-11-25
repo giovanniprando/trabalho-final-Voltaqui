@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solicitar devolução | Voltaqui</title>
 
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap">
@@ -18,6 +19,103 @@
   <link rel="stylesheet" href="css/aluno-solicitar-devolucao.css">
 </head>
 <body>
+
+  <a class="pular-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="app">
+
+    <aside class="lateral">
+
+      <a class="lateral-logo" href="aluno-achados.html">
+        <img src="img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="114" height="40">
+      </a>
+
+      <nav aria-label="Menu do aluno">
+        <ul class="lateral-menu">
+          <li>
+            <a href="aluno-achados.html" aria-current="page">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              Buscar achados
+            </a>
+          </li>
+          <li>
+            <a href="aluno-minhas-solicitacoes.html">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+              Minhas solicitações
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="lateral-rodape">
+        <div class="lateral-usuario">
+          <span class="avatar" aria-hidden="true">AS</span>
+          <span>
+            <strong>Ana Souza</strong>
+            <small>Aluna · SENAI</small>
+          </span>
+        </div>
+
+        <a class="lateral-sair" href="login.html">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+          Sair
+        </a>
+      </div>
+
+    </aside>
+
+    <main id="conteudo" class="app-conteudo">
+
+      <a class="link link-voltar" href="aluno-detalhe-achado.html">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Voltar para o achado
+      </a>
+
+      <header class="pagina-cabecalho">
+        <h1>Solicitar devolução</h1>
+        <p>Conte um detalhe para a secretaria saber que o objeto é seu.</p>
+      </header>
+
+      <div class="solicitar">
+
+        <div class="cartao resumo-achado">
+          <span class="icone-categoria"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></span>
+          <div>
+            <p class="resumo-titulo">Casaco azul-marinho, tamanho M</p>
+            <p class="resumo-meta">Sala de aula · 08/11/2026 · <span class="numero-achado">Nº&nbsp;0163</span></p>
+          </div>
+        </div>
+
+        <form class="cartao formulario-solicitar" action="aluno-minhas-solicitacoes.html">
+
+          <div class="campo">
+            <label for="descricao-dono">Descreva um detalhe que só o dono saberia</label>
+            <textarea id="descricao-dono" required minlength="10" maxlength="300"
+                      placeholder="Ex.: tem um chaveiro de caveira no zíper e meu nome escrito na etiqueta"></textarea>
+            <p class="campo-ajuda">Pense em cor de um adesivo, um nome escrito, um arranhão ou o que estava dentro. Mínimo de 10 caracteres.</p>
+            <p class="campo-erro">Escreva pelo menos 10 caracteres para a secretaria conseguir conferir.</p>
+          </div>
+
+          <div class="alerta alerta-info">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            <span>A secretaria analisa os pedidos em até 1 dia útil. Você acompanha a resposta em <strong>Minhas solicitações</strong>.</span>
+          </div>
+
+          <div class="formulario-acoes">
+            <a class="botao botao-secundario" href="aluno-detalhe-achado.html">Cancelar</a>
+            <button class="botao botao-primario" type="submit">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+              Enviar solicitação
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </main>
+
+  </div>
 
 </body>
 </html>

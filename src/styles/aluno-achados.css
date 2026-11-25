@@ -1,0 +1,83 @@
+.busca-aluno {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  margin-bottom: var(--esp-6);
+}
+
+.resultado-contagem {
+  margin-bottom: var(--esp-4);
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+}
+
+.achados-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--esp-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.achado-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  height: 100%;
+  padding: var(--esp-6);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.achado-card:hover {
+  border-color: var(--cor-destaque);
+  box-shadow: var(--elevacao-md);
+  transform: translateY(-2px);
+}
+
+.achado-card:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
+.achado-card-topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--esp-2);
+}
+
+.achado-card-categoria {
+  font-size: 0.8125rem;
+  color: var(--cor-texto-secundario);
+}
+
+.achado-card-titulo {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.achado-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1) var(--esp-4);
+  margin-top: auto;
+  padding-top: var(--esp-2);
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+}
+
+.achado-card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achado-card:hover {
+    transform: none;
+  }
+}
