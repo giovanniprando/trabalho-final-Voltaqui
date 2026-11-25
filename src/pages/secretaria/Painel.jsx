@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge } from '../../components/Badge'
 import { Icone } from '../../components/Icone'
 import { IconeCategoria } from '../../components/IconeCategoria'
+import { Modal } from '../../components/Modal'
+import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { buscarLocal } from '../../data/locais'
 import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
@@ -9,7 +12,15 @@ import { formatarData, formatarNumero } from '../../utils/formatar'
 import '../../styles/secretaria-painel.css'
 
 export default function Painel() {
-  const { achados, solicitacoes, buscarAchado } = useDados()
+  const { achados, solicitacoes, buscarAchado, restaurarExemplos } = useDados()
+  const avisar = useAviso()
+  const [confirmarRestauro, setConfirmarRestauro] = useState(false)
+
+  function restaurar() {
+    restaurarExemplos()
+    setConfirmarRestauro(false)
+    avisar('Dados de exemplo restaurados.')
+  }
 
   const contar = (status) => achados.filter((a) => a.status === status).length
   const pendentes = solicitacoes
@@ -109,6 +120,27 @@ export default function Painel() {
           </ul>
         </section>
       </div>
+
+      <p className="painel-rodape">
+        Vai apresentar ou testar do zero?{' '}
+        <button className="link botao-link" type="button" onClick={() => setConfirmarRestauro(true)}>
+          Restaurar dados de exemplo
+        </button>
+      </p>
+
+      {confirmarRestauro && (
+        <Modal
+          titulo="Restaurar dados de exemplo?"
+          textoConfirmar="Restaurar"
+          iconeConfirmar={null}
+          onConfirmar={restaurar}
+          onFechar={() => setConfirmarRestauro(false)}
+        >
+          Os achados e as solicitações voltam a ser os 7 achados e os 4 pedidos de exemplo. Tudo o
+          que foi cadastrado, editado ou excluído depois disso se perde. As contas de aluno criadas
+          continuam.
+        </Modal>
+      )}
     </>
   )
 }

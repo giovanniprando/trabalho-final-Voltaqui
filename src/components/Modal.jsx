@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Icone } from './Icone'
 
 // Caixa de confirmação. Fecha com Esc, com o botão Cancelar ou clicando fora.
-export function Modal({ titulo, children, textoConfirmar, onConfirmar, onFechar }) {
+export function Modal({ titulo, children, textoConfirmar, iconeConfirmar = 'lixeira', onConfirmar, onFechar }) {
   const cancelarRef = useRef(null)
   const fecharRef = useRef(onFechar)
 
@@ -48,7 +48,7 @@ export function Modal({ titulo, children, textoConfirmar, onConfirmar, onFechar 
             Cancelar
           </button>
           <button className="botao botao-perigo-cheio" type="button" onClick={onConfirmar}>
-            <Icone nome="lixeira" />
+            {iconeConfirmar && <Icone nome={iconeConfirmar} />}
             {textoConfirmar}
           </button>
         </div>
