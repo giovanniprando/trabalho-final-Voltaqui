@@ -36,7 +36,7 @@ Escala: título da abertura `clamp(2.5rem, 5.5vw, 4rem)`, título de seção `cl
 ## Espaço, forma e profundidade
 
 - Espaços: 4, 8, 12, 16, 24, 32, 48, 64, 96px (`--esp-*`). Seção: 96px (64px no celular). Largura do conteúdo: 1120px (`--largura-conteudo`).
-- Raios: 6, 10, 16 e total. Sombras: `--elevacao-sm` nos cards, `--elevacao-lg` no cartão da abertura.
+- Raios: 8px em campos e botões (`--raio-md`), 12px em cards (`--raio-lg`) e total (`--raio-full`) só em chips e selos de status. O 6px (`--raio-sm`) fica para detalhes pequenos, como o realce de palavras. Sombras: `--elevacao-sm` nos cards do painel, `--elevacao-lg` no cartão da abertura. Os cards da lista de achados não têm sombra, só borda.
 - Padrão de pontos sutis (6% branco) só no fundo da abertura. Sem gradientes, sem vidro.
 
 ## Componentes
