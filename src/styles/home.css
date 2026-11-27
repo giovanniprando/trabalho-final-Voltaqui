@@ -545,3 +545,10 @@ html {
     padding: 0 var(--esp-4);
   }
 }
+
+/* Abre espaço para o botão de tema (fixo no canto) não cobrir o "Criar conta". */
+@media (max-width: 1260px) {
+  .cabecalho .container {
+    padding-right: 76px;
+  }
+}

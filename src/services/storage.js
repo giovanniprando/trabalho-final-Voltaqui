@@ -10,6 +10,7 @@ const CHAVES = {
   ultimoNumero: 'voltaqui:ultimoNumero',
   sessao: 'voltaqui:sessao',
   leituras: 'voltaqui:notificacoesLidas',
+  tema: 'voltaqui:tema',
 }
 
 // Chaves que guardam os dados compartilhados entre as abas (usado pelo DadosProvider).
@@ -302,4 +303,16 @@ export function lerUltimaLeitura(usuarioId) {
 export function marcarNotificacoesLidas(usuarioId) {
   const leituras = ler(CHAVES.leituras, {})
   gravar(CHAVES.leituras, { ...leituras, [usuarioId]: agora() })
+}
+
+// ---------- tema (claro ou escuro) ----------
+
+// Devolve 'claro', 'escuro' ou null (a pessoa ainda não escolheu).
+export function lerTema() {
+  const tema = ler(CHAVES.tema, null)
+  return tema === 'claro' || tema === 'escuro' ? tema : null
+}
+
+export function salvarTema(tema) {
+  gravar(CHAVES.tema, tema)
 }
