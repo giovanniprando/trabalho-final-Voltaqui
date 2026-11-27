@@ -124,8 +124,7 @@
 .abas-painel {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
-  align-items: start;
-  gap: var(--esp-4);
+  gap: var(--esp-6);
 }
 
 .abas-painel > .estado-vazio {
