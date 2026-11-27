@@ -1,7 +1,6 @@
 .minhas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
-  align-items: start;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
   gap: var(--esp-4);
   margin: 0;
   padding: 0;
@@ -26,18 +25,29 @@
   min-width: 0;
 }
 
+/* Título com no máximo 2 linhas e o espaço das 2 sempre reservado:
+   assim a data e a mensagem começam na mesma altura em todos os cards. */
 .minha-achado h2 {
+  display: -webkit-box;
+  min-height: calc(2 * 1.35em);
+  overflow: hidden;
   font-family: var(--fonte-texto);
   font-size: 1.0625rem;
   font-weight: 600;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .minha-achado p {
+  margin-bottom: var(--esp-2);
   font-size: 0.875rem;
   color: var(--cor-texto-secundario);
 }
 
+/* A mensagem ocupa o resto do card: os cards de uma linha ficam com a mesma altura. */
 .mensagem {
+  flex: 1;
   display: flex;
   align-items: flex-start;
   gap: var(--esp-2);
