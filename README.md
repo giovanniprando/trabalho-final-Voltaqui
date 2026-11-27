@@ -1,4 +1,4 @@
-# Voltaqui
+# voltAqui
 
 **Se é seu, merece voltar.**
 
@@ -49,6 +49,8 @@ Cada achado recebe um número (Nº 0158) e uma etiqueta para imprimir e prender 
 - Botão "Demonstração" (só nas contas de teste) para trocar entre aluno e secretaria na apresentação
 - Criar conta com o código da escola (cada escola tem o seu; o do SENAI é `SN7K2P`)
 - Página de termos de uso e privacidade, página 404 e layout para computador, tablet e celular
+- Modo escuro em todas as páginas, com botão de lua e sol; a escolha fica salva e, sem escolha, segue o sistema
+- Homepage animada: etiqueta pendurada que voa com um clique, caixa da secretaria que se organiza sozinha e exemplo da tela do aluno e da secretaria, demonstração ao vivo da ajuda na conferência (semelhança entre pedido e detalhe oculto) (cores na regra 60-30-10)
 
 ## Tecnologias
 
@@ -57,7 +59,8 @@ Cada achado recebe um número (Nº 0158) e uma etiqueta para imprimir e prender 
 - Vite 8
 - HTML5 e CSS3 puro, com variáveis de cor e espaçamento (sem framework de CSS)
 - localStorage para guardar os dados (não há backend)
-- Matter.js para a física da etiqueta na tela de login
+- Matter.js para a física da etiqueta pendurada (login e homepage)
+- Motion (antigo Framer Motion) para as animações da homepage
 - Oxlint para checar o código e Vitest para os testes das funções
 - Figma, Git, GitHub e GitHub Projects
 
@@ -203,6 +206,13 @@ Todos rodados no Chrome em 1440 px e em 390 px, no fuso de São Paulo.
 | Navegar a homepage só com Tab | O foco é sempre visível | Todas as paradas com anel de foco | Sim |
 | Etiqueta e comprovante no Ctrl+P | Sem menu, barra lateral ou botões; cabem numa A4 | Uma página A4 cada, só o conteúdo | Sim |
 | Telas em 1440 e 390 px | Nada passa da largura da tela | 11 páginas sem rolagem lateral | Sim |
+| Recusar um pedido | Pede confirmação antes, porque o aluno não pode pedir de novo | Caixa de confirmação; Esc cancela | Sim |
+| Clicar em "Devolvidos" no painel | Abre a lista já filtrada por status | `?status=devolvido`, filtro marcado | Sim |
+| Clicar em "Achados" no menu depois de um filtro do painel | A lista volta sem filtro | Filtros limpos | Sim |
+| Axe (acessibilidade) em 12 páginas | Nenhum erro WCAG A/AA | 0 erros | Sim |
+| Etiqueta com as animações do Windows desligadas | Fica parada, mas voa ao clicar | Voou ao clicar | Sim |
+| Modo escuro | Ligar no botão de lua, recarregar a página | Continua escuro; axe sem erros em 13 páginas no escuro | Sim |
+| Imprimir a etiqueta no modo escuro | Sai clara no papel | Fundo branco e logo azul | Sim |
 | Celular de verdade: login, busca, pedido e painel | Funciona sem travar | _a fazer pela equipe_ | |
 
 Lighthouse na versão de produção (`npm run build && npm run preview`), homepage, login e criar conta: **Desempenho 100, Acessibilidade 100, Boas práticas 100, SEO 100**.
@@ -211,7 +221,7 @@ Além do teste no navegador, `npm test` roda 17 testes automáticos das funçõe
 
 ## Limitações
 
-O Voltaqui é uma demonstração sem servidor. Isso tem consequências que a gente conhece:
+O voltAqui é uma demonstração sem servidor. Isso tem consequências que a gente conhece:
 
 - **Os dados ficam só no navegador de quem usa.** O que a secretaria cadastra no computador dela não aparece no celular do aluno. Na apresentação, tudo roda no mesmo navegador.
 - **As senhas não são criptografadas.** Elas ficam como texto no localStorage.
@@ -221,7 +231,7 @@ Próximo passo para uso real: um servidor com banco de dados e login de verdade 
 
 ## Organização
 
-- **Branches:** `main` (versão estável), `develop` (integração) e uma branch por integrante. Tudo entra na `develop` por Pull Request.
+- **Branches:** `main` (versão estável), `develop` (integração) e branches de trabalho, por integrante ou por tarefa (por exemplo `giovanni` e `visual-achados`). Tudo entra na `develop` por Pull Request.
 - **Kanban:** GitHub Projects com as colunas A fazer, Em andamento, Em revisão e Concluído.
 - **Fluxo:** as telas do sistema foram feitas primeiro no Figma, depois em HTML e CSS (`prototipo/`) e por fim em React. A homepage foi desenhada direto em HTML e CSS.
 
