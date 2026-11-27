@@ -2,7 +2,6 @@ import { Link, useParams } from 'react-router'
 import { SeloStatus } from '../../components/SeloStatus'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
-import { FotoOuIcone } from '../../components/FotoOuIcone'
 import { useAuth } from '../../context/useAuth'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
@@ -44,7 +43,12 @@ export default function DetalheAchado() {
 
       <div className="detalhe">
         <article className="cartao detalhe-achado">
-          <FotoOuIcone achado={achado} tamanho="grande" />
+          {/* Igual ao cartão da lista: foto ou o ícone da categoria em cinza */}
+          <span className="detalhe-imagem">
+            {achado.foto
+              ? <img src={achado.foto} alt="" />
+              : <Icone nome={buscarCategoria(achado.categoria)?.icone ?? 'pacote'} tamanho={40} />}
+          </span>
           <p className="detalhe-categoria">
             {buscarCategoria(achado.categoria)?.nome} ·{' '}
             <span className="numero-achado">{formatarNumero(achado.numero)}</span>
