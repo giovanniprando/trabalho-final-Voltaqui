@@ -3,7 +3,7 @@ import { useAuth } from '../context/useAuth'
 import { PERFIS, USUARIOS, paginaInicial } from '../data/usuarios'
 import { Icone } from './Icone'
 
-// Botão flutuante para a apresentação: troca entre aluno e secretaria com um clique,
+// Item do rodapé da barra lateral para a apresentação: troca entre aluno e secretaria com um clique,
 // sem perder tempo digitando e-mail e senha na frente da banca.
 // Só aparece para as contas de teste; contas criadas no site não veem.
 export function TrocaDemonstracao() {
@@ -24,11 +24,11 @@ export function TrocaDemonstracao() {
   }
 
   return (
-    <button className="troca-demonstracao" type="button" onClick={trocar}>
+    <button className="lateral-demo" type="button" onClick={trocar}>
       <Icone nome="trocar" tamanho={18} />
       <span>
-        <small>Demonstração</small>
         {vaiParaSecretaria ? 'Ver como secretaria' : `Ver como aluno (${proximaConta.nome.split(' ')[0]})`}
+        <small>Demonstração</small>
       </span>
     </button>
   )

@@ -433,20 +433,12 @@
   padding: 0 var(--esp-4);
   font-size: 0.875rem;
   font-weight: 500;
+  color: var(--cor-texto);
   background: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-full);
   cursor: pointer;
   transition: background-color 0.15s, border-color 0.15s, color 0.15s;
-}
-
-.chip[data-categoria]::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  margin-right: var(--esp-2);
-  background: var(--cat-texto);
-  border-radius: var(--raio-full);
 }
 
 .chip input {
@@ -459,10 +451,11 @@
   border-color: var(--cor-borda-forte);
 }
 
+/* Selecionado: verde escuro da marca com texto branco (5,1:1). */
 .chip:has(input:checked) {
-  color: var(--cor-texto-sobre-marca);
-  background: var(--cor-marca);
-  border-color: var(--cor-marca);
+  color: var(--branco);
+  background: var(--cor-link);
+  border-color: var(--cor-link);
 }
 
 .chip:has(input:focus-visible) {

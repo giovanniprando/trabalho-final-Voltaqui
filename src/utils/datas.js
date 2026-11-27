@@ -53,6 +53,14 @@ export function diasDesde(textoAAAAMMDD, ate = new Date()) {
   return Math.max(0, Math.round((fim - inicio) / UM_DIA))
 }
 
+// Quanto tempo passou, para mostrar ao lado da data: "hoje", "ontem", "há 17 dias".
+export function tempoRelativo(textoAAAAMMDD, ate = new Date()) {
+  const dias = diasDesde(textoAAAAMMDD, ate)
+  if (dias === 0) return 'hoje'
+  if (dias === 1) return 'ontem'
+  return `há ${dias} dias`
+}
+
 // Número do comprovante: "VQ-20261125-0161" (dia local da entrega + número do achado).
 export function protocoloDevolucao(numero, entregueEmISO) {
   const dia = paraAAAAMMDD(diaLocal(entregueEmISO)).replaceAll('-', '')

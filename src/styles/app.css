@@ -718,19 +718,44 @@ button.lateral-sair {
   color: var(--cor-texto-secundario);
 }
 
+/* Mesmo visual dos campos: 44px, borda de campo, raio 8px e seta desenhada. */
 .ordenar select {
-  height: 36px;
+  height: 44px;
   padding: 0 var(--esp-8) 0 var(--esp-3);
-  font-weight: 600;
+  font-weight: 500;
   background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
+  border: 1px solid var(--cor-borda-campo);
   border-radius: var(--raio-md);
   cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ordenar select:hover {
+  border-color: var(--cor-borda-campo-hover);
 }
 
 .ordenar select:focus-visible {
   outline: none;
+  border-color: var(--cor-destaque);
   box-shadow: var(--anel-foco);
+}
+
+.select {
+  position: relative;
+  display: inline-flex;
+}
+
+.select select {
+  appearance: none;
+}
+
+.select svg {
+  position: absolute;
+  top: 50%;
+  right: var(--esp-3);
+  color: var(--cor-texto-secundario);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .ordenar-tabela {

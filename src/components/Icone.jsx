@@ -204,6 +204,14 @@ const DESENHOS = {
   lua: (
     <>
       <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+  filtro: (
+    <>
+      <path d="M10 5H3"/><path d="M12 19H3"/><path d="M14 3v4"/><path d="M16 17v4"/><path d="M21 12h-9"/><path d="M21 19h-5"/><path d="M21 5h-7"/><path d="M8 10v4"/><path d="M8 12H3"/>
+    </>
+  ),
+  seta_baixo: (
+    <>
+      <path d="m6 9 6 6 6-6"/>
     </>
   ),
 }
