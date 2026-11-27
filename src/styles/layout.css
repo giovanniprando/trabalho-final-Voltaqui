@@ -77,10 +77,9 @@
   margin-top: auto;
 }
 
-/* Espaço extra embaixo para o botão "Demonstração" não cobrir o fim da página. */
 .app-conteudo {
   min-width: 0;
-  padding: var(--esp-12) var(--esp-12) var(--esp-24);
+  padding: var(--esp-12);
 }
 
 /* Em telas muito largas o conteúdo não se estica até a borda. */
@@ -136,7 +135,7 @@
   }
 
   .app-conteudo {
-    padding: var(--esp-6) var(--esp-4) var(--esp-24);
+    padding: var(--esp-6) var(--esp-4);
   }
 }
 
@@ -152,6 +151,44 @@
   flex-direction: column;
   gap: var(--esp-2);
   margin-top: auto;
+}
+
+/* "Ver como secretaria": item discreto, só para as contas de teste */
+.lateral-demo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  width: 100%;
+  padding: var(--esp-2) var(--esp-4);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--cor-texto-sobre-marca-suave);
+  background: transparent;
+  border: 1px dashed var(--cor-hover-sobre-marca);
+  border-radius: var(--raio-md);
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.lateral-demo small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--cor-texto-sobre-marca-suave);
+}
+
+.lateral-demo:hover {
+  color: var(--cor-texto-sobre-marca);
+  background: var(--cor-hover-sobre-marca);
+}
+
+.lateral-demo:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
+.lateral-demo svg {
+  flex-shrink: 0;
 }
 
 .lateral-usuario {
