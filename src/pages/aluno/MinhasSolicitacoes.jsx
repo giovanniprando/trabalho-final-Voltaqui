@@ -79,8 +79,8 @@ export default function MinhasSolicitacoes() {
                       Pedido em {formatarData(s.criadaEm)} ·{' '}
                       <span className="numero-achado">{formatarNumero(s.achado.numero)}</span>
                     </p>
+                    <SeloStatus status={s.status} />
                   </div>
-                  <SeloStatus status={s.status} />
                 </div>
                 <p className={`mensagem ${msg.classe}`}>
                   <Icone nome={msg.icone} tamanho={16} />

@@ -124,8 +124,7 @@
 .abas-painel {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
-  align-items: start;
-  gap: var(--esp-4);
+  gap: var(--esp-6);
 }
 
 .abas-painel > .estado-vazio {
@@ -718,19 +717,44 @@ button.lateral-sair {
   color: var(--cor-texto-secundario);
 }
 
+/* Mesmo visual dos campos: 44px, borda de campo, raio 8px e seta desenhada. */
 .ordenar select {
-  height: 36px;
+  height: 44px;
   padding: 0 var(--esp-8) 0 var(--esp-3);
-  font-weight: 600;
+  font-weight: 500;
   background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
+  border: 1px solid var(--cor-borda-campo);
   border-radius: var(--raio-md);
   cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ordenar select:hover {
+  border-color: var(--cor-borda-campo-hover);
 }
 
 .ordenar select:focus-visible {
   outline: none;
+  border-color: var(--cor-destaque);
   box-shadow: var(--anel-foco);
+}
+
+.select {
+  position: relative;
+  display: inline-flex;
+}
+
+.select select {
+  appearance: none;
+}
+
+.select svg {
+  position: absolute;
+  top: 50%;
+  right: var(--esp-3);
+  color: var(--cor-texto-secundario);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .ordenar-tabela {
@@ -807,54 +831,3 @@ button.lateral-sair {
   display: block;
 }
 
-/* Botão de troca de perfil para a apresentação */
-.troca-demonstracao {
-  position: fixed;
-  bottom: var(--esp-6);
-  left: calc(260px + var(--esp-6));
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  gap: var(--esp-3);
-  padding: var(--esp-2) var(--esp-4) var(--esp-2) var(--esp-3);
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-align: left;
-  color: var(--azul-950);
-  background: var(--cor-laranja);
-  border: 0;
-  border-radius: var(--raio-full);
-  box-shadow: var(--elevacao-lg);
-  cursor: pointer;
-}
-
-.troca-demonstracao small {
-  display: block;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  line-height: 1.2;
-  opacity: 0.75;
-}
-
-.troca-demonstracao:hover {
-  filter: brightness(1.08);
-}
-
-.troca-demonstracao:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--cor-superficie), 0 0 0 6px var(--cor-laranja);
-}
-
-@media (max-width: 900px) {
-  .troca-demonstracao {
-    left: var(--esp-4);
-    bottom: var(--esp-4);
-  }
-}
-
-@media print {
-  .troca-demonstracao {
-    display: none;
-  }
-}

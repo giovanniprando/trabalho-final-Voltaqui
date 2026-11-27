@@ -57,7 +57,7 @@ export default function Painel() {
     // "tom" escolhe a cor do cartão (veja secretaria-painel.css).
     { icone: 'pacote', numero: contar(STATUS_ACHADO.DISPONIVEL), rotulo: 'Achados disponíveis', tom: 'verde', para: '/secretaria/achados' },
     { icone: 'relogio', numero: contar(STATUS_ACHADO.EM_ANALISE), rotulo: 'Em análise', tom: 'azul', para: '/secretaria/achados' },
-    { icone: 'caixa_entrada', numero: pendentes.length, rotulo: 'Solicitações pendentes', tom: 'laranja', para: '/secretaria/solicitacoes' },
+    { icone: 'caixa_entrada', numero: pendentes.length, rotulo: 'Pedidos pendentes', tom: 'laranja', para: '/secretaria/solicitacoes' },
     { icone: 'check_circulo', numero: contar(STATUS_ACHADO.DEVOLVIDO), rotulo: 'Devolvidos', tom: 'cinza', para: '/secretaria/achados' },
   ]
 
@@ -88,113 +88,110 @@ export default function Painel() {
         ))}
       </ul>
 
+      {/* Grade 2 x 2: os blocos da mesma linha ficam com a mesma altura. */}
       <div className="painel-colunas">
-        <div className="painel-pilha">
-          <section className="cartao painel-bloco" aria-labelledby="titulo-pendentes">
-            <header className="painel-bloco-topo">
-              <h2 id="titulo-pendentes">Esperando análise</h2>
-              <Link className="link link-com-icone" to="/secretaria/solicitacoes">
-                Ver todas
-                <Icone nome="seta" tamanho={16} />
-              </Link>
-            </header>
+        <section className="cartao painel-bloco" aria-labelledby="titulo-pendentes">
+          <header className="painel-bloco-topo">
+            <h2 id="titulo-pendentes">Esperando análise</h2>
+            <Link className="link link-com-icone" to="/secretaria/solicitacoes">
+              Ver todas
+              <Icone nome="seta" tamanho={16} />
+            </Link>
+          </header>
 
-            {pendentes.length === 0 ? (
-              <p className="recente-meta">Nenhum pedido esperando análise.</p>
-            ) : (
-              <ul className="recentes">
-                {pendentes.slice(0, 4).map((s) => {
-                  const achado = buscarAchado(s.achadoId)
-                  if (!achado) return null
-                  return (
-                    <li key={s.id} className="recente">
-                      <IconeCategoria categoria={achado.categoria} tamanho="pequeno" />
-                      <div className="recente-achado">
-                        <p className="recente-titulo">{achado.descricao}</p>
-                        <p className="recente-meta">
-                          <strong>{s.alunoNome}</strong> · pediu em {formatarData(s.criadaEm)} ·{' '}
-                          <span className="numero-achado">{formatarNumero(achado.numero)}</span>
-                        </p>
-                      </div>
-                      <SeloStatus status={s.status} />
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-          </section>
-
-          <section className="cartao painel-bloco" aria-labelledby="titulo-locais">
-            <header className="painel-bloco-topo">
-              <h2 id="titulo-locais">Onde mais se perde</h2>
-            </header>
-            <p className="painel-bloco-texto">Clique num local para ver os achados de lá.</p>
-            <ul className="locais-barras">
-              {porLocal.map((local) => (
-                <li key={local.chave}>
-                  <Link to={`/secretaria/achados?local=${local.chave}`}>
-                    <span className="locais-barras-nome">{local.nome}</span>
-                    {/* A barra tem largura proporcional ao local com mais achados */}
-                    <span className="locais-barras-trilho" aria-hidden="true">
-                      <span style={{ width: `${(local.quantidade / maiorQuantidade) * 100}%` }} />
-                    </span>
-                    <span className="locais-barras-numero">
-                      {local.quantidade} {local.quantidade === 1 ? 'achado' : 'achados'}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        <div className="painel-pilha">
-          <section className="cartao painel-bloco" aria-labelledby="titulo-parados">
-            <header className="painel-bloco-topo">
-              <h2 id="titulo-parados">Há mais tempo na secretaria</h2>
-            </header>
-            {parados.length === 0 ? (
-              <p className="recente-meta">Nenhum achado esperando o dono agora.</p>
-            ) : (
-              <ul className="recentes">
-                {parados.map((achado) => (
-                  <li key={achado.id} className="recente">
+          {pendentes.length === 0 ? (
+            <p className="recente-meta">Nenhum pedido esperando análise.</p>
+          ) : (
+            <ul className="recentes">
+              {pendentes.slice(0, 4).map((s) => {
+                const achado = buscarAchado(s.achadoId)
+                if (!achado) return null
+                return (
+                  <li key={s.id} className="recente">
                     <IconeCategoria categoria={achado.categoria} tamanho="pequeno" />
                     <div className="recente-achado">
                       <p className="recente-titulo">{achado.descricao}</p>
-                      <DiasParado data={achado.dataEncontrado} />
+                      <p className="recente-meta">
+                        <strong>{s.alunoNome}</strong> · pediu em {formatarData(s.criadaEm)} ·{' '}
+                        <span className="numero-achado">{formatarNumero(achado.numero)}</span>
+                      </p>
                     </div>
+                    <SeloStatus status={s.status} />
                   </li>
-                ))}
-              </ul>
-            )}
-          </section>
+                )
+              })}
+            </ul>
+          )}
+        </section>
 
-          <section className="cartao painel-bloco" aria-labelledby="titulo-ultimos">
-            <header className="painel-bloco-topo">
-              <h2 id="titulo-ultimos">Últimos cadastrados</h2>
-              <Link className="link link-com-icone" to="/secretaria/achados">
-                Ver achados
-                <Icone nome="seta" tamanho={16} />
-              </Link>
-            </header>
-
+        <section className="cartao painel-bloco" aria-labelledby="titulo-parados">
+          <header className="painel-bloco-topo">
+            <h2 id="titulo-parados">Há mais tempo na secretaria</h2>
+          </header>
+          {parados.length === 0 ? (
+            <p className="recente-meta">Nenhum achado esperando o dono agora.</p>
+          ) : (
             <ul className="recentes">
-              {ultimos.map((achado) => (
+              {parados.map((achado) => (
                 <li key={achado.id} className="recente">
                   <IconeCategoria categoria={achado.categoria} tamanho="pequeno" />
                   <div className="recente-achado">
                     <p className="recente-titulo">{achado.descricao}</p>
-                    <p className="recente-meta">
-                      {nomeDoLocal(achado.local)} · {formatarData(achado.dataEncontrado)}
-                    </p>
+                    <DiasParado data={achado.dataEncontrado} />
                   </div>
-                  <SeloStatus status={achado.status} />
                 </li>
               ))}
             </ul>
-          </section>
-        </div>
+          )}
+        </section>
+
+        <section className="cartao painel-bloco" aria-labelledby="titulo-locais">
+          <header className="painel-bloco-topo">
+            <h2 id="titulo-locais">Onde mais se perde</h2>
+          </header>
+          <p className="painel-bloco-texto">Clique num local para ver os achados de lá.</p>
+          <ul className="locais-barras">
+            {porLocal.map((local) => (
+              <li key={local.chave}>
+                <Link to={`/secretaria/achados?local=${local.chave}`}>
+                  <span className="locais-barras-nome">{local.nome}</span>
+                  {/* A barra tem largura proporcional ao local com mais achados */}
+                  <span className="locais-barras-trilho" aria-hidden="true">
+                    <span style={{ width: `${(local.quantidade / maiorQuantidade) * 100}%` }} />
+                  </span>
+                  <span className="locais-barras-numero">
+                    {local.quantidade} {local.quantidade === 1 ? 'achado' : 'achados'}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="cartao painel-bloco" aria-labelledby="titulo-ultimos">
+          <header className="painel-bloco-topo">
+            <h2 id="titulo-ultimos">Últimos cadastrados</h2>
+            <Link className="link link-com-icone" to="/secretaria/achados">
+              Ver achados
+              <Icone nome="seta" tamanho={16} />
+            </Link>
+          </header>
+
+          <ul className="recentes">
+            {ultimos.map((achado) => (
+              <li key={achado.id} className="recente">
+                <IconeCategoria categoria={achado.categoria} tamanho="pequeno" />
+                <div className="recente-achado">
+                  <p className="recente-titulo">{achado.descricao}</p>
+                  <p className="recente-meta">
+                    {nomeDoLocal(achado.local)} · {formatarData(achado.dataEncontrado)}
+                  </p>
+                </div>
+                <SeloStatus status={achado.status} />
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
       <p className="painel-rodape">

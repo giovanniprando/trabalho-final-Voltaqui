@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: var(--esp-6);
-  align-items: start;
 }
 
 .detalhe-achado {
@@ -11,6 +10,23 @@
   align-items: flex-start;
   gap: var(--esp-3);
   padding: var(--esp-8);
+}
+
+.detalhe-imagem {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  color: var(--cinza-500);
+  background: var(--cor-fundo-sutil);
+  border-radius: var(--raio-md);
+}
+
+.detalhe-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .detalhe-categoria {
@@ -60,8 +76,11 @@
   border-radius: var(--raio-md);
 }
 
+/* Os dois cartões ficam com a mesma altura; o botão fica na base do da direita. */
 .detalhe-como {
-  padding: var(--esp-6);
+  display: flex;
+  flex-direction: column;
+  padding: var(--esp-8);
 }
 
 .detalhe-como h2 {
@@ -73,8 +92,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--esp-4);
-  margin: 0 0 var(--esp-6);
-  padding: 0;
+  margin: 0 0 auto;
+  padding: 0 0 var(--esp-6);
   list-style: none;
   counter-reset: passo;
 }
@@ -117,7 +136,8 @@
 }
 
 @media (max-width: 560px) {
-  .detalhe-achado {
+  .detalhe-achado,
+  .detalhe-como {
     padding: var(--esp-6);
   }
 

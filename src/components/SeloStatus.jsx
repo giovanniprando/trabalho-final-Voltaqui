@@ -9,7 +9,14 @@ const STATUS = {
   recusada: { texto: 'Recusada', classe: 'selo-recusada' },
 }
 
-export function SeloStatus({ status }) {
+// Nas telas do aluno, o status do achado diz o que ele pode fazer.
+const TEXTOS_ALUNO = {
+  disponivel: 'Pode solicitar',
+  em_analise: 'Em análise pela secretaria',
+}
+
+export function SeloStatus({ status, paraAluno = false }) {
   const { texto, classe } = STATUS[status] ?? STATUS.disponivel
-  return <span className={`selo ${classe}`}>{texto}</span>
+  const textoFinal = (paraAluno && TEXTOS_ALUNO[status]) || texto
+  return <span className={`selo ${classe}`}>{textoFinal}</span>
 }
