@@ -254,6 +254,12 @@
   gap: var(--esp-2);
 }
 
+.lateral-topo-acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
 .notificacoes {
   position: relative;
 }
@@ -349,7 +355,7 @@
 }
 
 .notificacao-nova {
-  background: var(--laranja-50);
+  background: var(--tom-laranja-fundo);
 }
 
 .notificacao-icone {
@@ -362,13 +368,13 @@
 }
 
 .notificacao-aprovada {
-  color: var(--verde-700);
-  background: var(--verde-50);
+  color: var(--tom-verde-texto);
+  background: var(--tom-verde-fundo);
 }
 
 .notificacao-recusada {
-  color: var(--vermelho-700);
-  background: var(--vermelho-50);
+  color: var(--tom-vermelho-texto);
+  background: var(--tom-vermelho-fundo);
 }
 
 .notificacoes-ver {

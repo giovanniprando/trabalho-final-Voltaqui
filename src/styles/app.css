@@ -261,7 +261,7 @@
   padding-top: var(--esp-3);
   font-size: 0.8125rem;
   color: var(--cor-texto-secundario);
-  border-top: 1px solid var(--cinza-200);
+  border-top: 1px solid var(--cor-divisoria);
 }
 
 .etiqueta-acoes {
@@ -472,7 +472,7 @@ button.lateral-sair {
 
 .campo-contador-alerta {
   font-weight: 600;
-  color: var(--laranja-700);
+  color: var(--tom-laranja-texto);
 }
 
 /* Página 404 */
@@ -530,7 +530,7 @@ button.lateral-sair {
   font-size: 2.25rem;
   font-weight: 700;
   line-height: 1.1;
-  color: var(--laranja-700);
+  color: var(--tom-laranja-texto);
 }
 
 .nao-encontrada h1 {
@@ -560,15 +560,15 @@ button.lateral-sair {
 }
 
 .dias-tom-recente {
-  color: var(--verde-700);
+  color: var(--tom-verde-texto);
 }
 
 .dias-tom-atencao {
-  color: var(--laranja-700);
+  color: var(--tom-laranja-texto);
 }
 
 .dias-tom-parado {
-  color: var(--vermelho-700);
+  color: var(--tom-vermelho-texto);
 }
 
 /* Comprovante de devolução */
@@ -615,15 +615,15 @@ button.lateral-sair {
   align-items: center;
   gap: var(--esp-4);
   padding: var(--esp-4) var(--esp-6);
-  color: var(--azul-950);
-  background: var(--verde-50);
-  border: 1px solid var(--verde-500);
+  color: var(--cor-texto);
+  background: var(--tom-verde-fundo);
+  border: 1px solid var(--cor-destaque);
   border-radius: var(--raio-md);
 }
 
 .comprovante-selo svg {
   flex-shrink: 0;
-  color: var(--verde-700);
+  color: var(--tom-verde-texto);
 }
 
 .comprovante-selo-titulo {
@@ -767,7 +767,7 @@ button.lateral-sair {
   flex-shrink: 0;
   object-fit: cover;
   background: var(--cor-fundo-sutil);
-  border: 1px solid var(--cinza-200);
+  border: 1px solid var(--cor-divisoria);
   border-radius: var(--raio-md);
 }
 

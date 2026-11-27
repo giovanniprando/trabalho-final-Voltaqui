@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
 
   --azul-950: #0f172a;
   --azul-800: #1e293b;
@@ -16,6 +17,7 @@
   --verde-600: #00b37c;
   --verde-700: #007a55;
   --verde-50: #e6faf3;
+  --verde-100: #d3f5e8;
   --cor-laranja: #fe8302;
   --laranja-50: #fff7ed;
   --laranja-700: #c2410c;
@@ -36,6 +38,7 @@
   --cor-destaque: var(--verde-500);
   --cor-destaque-hover: var(--verde-600);
   --cor-destaque-suave: var(--verde-50);
+  --cor-destaque-suave-hover: var(--verde-100);
   --cor-link: var(--verde-700);
 
   --cor-texto-sobre-destaque: var(--azul-950);
@@ -56,13 +59,31 @@
   --cor-erro-fundo: var(--vermelho-50);
   --cor-erro-borda: var(--vermelho-200);
 
+  --cor-divisoria: var(--cinza-200);
+  --cor-icone-apagado: var(--cinza-500);
+  --cor-texto-forte: var(--azul-800);
+  --cor-desativado-texto: var(--cinza-400);
+  --cor-desativado-fundo: var(--cinza-100);
+  --cor-texto-sobre-link: var(--branco);
+  --cor-perigo-cheio: var(--vermelho-600);
+  --cor-cabecalho-vidro: rgba(255, 255, 255, 0.92);
+
+  --tom-verde-texto: var(--verde-700);
+  --tom-verde-fundo: var(--verde-50);
+  --tom-laranja-texto: var(--laranja-700);
+  --tom-laranja-fundo: var(--laranja-50);
+  --tom-vermelho-texto: var(--vermelho-700);
+  --tom-vermelho-fundo: var(--vermelho-50);
+  --tom-neutro-texto: var(--cinza-600);
+  --tom-neutro-fundo: var(--cinza-100);
+
   --status-disponivel-texto: var(--verde-700);
   --status-disponivel-fundo: var(--verde-50);
   --status-analise-texto: var(--laranja-700);
   --status-analise-fundo: var(--laranja-50);
   --status-devolvido-texto: var(--cinza-600);
   --status-devolvido-fundo: var(--cinza-100);
-  --status-recusada-texto: var(--vermelho-600);
+  --status-recusada-texto: var(--vermelho-700);
   --status-recusada-fundo: var(--vermelho-50);
 
   --esp-1: 4px;
@@ -110,4 +131,95 @@
 
   --fonte-titulo: 'Montserrat', system-ui, sans-serif;
   --fonte-texto: 'Inter', system-ui, sans-serif;
+}
+
+/* Modo escuro: o BotaoTema coloca data-tema="escuro" no <html>.
+   Só as cores mudam; espaços, raios e fontes continuam iguais.
+   Fica dentro de @media screen para a impressão (etiqueta e comprovante) sair sempre clara.
+   60-30-10 no escuro: 60% cinza-azulado escuro, 30% azul da marca, 10% verde. */
+@media screen {
+  :root[data-tema='escuro'] {
+    color-scheme: dark;
+
+    --cor-fundo: #0b1120;
+    --cor-superficie: #131b2d;
+    --cor-fundo-sutil: #1c2539;
+    --cor-texto: #e5e9f0;
+    --cor-texto-secundario: #a6b1c2;
+    --cor-texto-forte: #e5e9f0;
+    --cor-marca: #13203b;
+    --cor-titulo-sobre-marca: #d5dce6;
+    --cor-texto-sobre-marca-suave: #a6b1c2;
+    --cor-destaque-suave: rgba(1, 208, 145, 0.14);
+    --cor-destaque-suave-hover: rgba(1, 208, 145, 0.22);
+    --cor-link: var(--verde-500);
+    --cor-texto-sobre-link: var(--azul-950);
+
+    --cor-borda: #2b3852;
+    --cor-borda-forte: #3d4a66;
+    --cor-divisoria: #243049;
+    --cor-borda-campo: #6b7891;
+    --cor-borda-campo-hover: #8a96ab;
+    --cor-placeholder: #8a96ab;
+    --cor-icone-apagado: #8a96ab;
+    --cor-desativado-texto: #6b7891;
+    --cor-desativado-fundo: #1a2335;
+    --cor-fundo-modal: rgba(0, 0, 0, 0.65);
+    --cor-trilho: rgba(255, 255, 255, 0.08);
+    --cor-cabecalho-vidro: rgba(11, 17, 32, 0.85);
+
+    --cor-erro: #f87171;
+    --cor-erro-fundo: rgba(248, 113, 113, 0.12);
+    --cor-erro-borda: rgba(248, 113, 113, 0.4);
+
+    --tom-verde-texto: #34d399;
+    --tom-verde-fundo: rgba(1, 208, 145, 0.14);
+    --tom-laranja-texto: #fdba74;
+    --tom-laranja-fundo: rgba(254, 131, 2, 0.14);
+    --tom-vermelho-texto: #fca5a5;
+    --tom-vermelho-fundo: rgba(248, 113, 113, 0.14);
+    --tom-neutro-texto: #cbd5e1;
+    --tom-neutro-fundo: #1f2a40;
+
+    --status-disponivel-texto: var(--tom-verde-texto);
+    --status-disponivel-fundo: var(--tom-verde-fundo);
+    --status-analise-texto: var(--tom-laranja-texto);
+    --status-analise-fundo: var(--tom-laranja-fundo);
+    --status-devolvido-texto: var(--tom-neutro-texto);
+    --status-devolvido-fundo: var(--tom-neutro-fundo);
+    --status-recusada-texto: var(--tom-vermelho-texto);
+    --status-recusada-fundo: var(--tom-vermelho-fundo);
+
+    --elevacao-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --elevacao-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+    --elevacao-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+    --cat-eletronicos-fundo: rgba(56, 189, 248, 0.16);
+    --cat-eletronicos-texto: #7dd3fc;
+    --cat-documentos-fundo: rgba(167, 139, 250, 0.16);
+    --cat-documentos-texto: #c4b5fd;
+    --cat-roupas-fundo: rgba(244, 114, 182, 0.16);
+    --cat-roupas-texto: #f9a8d4;
+    --cat-material-escolar-fundo: rgba(251, 191, 36, 0.16);
+    --cat-material-escolar-texto: #fcd34d;
+    --cat-garrafas-fundo: rgba(45, 212, 191, 0.16);
+    --cat-garrafas-texto: #5eead4;
+    --cat-chaves-fundo: rgba(251, 146, 60, 0.16);
+    --cat-chaves-texto: #fdba74;
+    --cat-acessorios-fundo: rgba(251, 113, 133, 0.16);
+    --cat-acessorios-texto: #fda4af;
+    --cat-outros-fundo: rgba(148, 163, 184, 0.18);
+    --cat-outros-texto: #cbd5e1;
+  }
+
+  :root[data-tema='escuro'] .logo-clara,
+  :root:not([data-tema='escuro']) .logo-escura {
+    display: none;
+  }
+}
+
+@media print {
+  .logo-escura {
+    display: none;
+  }
 }

@@ -64,7 +64,7 @@
 }
 
 .mensagem-aprovada {
-  color: var(--azul-800);
+  color: var(--cor-texto-forte);
   background: var(--cor-destaque-suave);
 }
 
@@ -73,7 +73,7 @@
 }
 
 .mensagem-recusada {
-  color: var(--vermelho-700);
+  color: var(--tom-vermelho-texto);
   background: var(--cor-erro-fundo);
 }
 
