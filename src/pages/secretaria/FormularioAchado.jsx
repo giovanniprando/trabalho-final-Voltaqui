@@ -18,9 +18,6 @@ import '../../styles/secretaria-cadastrar-achado.css'
 
 const VAZIO = { categoria: '', local: '', descricao: '', detalheOculto: '', foto: '' }
 
-// A mesma tela serve para cadastrar (/secretaria/novo)
-// e para editar (/secretaria/editar/:id).
-// A "key" faz o React começar o formulário do zero quando o id muda.
 export default function FormularioAchado() {
   const { id } = useParams()
   useTitulo(id ? 'Editar achado' : 'Cadastrar achado')
@@ -62,7 +59,7 @@ function Formulario({ id }) {
 
   async function aoEscolherFoto(evento) {
     const arquivo = evento.target.files[0]
-    evento.target.value = '' // deixa escolher a mesma foto de novo, se precisar
+    evento.target.value = ''
     if (!arquivo) return
     try {
       const foto = await reduzirImagem(arquivo)
@@ -95,7 +92,6 @@ function Formulario({ id }) {
       detalheOculto: dados.detalheOculto.trim(),
     }
 
-    // Com o armazenamento do navegador cheio, as ações devolvem null e um aviso aparece.
     if (editando) {
       if (!editarAchado(id, limpos)) return
       avisar(`Alterações de ${formatarNumero(original.numero)} salvas.`)
@@ -153,7 +149,6 @@ function Formulario({ id }) {
           <input {...ligarCampo('local', erros.local, true)} name="local" list="sugestoes-local"
                  maxLength={60} autoComplete="off" placeholder="Ex.: Cantina"
                  value={dados.local} onChange={aoMudar} />
-          {/* datalist: o navegador mostra estas sugestões enquanto a pessoa digita */}
           <datalist id="sugestoes-local">
             {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome}>{nome}</option>)}
           </datalist>
@@ -192,7 +187,6 @@ function Formulario({ id }) {
                 <Icone nome="camera" />
                 {dados.foto ? 'Trocar foto' : 'Escolher foto'}
               </label>
-              {/* O input fica escondido; o label acima funciona como botão */}
               <input id="foto" className="visualmente-oculto" type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={aoEscolherFoto} />
               {dados.foto && (
                 <button className="link botao-link" type="button" onClick={() => setDados({ ...dados, foto: '' })}>

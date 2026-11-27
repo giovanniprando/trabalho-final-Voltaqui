@@ -18,7 +18,6 @@ describe('datas (fuso de São Paulo)', () => {
   })
 
   test('registro salvo às 21h30 aparece no dia certo', () => {
-    // 21h30 em São Paulo = 00h30 do dia seguinte em UTC
     expect(formatarData('2026-11-26T00:30:00.000Z')).toBe('25/11/2026')
     expect(protocoloDevolucao(161, '2026-11-26T00:30:00.000Z')).toBe('VQ-20261125-0161')
   })

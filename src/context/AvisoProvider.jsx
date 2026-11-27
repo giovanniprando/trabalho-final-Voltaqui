@@ -4,8 +4,6 @@ import { AvisoContext } from './AvisoContext'
 
 const DURACAO = 4500
 
-// Mostra mensagens rápidas no canto da tela ("Achado cadastrado.").
-// Elas somem sozinhas depois de alguns segundos.
 export function AvisoProvider({ children }) {
   const [avisos, setAvisos] = useState([])
   const proximoId = useRef(1)
@@ -24,7 +22,6 @@ export function AvisoProvider({ children }) {
     <AvisoContext.Provider value={avisar}>
       {children}
 
-      {/* <output> já avisa o leitor de tela quando o conteúdo muda (papel "status"). */}
       <output className="avisos" aria-live="polite">
         {avisos.map((aviso) => (
           <span key={aviso.id} className={`aviso aviso-${aviso.tipo}`}>

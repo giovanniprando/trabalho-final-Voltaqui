@@ -4,6 +4,7 @@ import { SeloStatus } from '../../components/SeloStatus'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
 import { IconeCategoria } from '../../components/IconeCategoria'
+import { Modal } from '../../components/Modal'
 import { Semelhanca, TextoDestacado } from '../../components/Semelhanca'
 import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
@@ -110,6 +111,7 @@ export default function Solicitacoes() {
   const avisar = useAviso()
   const navigate = useNavigate()
   const [aba, setAba] = useState(STATUS_SOLICITACAO.PENDENTE)
+  const [paraRecusar, setParaRecusar] = useState(null)
 
   const comAchado = solicitacoes
     .map((s) => ({ solicitacao: s, achado: buscarAchado(s.achadoId) }))
@@ -121,7 +123,6 @@ export default function Solicitacoes() {
     .filter((item) => item.solicitacao.status === aba)
     .toSorted((a, b) => b.solicitacao.criadaEm.localeCompare(a.solicitacao.criadaEm))
 
-  // Aprovar recusa os outros pedidos pendentes do mesmo achado (regra em storage.js).
   function aoAprovar(solicitacao) {
     const outros = solicitacoes.filter(
       (s) => s.achadoId === solicitacao.achadoId && s.id !== solicitacao.id && s.status === STATUS_SOLICITACAO.PENDENTE,
@@ -135,8 +136,9 @@ export default function Solicitacoes() {
     avisar(`Pedido de ${solicitacao.alunoNome} aprovado.${extra}`)
   }
 
-  function aoRecusar(solicitacao) {
-    if (recusar(solicitacao.id)) avisar(`Pedido de ${solicitacao.alunoNome} recusado.`)
+  function confirmarRecusa() {
+    if (recusar(paraRecusar.id)) avisar(`Pedido de ${paraRecusar.alunoNome} recusado.`)
+    setParaRecusar(null)
   }
 
   function aoDevolver(solicitacao, achado) {
@@ -145,7 +147,6 @@ export default function Solicitacoes() {
     navigate(`/secretaria/comprovante/${solicitacao.id}`)
   }
 
-  // Setas do teclado trocam de aba (padrão de acessibilidade para abas).
   function aoApertarTecla(evento) {
     const indice = ABAS.findIndex((a) => a.status === aba)
     let novo = null
@@ -192,12 +193,25 @@ export default function Solicitacoes() {
               solicitacao={solicitacao}
               achado={achado}
               onAprovar={aoAprovar}
-              onRecusar={aoRecusar}
+              onRecusar={setParaRecusar}
               onDevolver={aoDevolver}
             />
           ))
         )}
       </section>
+
+      {paraRecusar && (
+        <Modal
+          titulo="Recusar o pedido?"
+          textoConfirmar="Recusar"
+          iconeConfirmar="x"
+          onConfirmar={confirmarRecusa}
+          onFechar={() => setParaRecusar(null)}
+        >
+          {paraRecusar.alunoNome} não vai poder pedir este achado de novo. Se for mesmo o dono,
+          vai precisar falar com a secretaria.
+        </Modal>
+      )}
     </>
   )
 }

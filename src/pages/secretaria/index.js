@@ -1,4 +1,3 @@
-// Páginas da secretaria, carregadas juntas só depois que a secretaria entra.
 export { default as Achados } from './Achados'
 export { default as Comprovante } from './Comprovante'
 export { default as Etiqueta } from './Etiqueta'

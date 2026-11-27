@@ -5,14 +5,12 @@ import { lerUltimaLeitura, marcarNotificacoesLidas, STATUS_SOLICITACAO } from '.
 import { formatarData } from '../utils/datas'
 import { Icone } from './Icone'
 
-// Sino do aluno: avisa quando a secretaria aprova ou recusa um pedido.
 export function Notificacoes({ usuario }) {
   const { solicitacoes, buscarAchado } = useDados()
   const [aberto, setAberto] = useState(false)
   const [ultimaLeitura, setUltimaLeitura] = useState(() => lerUltimaLeitura(usuario.id))
   const caixa = useRef(null)
 
-  // Uma notificação para cada pedido do aluno que já foi analisado.
   const notificacoes = solicitacoes
     .filter((s) => s.alunoId === usuario.id && s.analisadaEm)
     .map((s) => ({ ...s, achado: buscarAchado(s.achadoId) }))
@@ -21,8 +19,6 @@ export function Notificacoes({ usuario }) {
 
   const naoLidas = notificacoes.filter((n) => !ultimaLeitura || n.analisadaEm > ultimaLeitura).length
 
-  // Ao abrir, grava que o aluno viu tudo. O destaque de "nova" continua
-  // na tela enquanto a caixa está aberta e só some quando ela fecha.
   function abrir() {
     marcarNotificacoesLidas(usuario.id)
     setAberto(true)
@@ -33,7 +29,6 @@ export function Notificacoes({ usuario }) {
     setUltimaLeitura(lerUltimaLeitura(usuario.id))
   }
 
-  // Fecha com Esc ou clicando fora da caixa.
   useEffect(() => {
     if (!aberto) return
     function fecharCaixa() {

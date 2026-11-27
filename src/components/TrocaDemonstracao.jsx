@@ -3,9 +3,6 @@ import { useAuth } from '../context/useAuth'
 import { PERFIS, USUARIOS, paginaInicial } from '../data/usuarios'
 import { Icone } from './Icone'
 
-// Item do rodapé da barra lateral para a apresentação: troca entre aluno e secretaria com um clique,
-// sem perder tempo digitando e-mail e senha na frente da banca.
-// Só aparece para as contas de teste; contas criadas no site não veem.
 export function TrocaDemonstracao() {
   const { usuario, entrar } = useAuth()
   const navigate = useNavigate()

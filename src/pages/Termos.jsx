@@ -1,21 +1,26 @@
 import { Link } from 'react-router'
+import { BotaoTema } from '../components/BotaoTema'
+import { Logo } from '../components/Logo'
 import { useTitulo } from '../hooks/useTitulo'
 
 export default function Termos() {
   useTitulo('Termos e privacidade')
   return (
     <main className="termos">
-      <Link className="termos-logo" to="/">
-        <img src="/img/logo-horizontal.svg" alt="Voltaqui, início" width="114" height="40" />
-      </Link>
+      <div className="pagina-solta-topo">
+        <Link className="termos-logo" to="/">
+          <Logo alt="voltAqui, início" />
+        </Link>
+        <BotaoTema />
+      </div>
 
       <h1>Termos de uso e privacidade</h1>
       <p className="termos-data">Atualizado em 25 de novembro de 2026.</p>
 
       <section>
-        <h2>O que é o Voltaqui</h2>
+        <h2>O que é o voltAqui</h2>
         <p>
-          O Voltaqui organiza os achados e perdidos de escolas. A secretaria cadastra o que foi
+          O voltAqui organiza os achados e perdidos de escolas. A secretaria cadastra o que foi
           encontrado e o aluno pede a devolução do que é dele, provando com um detalhe que só o
           dono saberia.
         </p>
@@ -55,7 +60,7 @@ export default function Termos() {
 
       <section>
         <h2>Contato</h2>
-        <p>Dúvidas sobre o Voltaqui? Procure a secretaria da sua escola.</p>
+        <p>Dúvidas sobre o voltAqui? Procure a secretaria da sua escola.</p>
       </section>
     </main>
   )

@@ -1,7 +1,3 @@
-// Moldura de um campo de formulário: rótulo, campo, ajuda e erro.
-// O campo em si (input, select, textarea) vem como children.
-// Com "limite" e "valor", mostra quantos caracteres já foram usados.
-
 export function Campo({ id, rotulo, erro, ajuda, limite, valor, className = '', children }) {
   const classes = ['campo', erro && 'campo-mostrar-erro', className].filter(Boolean).join(' ')
   const usados = valor?.length ?? 0

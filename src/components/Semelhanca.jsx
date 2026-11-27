@@ -7,7 +7,6 @@ const NIVEIS = {
   baixa: { texto: 'Baixa semelhança', icone: 'alerta_circulo' },
 }
 
-// Faixa que resume a comparação entre o texto do aluno e o detalhe oculto.
 export function Semelhanca({ resultado }) {
   const { nivel, emComum, publicas, total } = resultado
   const { texto, icone } = NIVEIS[nivel]
@@ -27,7 +26,6 @@ export function Semelhanca({ resultado }) {
           </span>
         )}
       </p>
-      {/* Barrinha que enche conforme a proporção de palavras em comum */}
       <span className="semelhanca-barra" aria-hidden="true">
         <span style={{ width: `${Math.round(resultado.proporcao * 100)}%` }} />
       </span>
@@ -35,10 +33,7 @@ export function Semelhanca({ resultado }) {
   )
 }
 
-// Mostra o texto com as palavras em comum marcadas com <mark>.
 export function TextoDestacado({ texto, emComum }) {
-  // split com parênteses mantém os espaços, para o texto voltar igual.
-  // A posição de cada pedaço no texto serve de key: ela nunca se repete.
   let posicao = 0
   return texto.split(/(\s+)/).map((pedaco) => {
     const key = posicao

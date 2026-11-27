@@ -1,13 +1,15 @@
-// Etiqueta do painel azul do login: clique = "tapa", o barbante arrebenta,
-// ela voa, quica no logo e nas paredes e o barbante a recolhe.
-// Recebe o painel (.marca) e devolve uma função que desliga tudo.
-// O Matter.js (uns 84 KB) só é baixado quando a física vai mesmo rodar:
-// tela larga e sem a opção "reduzir movimento" ligada.
-export function iniciarEtiquetaFisica(painel) {
+export function iniciarEtiquetaFisica(painel, opcoes = {}) {
+  const {
+    seletor = '.etiqueta',
+    obstaculos = [],
+    larguraMinima = 901,
+    giroInicial = 0.02,
+  } = opcoes
+
   let Engine, Bodies, Body, Composite, Constraint, Vector
   let carregando = null
 
-  const etiqueta = painel.querySelector('.etiqueta')
+  const etiqueta = painel.querySelector(seletor)
   if (!etiqueta) return () => {}
 
   const COMPRIMENTO_BARBANTE = 120;
@@ -19,7 +21,7 @@ export function iniciarEtiquetaFisica(painel) {
   const PASSO = 1000 / 60;
 
   const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const telaLarga = window.matchMedia('(min-width: 901px)');
+  const telaLarga = window.matchMedia(`(min-width: ${larguraMinima}px)`);
 
   let estado = 'pendurada';
   let engine = null;
@@ -63,7 +65,7 @@ export function iniciarEtiquetaFisica(painel) {
 
   function montar() {
     desmontar();
-    if (!telaLarga.matches || reduzirMovimento.matches) return;
+    if (!telaLarga.matches) return;
     if (!Engine) {
       carregarMatter();
       return;
@@ -91,8 +93,10 @@ export function iniciarEtiquetaFisica(painel) {
       Bodies.rectangle(L / 2, -E / 2, L + E * 2, E, parede),
       Bodies.rectangle(-E / 2, A / 2, E, A + E * 2, parede),
       Bodies.rectangle(L + E / 2, A / 2, E, A + E * 2, parede),
-      obstaculo(painel.querySelector('.marca-logo'), base),
-      obstaculo(painel.querySelector('.marca-slogan').parentElement, base),
+      ...obstaculos
+        .map((s) => painel.querySelector(s))
+        .filter(Boolean)
+        .map((elemento) => obstaculo(elemento, base)),
     ];
 
     corpo = Bodies.rectangle(centro.x, centro.y, largura, altura, {
@@ -114,7 +118,7 @@ export function iniciarEtiquetaFisica(painel) {
     linha = criarLinha();
     estado = 'pendurada';
 
-    Body.setAngularVelocity(corpo, 0.02);
+    Body.setAngularVelocity(corpo, reduzirMovimento.matches ? 0 : giroInicial);
 
     ultimoQuadro = performance.now();
     idQuadro = requestAnimationFrame(quadro);

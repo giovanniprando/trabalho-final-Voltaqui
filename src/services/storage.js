@@ -1,6 +1,3 @@
-// Toda leitura e gravação no navegador passa por aqui.
-// Nenhum outro arquivo usa localStorage ou sessionStorage diretamente.
-
 import { ACHADOS_EXEMPLO, SOLICITACOES_EXEMPLO } from '../data/exemplos'
 
 const CHAVES = {
@@ -13,7 +10,6 @@ const CHAVES = {
   tema: 'voltaqui:tema',
 }
 
-// Chaves que guardam os dados compartilhados entre as abas (usado pelo DadosProvider).
 export const CHAVES_DE_DADOS = [CHAVES.achados, CHAVES.solicitacoes, CHAVES.leituras]
 
 export const STATUS_ACHADO = {
@@ -28,7 +24,6 @@ export const STATUS_SOLICITACAO = {
   RECUSADA: 'recusada',
 }
 
-// Erro de quando o armazenamento do navegador (uns 5 MB) está cheio.
 export class ArmazenamentoCheio extends Error {
   constructor() {
     super('O armazenamento do navegador está cheio.')
@@ -36,9 +31,6 @@ export class ArmazenamentoCheio extends Error {
   }
 }
 
-// ---------- utilitários internos ----------
-
-// Texto inválido na chave (alguém mexeu pelo DevTools, por exemplo) vira "padrao".
 function ler(chave, padrao, area = localStorage) {
   try {
     const valor = area.getItem(chave)
@@ -70,12 +62,8 @@ function agora() {
   return new Date().toISOString()
 }
 
-// ---------- dados de exemplo ----------
-
 const ULTIMO_NUMERO_EXEMPLO = Math.max(...ACHADOS_EXEMPLO.map((a) => a.numero))
 
-// Uma chave está "boa" se existe e é uma lista. Faltando ou com texto
-// inválido, ela volta para os dados de exemplo e o site abre normalmente.
 function chaveValida(chave) {
   return Array.isArray(ler(chave, null))
 }
@@ -89,25 +77,12 @@ export function inicializarDados() {
   if (!chaveValida(CHAVES.contas)) gravar(CHAVES.contas, [])
 }
 
-// Volta achados e pedidos para os exemplos (útil antes da apresentação).
-// As contas criadas continuam. O contador de números não volta para trás,
-// para um número já impresso numa etiqueta nunca ser usado de novo.
 export function restaurarExemplos() {
   gravar(CHAVES.achados, ACHADOS_EXEMPLO)
   gravar(CHAVES.solicitacoes, SOLICITACOES_EXEMPLO)
   gravar(CHAVES.leituras, {})
   return true
 }
-
-// ---------- achados ----------
-
-// Formato de um achado:
-// {
-//   id, numero (Nº 0158), categoria (id de data/categorias.js), descricao (pública),
-//   detalheOculto (só a secretaria vê), local (nome digitado), dataEncontrado ('AAAA-MM-DD'),
-//   foto (opcional), status ('disponivel' | 'em_analise' | 'devolvido'),
-//   criadoEm, atualizadoEm e devolvidoEm (data e hora ISO)
-// }
 
 export function listarAchados() {
   return lista(CHAVES.achados)
@@ -116,7 +91,6 @@ export function listarAchados() {
 export function criarAchado(dados) {
   const achados = listarAchados()
 
-  // O número nunca se repete, nem se o último achado for excluído.
   const maiorNaLista = achados.reduce((maior, a) => Math.max(maior, a.numero ?? 0), 0)
   const numero = Math.max(maiorNaLista, Number(ler(CHAVES.ultimoNumero, 0)) || 0) + 1
 
@@ -156,15 +130,6 @@ export function excluirAchado(id) {
   return true
 }
 
-// ---------- solicitações de devolução ----------
-
-// Formato de uma solicitação:
-// {
-//   id, achadoId, alunoId, alunoNome, descricaoDono (o que o aluno escreveu),
-//   status ('pendente' | 'aprovada' | 'recusada'), criadaEm, analisadaEm (ou null),
-//   motivo ('outro-aprovado' quando foi recusada porque a secretaria aprovou outro aluno)
-// }
-
 export function listarSolicitacoes() {
   return lista(CHAVES.solicitacoes)
 }
@@ -173,13 +138,6 @@ function solicitacoesDoAchado(achadoId) {
   return listarSolicitacoes().filter((s) => s.achadoId === achadoId)
 }
 
-// O aluno pode pedir este achado? Devolve o motivo do "não" ou null.
-// Regras:
-// - achado devolvido ou com pedido aprovado (esperando retirada): ninguém pede mais;
-// - cada aluno pede o mesmo achado uma vez só. Se for recusado, não pode tentar de novo,
-//   senão daria para chutar detalhes até acertar. Ele fala com a secretaria.
-// Enquanto os pedidos estão só pendentes, outro aluno ainda pode pedir:
-// a secretaria compara e aprova o dono.
 export function motivoParaNaoPedir(achado, solicitacoes, alunoId) {
   if (!achado) return 'inexistente'
   if (achado.status === STATUS_ACHADO.DEVOLVIDO) return 'devolvido'
@@ -208,15 +166,12 @@ export function criarSolicitacao({ achadoId, alunoId, alunoNome, descricaoDono }
   return solicitacao
 }
 
-// Muda várias solicitações de uma vez e grava uma vez só.
 function atualizarSolicitacoes(mudar) {
   const solicitacoes = listarSolicitacoes().map((s) => mudar(s) ?? s)
   gravar(CHAVES.solicitacoes, solicitacoes)
   return solicitacoes
 }
 
-// Aprovar um pedido recusa os outros pendentes do mesmo achado (só existe um dono).
-// Se o achado já tem um pedido aprovado, não aprova outro.
 export function aprovarSolicitacao(id) {
   const pedido = listarSolicitacoes().find((s) => s.id === id)
   if (!pedido || pedido.status !== STATUS_SOLICITACAO.PENDENTE) return null
@@ -242,7 +197,6 @@ export function recusarSolicitacao(id) {
     s.id === id ? { ...s, status: STATUS_SOLICITACAO.RECUSADA, analisadaEm: agora() } : null,
   )
 
-  // Sem outro pedido pendente ou aprovado, o achado volta a ficar disponível.
   const aindaEmAnalise = solicitacoes.some(
     (s) =>
       s.achadoId === pedido.achadoId &&
@@ -254,15 +208,11 @@ export function recusarSolicitacao(id) {
   return solicitacoes.find((s) => s.id === id)
 }
 
-// Só dá para marcar como devolvido um achado com pedido aprovado.
 export function marcarDevolvido(achadoId) {
   const aprovado = solicitacoesDoAchado(achadoId).some((s) => s.status === STATUS_SOLICITACAO.APROVADA)
   if (!aprovado) return null
-  // devolvidoEm guarda o momento da entrega (aparece no comprovante).
   return atualizarAchado(achadoId, { status: STATUS_ACHADO.DEVOLVIDO, devolvidoEm: agora() })
 }
-
-// ---------- contas de aluno criadas no site ----------
 
 export function listarContas() {
   return lista(CHAVES.contas)
@@ -274,11 +224,6 @@ export function criarConta(dados) {
   return conta
 }
 
-// ---------- sessão (login simulado) ----------
-
-// A sessão fica no sessionStorage: cada aba tem o seu login.
-// Assim dá para abrir a secretaria numa aba e o aluno em outra, e recarregar
-// uma delas não troca de usuário. Fechou a aba, saiu da conta.
 export function lerSessao() {
   const sessao = ler(CHAVES.sessao, null, sessionStorage)
   return sessao && typeof sessao === 'object' && sessao.id ? sessao : null
@@ -292,10 +237,6 @@ export function limparSessao() {
   sessionStorage.removeItem(CHAVES.sessao)
 }
 
-// ---------- notificações do aluno ----------
-
-// Guarda, para cada aluno, quando ele abriu o sino pela última vez.
-// Respostas da secretaria depois dessa data contam como "não lidas".
 export function lerUltimaLeitura(usuarioId) {
   return ler(CHAVES.leituras, {})[usuarioId] ?? null
 }
@@ -314,5 +255,9 @@ export function lerTema() {
 }
 
 export function salvarTema(tema) {
+  try {
+    gravar(CHAVES.tema, tema)
+  } catch {
+  }
   gravar(CHAVES.tema, tema)
 }

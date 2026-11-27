@@ -1,5 +1,3 @@
-// Dados iniciais: entram no localStorage só na primeira vez que o site abre.
-
 export const ACHADOS_EXEMPLO = [
   {
     id: 'a-0142', numero: 142, categoria: 'outros', local: 'Recepção',

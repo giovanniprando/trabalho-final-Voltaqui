@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
+import { Logo } from '../../components/Logo'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
 import { USUARIOS } from '../../data/usuarios'
@@ -9,8 +10,6 @@ import { listarContas, STATUS_ACHADO } from '../../services/storage'
 import { formatarNumero } from '../../utils/formatar'
 import { formatarData, formatarHora, protocoloDevolucao } from '../../utils/datas'
 
-// Comprovante de devolução: aparece depois de "Marcar como devolvido".
-// A secretaria imprime ou salva em PDF pelo próprio navegador (Ctrl + P).
 export default function Comprovante() {
   useTitulo('Comprovante de devolução')
   const { id } = useParams()
@@ -28,7 +27,6 @@ export default function Comprovante() {
     )
   }
 
-  // Achados devolvidos antes desta versão não têm devolvidoEm.
   const entregueEm = achado.devolvidoEm ?? achado.atualizadoEm
   const aluno = [...USUARIOS, ...listarContas()].find((c) => c.id === solicitacao.alunoId)
 
@@ -46,7 +44,7 @@ export default function Comprovante() {
 
       <article className="comprovante">
         <header className="comprovante-topo">
-          <img src="/img/logo-horizontal.svg" alt="Voltaqui" width="114" height="40" />
+          <Logo alt="voltAqui" />
           <div className="comprovante-protocolo">
             <span>Protocolo</span>
             <strong>{protocoloDevolucao(achado.numero, entregueEm)}</strong>

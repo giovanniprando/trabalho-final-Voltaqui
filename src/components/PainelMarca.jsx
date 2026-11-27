@@ -2,16 +2,18 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router'
 import { iniciarEtiquetaFisica } from '../lib/etiquetaFisica'
 
-// Painel azul da esquerda no login e no criar conta, com a etiqueta que voa.
 export function PainelMarca({ etiqueta, descricao }) {
   const painelRef = useRef(null)
 
-  useEffect(() => iniciarEtiquetaFisica(painelRef.current), [])
+  useEffect(
+    () => iniciarEtiquetaFisica(painelRef.current, { obstaculos: ['.marca-logo', '.marca-texto'] }),
+    [],
+  )
 
   return (
     <aside className="marca" ref={painelRef}>
       <Link className="marca-logo" to="/">
-        <img src="/img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="159" height="56" />
+        <img src="/img/logo-horizontal-escura.svg" alt="voltAqui, início" width="159" height="56" />
       </Link>
 
       <div className="etiqueta-area" aria-hidden="true">
@@ -23,7 +25,7 @@ export function PainelMarca({ etiqueta, descricao }) {
         </div>
       </div>
 
-      <div>
+      <div className="marca-texto">
         <p className="marca-slogan">Se é seu, <span>merece voltar.</span></p>
         <p className="marca-descricao">{descricao}</p>
       </div>

@@ -11,7 +11,6 @@ import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-minhas-solicitacoes.css'
 
-// A mensagem muda conforme a resposta da secretaria.
 function mensagem(solicitacao, achado) {
   if (solicitacao.status === 'pendente') {
     return { icone: 'relogio', classe: '', texto: 'A secretaria vai conferir o detalhe que você descreveu. Quando ela responder, o sino avisa.' }

@@ -7,7 +7,6 @@ function todasAsContas() {
   return [...USUARIOS, ...listarContas()]
 }
 
-// A senha nunca vai para a sessão.
 function semSenha(conta) {
   const { senha: _senha, ...dados } = conta
   return dados
@@ -27,7 +26,6 @@ export function AuthProvider({ children }) {
     setUsuario(dados)
   }
 
-  // Devolve { ok: true } ou { ok: false, motivo: 'credenciais' | 'perfil' }.
   function entrar(email, senha, perfilEsperado) {
     const conta = todasAsContas().find(
       (c) => c.email === email.trim().toLowerCase() && c.senha === senha,
@@ -39,7 +37,6 @@ export function AuthProvider({ children }) {
     return { ok: true, usuario: semSenha(conta) }
   }
 
-  // Só aluno cria conta pelo site. A conta da secretaria é criada pela escola.
   function cadastrar(dados) {
     const conta = criarConta({
       nome: dados.nome.trim(),

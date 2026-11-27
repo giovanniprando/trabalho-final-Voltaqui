@@ -5,11 +5,11 @@ import { RotaProtegida } from './components/RotaProtegida'
 import { TrocaTema } from './components/TrocaTema'
 import { PERFIS } from './data/usuarios'
 import CriarConta from './pages/CriarConta'
-import Home from './pages/Home'
 import Login from './pages/Login'
 import NaoEncontrada from './pages/NaoEncontrada'
 import Termos from './pages/Termos'
 
+const Home = lazy(() => import('./pages/Home'))
 
 const aluno = () => import('./pages/aluno')
 const secretaria = () => import('./pages/secretaria')
@@ -40,14 +40,12 @@ export default function App() {
       {/* Um botão só, fixo no canto superior direito de todas as telas */}
       <TrocaTema />
       <Routes>
-        {/* Públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login key="aluno" perfil={PERFIS.ALUNO} />} />
         <Route path="/login/secretaria" element={<Login key="secretaria" perfil={PERFIS.SECRETARIA} />} />
         <Route path="/criar-conta" element={<CriarConta />} />
         <Route path="/termos" element={<Termos />} />
 
-        {/* Só aluno */}
         <Route
           element={
             <RotaProtegida perfil={PERFIS.ALUNO}>
@@ -61,7 +59,6 @@ export default function App() {
           <Route path="/minhas-solicitacoes" element={<MinhasSolicitacoes />} />
         </Route>
 
-        {}
         <Route
           element={
             <RotaProtegida perfil={PERFIS.SECRETARIA}>
@@ -78,7 +75,6 @@ export default function App() {
           <Route path="/secretaria/comprovante/:id" element={<Comprovante />} />
         </Route>
 
-        {/* Qualquer endereço que não existe */}
         <Route path="*" element={<NaoEncontrada />} />
       </Routes>
     </Suspense>

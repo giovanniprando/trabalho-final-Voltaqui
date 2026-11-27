@@ -138,8 +138,8 @@
 .campo input:disabled,
 .campo select:disabled,
 .campo textarea:disabled {
-  color: var(--cinza-400);
-  background: var(--cinza-100);
+  color: var(--cor-desativado-texto);
+  background: var(--cor-desativado-fundo);
   cursor: not-allowed;
 }
 
@@ -211,9 +211,9 @@
 }
 
 .alerta-info {
-  color: var(--azul-800);
+  color: var(--cor-texto-forte);
   background: var(--cor-destaque-suave);
-  border-color: var(--verde-500);
+  border-color: var(--cor-destaque);
 }
 
 .link {
@@ -305,7 +305,7 @@
 
 .botao-perigo-cheio {
   color: var(--branco);
-  background: var(--cor-erro);
+  background: var(--cor-perigo-cheio);
 }
 
 .botao-perigo-cheio:hover {
@@ -361,8 +361,6 @@
   background: var(--cat-fundo, var(--cor-destaque-suave));
   border-radius: var(--raio-md);
 }
-
-/* Cada categoria troca as duas variáveis; quem usa --cat-* ganha a cor dela. */
 [data-categoria="eletronicos"] { --cat-fundo: var(--cat-eletronicos-fundo); --cat-texto: var(--cat-eletronicos-texto); }
 [data-categoria="documentos"] { --cat-fundo: var(--cat-documentos-fundo); --cat-texto: var(--cat-documentos-texto); }
 [data-categoria="roupas"] { --cat-fundo: var(--cat-roupas-fundo); --cat-texto: var(--cat-roupas-texto); }
@@ -450,10 +448,8 @@
 .chip:hover {
   border-color: var(--cor-borda-forte);
 }
-
-/* Selecionado: verde escuro da marca com texto branco (5,1:1). */
 .chip:has(input:checked) {
-  color: var(--branco);
+  color: var(--cor-texto-sobre-link);
   background: var(--cor-link);
   border-color: var(--cor-link);
 }
@@ -507,8 +503,6 @@
   align-items: center;
   gap: var(--esp-2);
 }
-
-/* Caixa de confirmação (components/Modal.jsx). Só existe na tela quando está aberta. */
 .modal {
   position: fixed;
   inset: 0;
@@ -559,4 +553,181 @@
   display: block;
   margin-top: var(--esp-2);
   color: var(--cor-erro);
+}
+.barbante {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.barbante line {
+  stroke: var(--cinza-400);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.tapa-impacto {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  border: 3px solid var(--cor-destaque);
+  border-radius: var(--raio-full);
+  pointer-events: none;
+  z-index: 2;
+  animation: impacto 0.35s ease-out forwards;
+}
+
+@keyframes impacto {
+  from {
+    transform: scale(0.2);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.balancando {
+  transform-origin: 50% -120px;
+  animation: balanco 0.9s ease-out;
+}
+
+@keyframes balanco {
+  0% { transform: rotate(-4deg); }
+  25% { transform: rotate(5deg); }
+  55% { transform: rotate(-7deg); }
+  80% { transform: rotate(-2deg); }
+  100% { transform: rotate(-4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tapa-impacto {
+    animation-duration: 0.01s;
+  }
+}
+.botao-tema {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  color: var(--cor-texto-secundario);
+  background: transparent;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-full);
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.botao-tema:hover {
+  color: var(--cor-texto);
+  background: var(--cor-fundo-sutil);
+}
+
+.botao-tema:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
+.botao-tema svg {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.botao-tema:active svg {
+  transform: rotate(-30deg) scale(0.9);
+}
+
+.botao-tema-sobre-marca {
+  color: var(--cor-texto-sobre-marca-suave);
+  border-color: var(--cor-hover-sobre-marca);
+}
+
+.botao-tema-sobre-marca:hover {
+  color: var(--cor-texto-sobre-marca);
+  background: var(--cor-hover-sobre-marca);
+}
+
+.formulario-topo,
+.pagina-solta-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+}
+
+.pagina-solta-topo {
+  width: 100%;
+  margin-bottom: var(--esp-8);
+}
+
+.pagina-solta-topo .termos-logo,
+.pagina-solta-topo .nao-encontrada-logo {
+  margin-bottom: 0;
+}
+
+.nao-encontrada .pagina-solta-topo {
+  max-width: 480px;
+}
+.conferencia mark {
+  padding: 0 2px;
+  color: inherit;
+  background: var(--cat-garrafas-fundo);
+  border-radius: var(--raio-sm);
+}
+
+.semelhanca {
+  --tom: var(--tom-verde-texto);
+  --tom-fundo: var(--tom-verde-fundo);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--esp-2) var(--esp-3);
+  padding: var(--esp-3) var(--esp-4);
+  font-size: 0.875rem;
+  color: var(--cor-texto);
+  background: var(--tom-fundo);
+  border-radius: var(--raio-md);
+}
+
+.semelhanca > svg {
+  margin-top: 1px;
+  color: var(--tom);
+}
+
+.semelhanca strong {
+  color: var(--tom);
+}
+
+.semelhanca-media {
+  --tom: var(--tom-laranja-texto);
+  --tom-fundo: var(--tom-laranja-fundo);
+}
+
+.semelhanca-baixa {
+  --tom: var(--tom-vermelho-texto);
+  --tom-fundo: var(--tom-vermelho-fundo);
+}
+
+.semelhanca-barra {
+  grid-column: 2;
+  height: 6px;
+  overflow: hidden;
+  background: var(--cor-trilho);
+  border-radius: var(--raio-full);
+}
+
+.semelhanca-barra span {
+  display: block;
+  height: 100%;
+  background: var(--tom);
+  border-radius: inherit;
+  transition: width 0.4s ease-out, background-color 0.3s;
+}
+
+.semelhanca-publicas {
+  display: block;
+  margin-top: var(--esp-1);
 }

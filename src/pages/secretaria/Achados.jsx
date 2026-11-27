@@ -19,11 +19,20 @@ import '../../styles/secretaria-achados.css'
 
 export default function Achados() {
   useTitulo('Achados')
+  const [parametros] = useSearchParams()
+  return <ListaAchados key={parametros.toString()} parametros={parametros} />
+}
+
+function ListaAchados({ parametros }) {
   const { achados, solicitacoes, removerAchado } = useDados()
   const avisar = useAviso()
-  // O painel pode abrir esta página já filtrada: /secretaria/achados?local=cantina
-  const [parametros] = useSearchParams()
-  const [filtros, setFiltros] = useState({ busca: '', categoria: '', local: parametros.get('local') ?? '', status: '' })
+  const statusDaUrl = parametros.get('status') ?? ''
+  const [filtros, setFiltros] = useState({
+    busca: '',
+    categoria: '',
+    local: parametros.get('local') ?? '',
+    status: statusDaUrl in NOMES_STATUS ? statusDaUrl : '',
+  })
   const [ordem, setOrdem] = useState('recentes')
   const [paraExcluir, setParaExcluir] = useState(null)
 
@@ -41,7 +50,6 @@ export default function Achados() {
 
   const temFiltro = Object.values(filtros).some(Boolean)
 
-  // Achado com pedido aprovado tem um aluno esperando para retirar: o modal avisa.
   const aprovadoDoExcluido = paraExcluir
     ? solicitacoes.find((s) => s.achadoId === paraExcluir.id && s.status === STATUS_SOLICITACAO.APROVADA)
     : null
@@ -140,7 +148,6 @@ export default function Achados() {
                 <td>{nomeDoLocal(achado.local)}</td>
                 <td>
                   {formatarData(achado.dataEncontrado)}
-                  {/* Devolvido já saiu da secretaria: não conta mais os dias */}
                   {achado.status !== STATUS_ACHADO.DEVOLVIDO && <DiasParado data={achado.dataEncontrado} />}
                 </td>
                 <td><SeloStatus status={achado.status} /></td>

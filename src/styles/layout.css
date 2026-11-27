@@ -81,8 +81,6 @@
   min-width: 0;
   padding: var(--esp-12);
 }
-
-/* Em telas muito largas o conteúdo não se estica até a borda. */
 .app-pagina {
   max-width: var(--largura-app);
 }
@@ -153,8 +151,6 @@
   gap: var(--esp-2);
   margin-top: auto;
 }
-
-/* "Ver como secretaria": item discreto, só para as contas de teste */
 .lateral-demo {
   display: flex;
   align-items: center;
@@ -246,12 +242,16 @@
     display: none;
   }
 }
-
-/* Logo + sino no topo da barra lateral */
 .lateral-topo {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.lateral-topo-acoes {
+  display: flex;
+  align-items: center;
   gap: var(--esp-2);
 }
 
@@ -350,7 +350,7 @@
 }
 
 .notificacao-nova {
-  background: var(--laranja-50);
+  background: var(--tom-laranja-fundo);
 }
 
 .notificacao-icone {
@@ -363,13 +363,13 @@
 }
 
 .notificacao-aprovada {
-  color: var(--verde-700);
-  background: var(--verde-50);
+  color: var(--tom-verde-texto);
+  background: var(--tom-verde-fundo);
 }
 
 .notificacao-recusada {
-  color: var(--vermelho-700);
-  background: var(--vermelho-50);
+  color: var(--tom-vermelho-texto);
+  background: var(--tom-vermelho-fundo);
 }
 
 .notificacoes-ver {

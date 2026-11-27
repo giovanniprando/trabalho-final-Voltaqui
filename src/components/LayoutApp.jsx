@@ -6,6 +6,7 @@ import { PERFIS, paginaInicial } from '../data/usuarios'
 import { STATUS_SOLICITACAO } from '../services/storage'
 import { iniciais } from '../utils/formatar'
 import { Icone } from './Icone'
+import { BotaoTema } from './BotaoTema'
 import { Notificacoes } from './Notificacoes'
 import { TrocaDemonstracao } from './TrocaDemonstracao'
 import '../styles/layout.css'
@@ -23,8 +24,6 @@ const MENUS = {
   ],
 }
 
-// Barra lateral + área de conteúdo das páginas internas.
-// <Outlet /> é onde o React Router desenha a página da rota atual.
 export function LayoutApp() {
   const { usuario, sair } = useAuth()
   const { solicitacoes } = useDados()
@@ -45,10 +44,12 @@ export function LayoutApp() {
       <aside className="lateral">
         <div className="lateral-topo">
           <Link className="lateral-logo" to={paginaInicial(usuario)}>
-            <img src="/img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="114" height="40" />
+            <img src="/img/logo-horizontal-escura.svg" alt="voltAqui, início" width="114" height="40" />
           </Link>
-          {/* O sino só existe para o aluno: é ele quem espera a resposta */}
-          {!ehSecretaria && <Notificacoes usuario={usuario} />}
+          <div className="lateral-topo-acoes">
+            {!ehSecretaria && <Notificacoes usuario={usuario} />}
+            <BotaoTema sobreMarca />
+          </div>
         </div>
 
         <nav aria-label={ehSecretaria ? 'Menu da secretaria' : 'Menu do aluno'}>
@@ -89,7 +90,6 @@ export function LayoutApp() {
 
       <main id="conteudo" className="app-conteudo">
         <div className="app-pagina">
-          {/* A barra lateral fica na tela enquanto a página carrega. */}
           <Suspense fallback={<output className="carregando">Carregando...</output>}>
             <Outlet />
           </Suspense>
