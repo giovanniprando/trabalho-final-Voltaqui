@@ -70,6 +70,8 @@ export function LayoutApp() {
         </nav>
 
         <div className="lateral-rodape">
+          <TrocaDemonstracao />
+
           <div className="lateral-usuario">
             <span className="avatar" aria-hidden="true">{iniciais(usuario.nome)}</span>
             <span>
@@ -84,8 +86,6 @@ export function LayoutApp() {
           </button>
         </div>
       </aside>
-
-      <TrocaDemonstracao />
 
       <main id="conteudo" className="app-conteudo">
         <div className="app-pagina">

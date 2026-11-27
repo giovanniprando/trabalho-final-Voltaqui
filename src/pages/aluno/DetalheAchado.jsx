@@ -50,7 +50,7 @@ export default function DetalheAchado() {
             <span className="numero-achado">{formatarNumero(achado.numero)}</span>
           </p>
           <h1>{achado.descricao}</h1>
-          <SeloStatus status={achado.status} />
+          <SeloStatus status={achado.status} paraAluno />
 
           <dl className="detalhe-dados">
             <div>

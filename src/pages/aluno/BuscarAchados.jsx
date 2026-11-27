@@ -1,57 +1,62 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { SeloStatus } from '../../components/SeloStatus'
-import { DiasParado } from '../../components/DiasParado'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
-import { IconeCategoria } from '../../components/IconeCategoria'
 import { useDados } from '../../context/useDados'
 import { CATEGORIAS, buscarCategoria } from '../../data/categorias'
 import { nomeDoLocal, sugestoesDeLocal } from '../../data/locais'
 import { STATUS_ACHADO } from '../../services/storage'
 import { formatarNumero, normalizar } from '../../utils/formatar'
-import { formatarData, hojeISO } from '../../utils/datas'
+import { formatarData, hojeISO, tempoRelativo } from '../../utils/datas'
 import { ORDENS, ordenarAchados } from '../../utils/ordenar'
 import { ordenarParecidos } from '../../utils/parecidos'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-achados.css'
 
-const PERDIDO_VAZIO = { categoria: '', local: '', data: '' }
+// Espera o aluno parar de digitar antes de refazer a lista.
+const ESPERA_DIGITACAO = 250
 
-// Selo do "Perdeu algo?": quanto mais pontos, mais parecido.
-function SeloParecido({ pontos }) {
-  if (pontos >= 5) return <span className="parecido parecido-muito">Muito parecido</span>
-  if (pontos >= 3) return <span className="parecido">Parecido</span>
-  return <span className="parecido parecido-talvez">Talvez</span>
+// Quanto mais pontos no "parecidos", mais perto do que o aluno perdeu.
+function textoParecido(pontos) {
+  if (pontos >= 5) return 'Muito parecido'
+  if (pontos >= 3) return 'Parecido'
+  return 'Talvez'
 }
 
-// Um cartão de achado em forma de etiqueta.
-// "pontos" só existe quando o aluno usou o "Perdeu algo?".
+// Um cartão de achado. "pontos" só existe quando o aluno preencheu Onde ou Quando.
 function CartaoAchado({ achado, pontos }) {
+  const categoria = buscarCategoria(achado.categoria)
   return (
-    <Link className="achado-card" to={`/achados/${achado.id}`} data-categoria={achado.categoria}>
-      {/* Faixa colorida da categoria, com o furo da etiqueta */}
-      <span className="achado-card-faixa">
-        <IconeCategoria categoria={achado.categoria} tamanho="pequeno" />
-        {buscarCategoria(achado.categoria)?.nome}
-        <span className="achado-card-furo" aria-hidden="true" />
+    <Link className="achado-card" to={`/achados/${achado.id}`}>
+      <span className="achado-card-imagem">
+        {achado.foto
+          ? <img src={achado.foto} alt="" />
+          : <Icone nome={categoria?.icone ?? 'pacote'} tamanho={40} />}
       </span>
+
       <span className="achado-card-corpo">
-        {pontos !== undefined && <SeloParecido pontos={pontos} />}
-        <span className="achado-card-cabeca">
-          <span>
-            <span className="achado-card-numero">{formatarNumero(achado.numero)}</span>
-            <span className="achado-card-titulo">{achado.descricao}</span>
+        <span className="achado-card-topo">
+          <span className="achado-card-categoria">
+            <Icone nome={categoria?.icone ?? 'pacote'} tamanho={14} />
+            {categoria?.nome}
           </span>
-          {achado.foto && <img className="foto-achado foto-medio" src={achado.foto} alt="" />}
+          <span className="achado-card-numero">{formatarNumero(achado.numero)}</span>
         </span>
+
+        {pontos !== undefined && <span className="achado-card-parecido">{textoParecido(pontos)}</span>}
+        <span className="achado-card-titulo">{achado.descricao}</span>
+
         <span className="achado-card-meta">
-          <span><Icone nome="local" tamanho={16} /> {nomeDoLocal(achado.local)}</span>
-          <span><Icone nome="calendario" tamanho={16} /> {formatarData(achado.dataEncontrado)}</span>
+          <span><Icone nome="local" tamanho={16} />{nomeDoLocal(achado.local)}</span>
+          <span>
+            <Icone nome="calendario" tamanho={16} />
+            {formatarData(achado.dataEncontrado)} ({tempoRelativo(achado.dataEncontrado)})
+          </span>
         </span>
+
         <span className="achado-card-rodape">
-          <SeloStatus status={achado.status} />
-          <DiasParado data={achado.dataEncontrado} />
+          <SeloStatus status={achado.status} paraAluno />
         </span>
       </span>
     </Link>
@@ -61,16 +66,31 @@ function CartaoAchado({ achado, pontos }) {
 export default function BuscarAchados() {
   useTitulo('Achados')
   const { achados } = useDados()
-  const [busca, setBusca] = useState('')
   const [categoria, setCategoria] = useState('')
   const [ordem, setOrdem] = useState('recentes')
+  const [filtrosAbertos, setFiltrosAbertos] = useState(false)
 
-  // "perdido" é o que está nos campos; "procurando" só muda ao clicar no botão.
-  const [perdido, setPerdido] = useState(PERDIDO_VAZIO)
-  const [procurando, setProcurando] = useState(null)
+  // O que está nos campos (muda a cada tecla)...
+  const [campos, setCampos] = useState({ busca: '', onde: '', quando: '' })
+  // ...e o que a lista usa (muda quando o aluno para de digitar ou aperta Enter).
+  const [aplicado, setAplicado] = useState(campos)
+
+  useEffect(() => {
+    const espera = setTimeout(() => setAplicado(campos), ESPERA_DIGITACAO)
+    return () => clearTimeout(espera)
+  }, [campos])
+
+  function mudarCampo(evento) {
+    setCampos({ ...campos, [evento.target.name]: evento.target.value })
+  }
+
+  function aplicarAgora(evento) {
+    evento.preventDefault()
+    setAplicado(campos)
+  }
 
   // O aluno não vê o que já foi devolvido.
-  const termo = normalizar(busca)
+  const termo = normalizar(aplicado.busca)
   const filtrados = achados
     .filter((a) => a.status !== STATUS_ACHADO.DEVOLVIDO)
     .filter((a) => !categoria || a.categoria === categoria)
@@ -81,34 +101,23 @@ export default function BuscarAchados() {
     })
   const visiveis = ordenarAchados(filtrados, ordem)
 
-  // Com o "Perdeu algo?" ativo, a lista vira os parecidos, do mais para o menos.
+  // Com Onde ou Quando preenchidos, os mais parecidos vêm primeiro.
+  // A categoria dos chips também conta pontos.
+  const procurando = aplicado.onde.trim() || aplicado.quando
+    ? { categoria, local: aplicado.onde, data: aplicado.quando }
+    : null
   const lista = procurando
     ? ordenarParecidos(visiveis, procurando)
     : visiveis.map((achado) => ({ achado }))
 
-  // Tem algum filtro ligado? Muda a mensagem quando a lista fica vazia.
+  const filtrosAtivos = (campos.onde.trim() ? 1 : 0) + (campos.quando ? 1 : 0)
   const temFiltro = Boolean(termo || categoria || procurando)
 
-  const preencheuAlgo = perdido.categoria || perdido.local.trim() || perdido.data
-
-  function mudarPerdido(evento) {
-    setPerdido({ ...perdido, [evento.target.name]: evento.target.value })
-  }
-
-  function procurarParecidos(evento) {
-    evento.preventDefault()
-    if (preencheuAlgo) setProcurando(perdido)
-  }
-
-  function verTodos() {
-    setProcurando(null)
-    setPerdido(PERDIDO_VAZIO)
-  }
-
   function limparFiltros() {
-    setBusca('')
+    const vazio = { busca: '', onde: '', quando: '' }
+    setCampos(vazio)
+    setAplicado(vazio)
     setCategoria('')
-    verTodos()
   }
 
   let contagem = lista.length === 1 ? '1 achado esperando o dono' : `${lista.length} achados esperando o dono`
@@ -125,57 +134,58 @@ export default function BuscarAchados() {
         <p>Tudo o que chegou na secretaria e ainda espera o dono.</p>
       </header>
 
-      <section className="perdi" aria-labelledby="titulo-perdi">
-        <div className="perdi-texto">
-          <h2 id="titulo-perdi">Perdeu algo?</h2>
-          <p>Conte o que era, onde e quando. Os achados mais parecidos aparecem primeiro.</p>
-        </div>
-
-        <form className="perdi-form" onSubmit={procurarParecidos}>
-          <div className="campo">
-            <label htmlFor="perdi-categoria">O que era</label>
-            <select id="perdi-categoria" name="categoria" value={perdido.categoria} onChange={mudarPerdido}>
-              <option value="">Qualquer coisa</option>
-              {CATEGORIAS.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
-            </select>
-          </div>
-          <div className="campo">
-            <label htmlFor="perdi-local">Onde</label>
-            <input id="perdi-local" name="local" list="perdi-sugestoes" autoComplete="off"
-                   placeholder="Ex.: Cantina" value={perdido.local} onChange={mudarPerdido} />
-            <datalist id="perdi-sugestoes">
-              {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome}>{nome}</option>)}
-            </datalist>
-          </div>
-          <div className="campo">
-            <label htmlFor="perdi-data">Quando</label>
-            <input id="perdi-data" name="data" type="date" max={hojeISO()}
-                   value={perdido.data} onChange={mudarPerdido} />
-          </div>
-          <button className="botao botao-primario" type="submit" disabled={!preencheuAlgo}>
-            <Icone nome="busca" />
-            Mostrar parecidos
-          </button>
-        </form>
-      </section>
-
       <search className="busca-aluno">
-        <div className="campo campo-busca">
-          <label className="visualmente-oculto" htmlFor="busca">Buscar achado</label>
-          <Icone nome="busca" />
-          <input
-            id="busca"
-            type="search"
-            placeholder="Buscar pela descrição, ex.: garrafa azul"
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-          />
-        </div>
+        <form className="busca-linha" onSubmit={aplicarAgora}>
+          <div className="campo campo-busca">
+            <label className="visualmente-oculto" htmlFor="busca">Buscar achado</label>
+            <Icone nome="busca" />
+            <input
+              id="busca"
+              name="busca"
+              type="search"
+              placeholder="Descreva o que perdeu, ex.: garrafa azul"
+              value={campos.busca}
+              onChange={mudarCampo}
+            />
+          </div>
+          <button
+            className="botao botao-secundario botao-filtros"
+            type="button"
+            aria-expanded={filtrosAbertos}
+            aria-controls="filtros-painel"
+            onClick={() => setFiltrosAbertos(!filtrosAbertos)}
+          >
+            <Icone nome="filtro" tamanho={18} />
+            Filtros
+            {filtrosAtivos > 0 && (
+              <span className="botao-filtros-contador">
+                {filtrosAtivos}
+                <span className="visualmente-oculto"> ativos</span>
+              </span>
+            )}
+          </button>
+
+          <div id="filtros-painel" className="filtros-painel" hidden={!filtrosAbertos}>
+            <div className="campo">
+              <label htmlFor="filtro-onde">Onde</label>
+              <input id="filtro-onde" name="onde" list="filtro-sugestoes" autoComplete="off"
+                     placeholder="Ex.: Cantina" value={campos.onde} onChange={mudarCampo} />
+              <datalist id="filtro-sugestoes">
+                {sugestoesDeLocal(achados).map((nome) => <option key={nome} value={nome}>{nome}</option>)}
+              </datalist>
+            </div>
+            <div className="campo">
+              <label htmlFor="filtro-quando">Quando</label>
+              <input id="filtro-quando" name="quando" type="date" max={hojeISO()}
+                     value={campos.quando} onChange={mudarCampo} />
+            </div>
+          </div>
+        </form>
 
         <fieldset className="chips">
           <legend className="visualmente-oculto">Categoria</legend>
           {[{ id: '', nome: 'Todas' }, ...CATEGORIAS].map((c) => (
-            <label key={c.id || 'todas'} className="chip" data-categoria={c.id || undefined}>
+            <label key={c.id || 'todas'} className="chip">
               <input
                 type="radio"
                 name="categoria"
@@ -192,16 +202,19 @@ export default function BuscarAchados() {
       <div className="resultado-barra">
         <p className="resultado-contagem" aria-live="polite">{contagem}</p>
         {procurando ? (
-          <button className="link botao-link" type="button" onClick={verTodos}>
-            Ver todos os achados
+          <button className="link botao-link" type="button" onClick={limparFiltros}>
+            Limpar filtros
           </button>
         ) : (
           // Com os parecidos, a ordem é pelos pontos; por isso só aparece na lista normal.
           <div className="ordenar">
             <label htmlFor="ordem">Ordenar</label>
-            <select id="ordem" value={ordem} onChange={(e) => setOrdem(e.target.value)}>
-              {ORDENS.map((o) => <option key={o.id} value={o.id}>{o.nome}</option>)}
-            </select>
+            <span className="select">
+              <select id="ordem" value={ordem} onChange={(e) => setOrdem(e.target.value)}>
+                {ORDENS.map((o) => <option key={o.id} value={o.id}>{o.nome}</option>)}
+              </select>
+              <Icone nome="seta_baixo" tamanho={16} />
+            </span>
           </div>
         )}
       </div>
