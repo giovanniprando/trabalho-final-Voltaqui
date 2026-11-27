@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router'
 import { LayoutApp } from './components/LayoutApp'
 import { RotaProtegida } from './components/RotaProtegida'
+import { TrocaTema } from './components/TrocaTema'
 import { PERFIS } from './data/usuarios'
 import CriarConta from './pages/CriarConta'
 import Login from './pages/Login'
@@ -36,6 +37,8 @@ function Carregando() {
 export default function App() {
   return (
     <Suspense fallback={<Carregando />}>
+      {/* Um botão só, fixo no canto superior direito de todas as telas */}
+      <TrocaTema />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login key="aluno" perfil={PERFIS.ALUNO} />} />

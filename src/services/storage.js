@@ -246,6 +246,9 @@ export function marcarNotificacoesLidas(usuarioId) {
   gravar(CHAVES.leituras, { ...leituras, [usuarioId]: agora() })
 }
 
+// ---------- tema (claro ou escuro) ----------
+
+// Devolve 'claro', 'escuro' ou null (a pessoa ainda não escolheu).
 export function lerTema() {
   const tema = ler(CHAVES.tema, null)
   return tema === 'claro' || tema === 'escuro' ? tema : null
@@ -256,4 +259,5 @@ export function salvarTema(tema) {
     gravar(CHAVES.tema, tema)
   } catch {
   }
+  gravar(CHAVES.tema, tema)
 }

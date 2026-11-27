@@ -606,6 +606,8 @@ button.lateral-sair {
   color: var(--cor-texto);
   background: var(--tom-verde-fundo);
   border: 1px solid var(--cor-destaque);
+  background: var(--verde-50);
+  border: 1px solid var(--verde-500);
   border-radius: var(--raio-md);
 }
 
@@ -811,3 +813,88 @@ button.lateral-sair {
   display: block;
 }
 
+/* Botão de troca de perfil para a apresentação */
+.troca-demonstracao {
+  position: fixed;
+  bottom: var(--esp-6);
+  left: calc(260px + var(--esp-6));
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-2) var(--esp-4) var(--esp-2) var(--esp-3);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--azul-950);
+  background: var(--cor-laranja);
+  border: 0;
+  border-radius: var(--raio-full);
+  box-shadow: var(--elevacao-lg);
+  cursor: pointer;
+}
+
+.troca-demonstracao small {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  opacity: 0.75;
+}
+
+.troca-demonstracao:hover {
+  filter: brightness(1.08);
+}
+
+.troca-demonstracao:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--cor-superficie), 0 0 0 6px var(--cor-laranja);
+}
+
+@media (max-width: 900px) {
+  .troca-demonstracao {
+    left: var(--esp-4);
+    bottom: var(--esp-4);
+  }
+}
+
+@media print {
+  .troca-demonstracao {
+    display: none;
+  }
+}
+
+/* Botão do tema claro/escuro, fixo no canto superior direito de todas as telas */
+.troca-tema {
+  position: fixed;
+  top: var(--esp-3);
+  right: var(--esp-4);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--cor-texto);
+  background: var(--cor-superficie);
+  border: 2px solid var(--cor-destaque);
+  border-radius: var(--raio-md);
+  box-shadow: var(--elevacao-md);
+  cursor: pointer;
+}
+
+.troca-tema:hover {
+  background: var(--cor-fundo-sutil);
+}
+
+.troca-tema:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
+@media print {
+  .troca-tema {
+    display: none;
+  }
+}

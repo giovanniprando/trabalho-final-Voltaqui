@@ -130,6 +130,8 @@
   --fonte-titulo: 'Montserrat', system-ui, sans-serif;
   --fonte-texto: 'Inter', system-ui, sans-serif;
 }
+/* Tema escuro: ligado pelo botão TrocaTema (atributo data-tema no <html>).
+   Só na tela: na impressão (etiqueta, comprovante) o papel continua branco. */
 @media screen {
   :root[data-tema='escuro'] {
     color-scheme: dark;
@@ -214,5 +216,51 @@
 @media print {
   .logo-escura {
     display: none;
+    /* Tons usados direto nos arquivos de cada tela (bordas, fundos de status, textos) */
+    --azul-800: #cbd5e1;
+    --cinza-100: #273449;
+    --cinza-200: #334155;
+    --cinza-600: #94a3b8;
+    --verde-50: rgba(1, 208, 145, 0.14);
+    --verde-700: #34d399;
+    --laranja-50: rgba(254, 131, 2, 0.14);
+    --laranja-700: #fb923c;
+    --vermelho-50: rgba(220, 38, 38, 0.16);
+    --vermelho-700: #f87171;
+
+    --cor-fundo: #0b1120;
+    --cor-superficie: #111a2e;
+    --cor-fundo-sutil: #1e293b;
+    --cor-texto: #e2e8f0;
+    --cor-texto-secundario: #94a3b8;
+    --cor-marca: #070c18;
+    --cor-titulo-sobre-marca: #e2e8f0;
+    --cor-destaque-suave: rgba(1, 208, 145, 0.14);
+    --cor-link: var(--verde-500);
+
+    --cor-borda: #334155;
+    --cor-borda-forte: #475569;
+    --cor-borda-sobre-marca: #475569;
+    --cor-fundo-modal: rgba(0, 0, 0, 0.65);
+    --cor-trilho: rgba(255, 255, 255, 0.08);
+
+    --cor-borda-campo: #64748b;
+    --cor-borda-campo-hover: #94a3b8;
+    --cor-placeholder: #8591a5;
+    --cor-erro: #f87171;
+    --cor-erro-fundo: rgba(220, 38, 38, 0.16);
+    --cor-erro-borda: #7f1d1d;
+
+    --status-recusada-texto: #f87171;
+
+    --elevacao-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --elevacao-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+    --elevacao-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+  }
+
+  /* Logo com letras escuras vira a versão com letras claras.
+     shortcut: troca via CSS "content", funciona no Chrome, Edge e Safari; se um navegador não suportar, fica a logo normal. */
+  :root[data-tema='escuro'] img[src='/img/logo-horizontal.svg'] {
+    content: url('/img/logo-horizontal-escura.svg');
   }
 }

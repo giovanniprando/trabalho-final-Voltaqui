@@ -128,7 +128,8 @@
   .lateral-sair {
     position: absolute;
     top: var(--esp-4);
-    right: var(--esp-4);
+    /* à esquerda do botão de tema (44px), que fica fixo no canto */
+    right: calc(var(--esp-4) + 52px);
     margin-top: 0;
   }
 
@@ -379,7 +380,7 @@
 
 @media (max-width: 900px) {
   .lateral-topo {
-    padding-right: 96px;
+    padding-right: 148px;
   }
 
   .notificacoes-caixa {

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casaco azul-marinho | Voltaqui</title>
+
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/aluno-detalhe-achado.css">
+</head>
+<body>
+
+  <a class="pular-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="app">
+
+    <aside class="lateral">
+
+      <a class="lateral-logo" href="aluno-achados.html">
+        <img src="img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="114" height="40">
+      </a>
+
+      <nav aria-label="Menu do aluno">
+        <ul class="lateral-menu">
+          <li>
+            <a href="aluno-achados.html" aria-current="page">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              Buscar achados
+            </a>
+          </li>
+          <li>
+            <a href="aluno-minhas-solicitacoes.html">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+              Minhas solicitações
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="lateral-rodape">
+        <div class="lateral-usuario">
+          <span class="avatar" aria-hidden="true">AS</span>
+          <span>
+            <strong>Ana Souza</strong>
+            <small>Aluna · SENAI</small>
+          </span>
+        </div>
+
+        <a class="lateral-sair" href="login.html">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+          Sair
+        </a>
+      </div>
+
+    </aside>
+
+    <main id="conteudo" class="app-conteudo">
+
+      <a class="link link-voltar" href="aluno-achados.html">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Voltar para achados
+      </a>
+
+      <div class="detalhe">
+
+        <article class="cartao detalhe-achado">
+          <span class="icone-categoria icone-categoria-lg"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></span>
+          <p class="detalhe-categoria">Roupas · <span class="numero-achado">Nº&nbsp;0163</span></p>
+          <h1>Casaco azul-marinho, tamanho M</h1>
+          <span class="badge badge-disponivel">Disponível</span>
+
+          <dl class="detalhe-dados">
+            <div>
+              <dt><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> Encontrado em</dt>
+              <dd>Sala de aula</dd>
+            </div>
+            <div>
+              <dt><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg> Data</dt>
+              <dd>08/11/2026</dd>
+            </div>
+            <div>
+              <dt><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/></svg> Onde está agora</dt>
+              <dd>Secretaria, Bloco A</dd>
+            </div>
+          </dl>
+
+          <p class="detalhe-oculto-aviso">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Um detalhe deste objeto fica escondido. Só o dono sabe qual é.
+          </p>
+        </article>
+
+        <aside class="cartao detalhe-como">
+          <h2>Como funciona a devolução</h2>
+          <ol class="passos">
+            <li>
+              <strong>Você descreve um detalhe</strong>
+              <span>Algo que só o dono saberia: um adesivo, um nome escrito, o que tinha no bolso.</span>
+            </li>
+            <li>
+              <strong>A secretaria confere</strong>
+              <span>Ela compara sua descrição com o detalhe oculto que anotou no cadastro.</span>
+            </li>
+            <li>
+              <strong>Você retira na secretaria</strong>
+              <span>Se conferir, é só levar a carteirinha e buscar.</span>
+            </li>
+          </ol>
+          <a class="botao botao-primario botao-bloco" href="aluno-solicitar-devolucao.html">É meu, quero solicitar</a>
+        </aside>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>
