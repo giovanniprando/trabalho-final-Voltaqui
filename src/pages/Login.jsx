@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Navigate, useNavigate } from 'react-router'
 import { Campo } from '../components/Campo'
 import { InputSenha } from '../components/InputSenha'
 import { Icone } from '../components/Icone'
@@ -20,7 +20,7 @@ const TEXTOS = {
     erroPerfil: 'Esta conta é da secretaria. Use a aba Secretaria para entrar.',
     etiqueta: {
       numero: '0142', objeto: 'Mochila preta com chaveiro de dinossauro',
-      local: 'Encontrada no Bloco B, em 14/10', status: 'Devolvido', classe: 'badge-devolvido',
+      local: 'Encontrada no Bloco B, em 14/10', status: 'Devolvido', classe: 'selo-devolvido',
     },
     descricao: 'Os achados e perdidos da sua escola em um só lugar. Procure o que você perdeu e peça a devolução direto pela plataforma.',
   },
@@ -32,7 +32,7 @@ const TEXTOS = {
     erroPerfil: 'Esta conta é de aluno. Use a aba Aluno para entrar.',
     etiqueta: {
       numero: '0158', objeto: 'Garrafa térmica azul, 500 ml',
-      local: 'Encontrada na cantina, em 02/11', status: 'Em análise', classe: 'badge-analise',
+      local: 'Encontrada na cantina, em 02/11', status: 'Em análise', classe: 'selo-analise',
     },
     descricao: 'Cadastre o que chega na secretaria, confira quem é o dono e organize as devoluções.',
   },

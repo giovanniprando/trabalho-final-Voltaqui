@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { Badge } from '../../components/Badge'
+import { Link, useSearchParams } from 'react-router'
+import { SeloStatus } from '../../components/SeloStatus'
 import { DiasParado } from '../../components/DiasParado'
 import { Icone } from '../../components/Icone'
 import { FotoOuIcone } from '../../components/FotoOuIcone'
@@ -9,16 +9,17 @@ import { useAviso } from '../../context/useAviso'
 import { useDados } from '../../context/useDados'
 import { CATEGORIAS, buscarCategoria } from '../../data/categorias'
 import { NOMES_STATUS } from '../../data/status'
-import { STATUS_ACHADO } from '../../services/storage'
+import { STATUS_ACHADO, STATUS_SOLICITACAO } from '../../services/storage'
 import { ORDENS, ordenarAchados } from '../../utils/ordenar'
 import { locaisUsados, nomeDoLocal } from '../../data/locais'
-import { formatarData, formatarNumero, normalizar } from '../../utils/formatar'
+import { formatarNumero, normalizar } from '../../utils/formatar'
+import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-achados.css'
 
 export default function Achados() {
   useTitulo('Achados')
-  const { achados, removerAchado } = useDados()
+  const { achados, solicitacoes, removerAchado } = useDados()
   const avisar = useAviso()
   // O painel pode abrir esta página já filtrada: /secretaria/achados?local=cantina
   const [parametros] = useSearchParams()
@@ -40,9 +41,13 @@ export default function Achados() {
 
   const temFiltro = Object.values(filtros).some(Boolean)
 
+  // Achado com pedido aprovado tem um aluno esperando para retirar: o modal avisa.
+  const aprovadoDoExcluido = paraExcluir
+    ? solicitacoes.find((s) => s.achadoId === paraExcluir.id && s.status === STATUS_SOLICITACAO.APROVADA)
+    : null
+
   function confirmarExclusao() {
-    removerAchado(paraExcluir.id)
-    avisar(`${formatarNumero(paraExcluir.numero)} excluído.`)
+    if (removerAchado(paraExcluir.id)) avisar(`${formatarNumero(paraExcluir.numero)} excluído.`)
     setParaExcluir(null)
   }
 
@@ -59,7 +64,7 @@ export default function Achados() {
         </Link>
       </header>
 
-      <form className="filtros" role="search" onSubmit={(e) => e.preventDefault()}>
+      <search className="filtros">
         <div className="campo campo-busca">
           <label className="visualmente-oculto" htmlFor="busca">Buscar achado</label>
           <Icone nome="busca" />
@@ -92,7 +97,7 @@ export default function Achados() {
             ))}
           </select>
         </div>
-      </form>
+      </search>
 
       <div className="ordenar ordenar-tabela">
         <label htmlFor="ordem">Ordenar</label>
@@ -138,7 +143,7 @@ export default function Achados() {
                   {/* Devolvido já saiu da secretaria: não conta mais os dias */}
                   {achado.status !== STATUS_ACHADO.DEVOLVIDO && <DiasParado data={achado.dataEncontrado} />}
                 </td>
-                <td><Badge status={achado.status} /></td>
+                <td><SeloStatus status={achado.status} /></td>
                 <td>
                   <div className="tabela-acoes">
                     <Link className="botao-icone" to={`/secretaria/etiqueta/${achado.id}`}
@@ -184,6 +189,11 @@ export default function Achados() {
         >
           {paraExcluir.descricao} ({formatarNumero(paraExcluir.numero)}) será apagado, junto com as
           solicitações dele. Não dá para desfazer.
+          {aprovadoDoExcluido && (
+            <strong className="modal-alerta">
+              {' '}O pedido de {aprovadoDoExcluido.alunoNome} já foi aprovado e o aluno ainda não retirou.
+            </strong>
+          )}
         </Modal>
       )}
     </>

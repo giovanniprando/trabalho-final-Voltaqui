@@ -24,17 +24,18 @@ export function AvisoProvider({ children }) {
     <AvisoContext.Provider value={avisar}>
       {children}
 
-      <div className="avisos" role="status" aria-live="polite">
+      {/* <output> já avisa o leitor de tela quando o conteúdo muda (papel "status"). */}
+      <output className="avisos" aria-live="polite">
         {avisos.map((aviso) => (
-          <div key={aviso.id} className={`aviso aviso-${aviso.tipo}`}>
+          <span key={aviso.id} className={`aviso aviso-${aviso.tipo}`}>
             <Icone nome={aviso.tipo === 'erro' ? 'alerta_circulo' : 'check_circulo'} />
-            <p>{aviso.texto}</p>
+            <span className="aviso-texto">{aviso.texto}</span>
             <button type="button" onClick={() => fechar(aviso.id)} aria-label="Fechar aviso">
               <Icone nome="x" tamanho={16} />
             </button>
-          </div>
+          </span>
         ))}
-      </div>
+      </output>
     </AvisoContext.Provider>
   )
 }

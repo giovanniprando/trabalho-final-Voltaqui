@@ -1,4 +1,5 @@
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { Suspense } from 'react'
+import { Link, NavLink, Outlet, useNavigate } from 'react-router'
 import { useAuth } from '../context/useAuth'
 import { useDados } from '../context/useDados'
 import { PERFIS, paginaInicial } from '../data/usuarios'
@@ -88,7 +89,10 @@ export function LayoutApp() {
 
       <main id="conteudo" className="app-conteudo">
         <div className="app-pagina">
-          <Outlet />
+          {/* A barra lateral fica na tela enquanto a página carrega. */}
+          <Suspense fallback={<output className="carregando">Carregando...</output>}>
+            <Outlet />
+          </Suspense>
         </div>
       </main>
     </div>

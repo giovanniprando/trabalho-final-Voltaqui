@@ -2,7 +2,10 @@ import { useEffect, useRef } from 'react'
 import { Icone } from './Icone'
 
 // Caixa de confirmação. Fecha com Esc, com o botão Cancelar ou clicando fora.
+// Enquanto está aberta, o Tab só passa pelos botões dela; ao fechar, o foco
+// volta para o botão que abriu.
 export function Modal({ titulo, children, textoConfirmar, iconeConfirmar = 'lixeira', onConfirmar, onFechar }) {
+  const caixaRef = useRef(null)
   const cancelarRef = useRef(null)
   const fecharRef = useRef(onFechar)
 
@@ -15,7 +18,24 @@ export function Modal({ titulo, children, textoConfirmar, iconeConfirmar = 'lixe
     cancelarRef.current?.focus()
 
     function aoApertarTecla(evento) {
-      if (evento.key === 'Escape') fecharRef.current()
+      if (evento.key === 'Escape') {
+        fecharRef.current()
+        return
+      }
+      if (evento.key !== 'Tab') return
+      const botoes = caixaRef.current.querySelectorAll('button, a[href], input, select, textarea')
+      const primeiro = botoes[0]
+      const ultimo = botoes[botoes.length - 1]
+      if (evento.shiftKey && document.activeElement === primeiro) {
+        evento.preventDefault()
+        ultimo.focus()
+      } else if (!evento.shiftKey && document.activeElement === ultimo) {
+        evento.preventDefault()
+        primeiro.focus()
+      } else if (!caixaRef.current.contains(document.activeElement)) {
+        evento.preventDefault()
+        primeiro.focus()
+      }
     }
     document.addEventListener('keydown', aoApertarTecla)
 
@@ -30,8 +50,9 @@ export function Modal({ titulo, children, textoConfirmar, iconeConfirmar = 'lixe
   }
 
   return (
-    <div className="modal modal-aberto" onMouseDown={aoClicarFundo}>
+    <div className="modal" role="presentation" onMouseDown={aoClicarFundo}>
       <div
+        ref={caixaRef}
         className="modal-caixa"
         role="alertdialog"
         aria-modal="true"

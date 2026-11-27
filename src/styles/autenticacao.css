@@ -284,4 +284,8 @@
   .tapa-impacto {
     animation-duration: 0.01s;
   }
+
+  .etiqueta.balancando {
+    animation: none;
+  }
 }

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useDados } from '../context/useDados'
 import { lerUltimaLeitura, marcarNotificacoesLidas, STATUS_SOLICITACAO } from '../services/storage'
-import { formatarData } from '../utils/formatar'
+import { formatarData } from '../utils/datas'
 import { Icone } from './Icone'
 
 // Sino do aluno: avisa quando a secretaria aprova ou recusa um pedido.
@@ -17,7 +17,7 @@ export function Notificacoes({ usuario }) {
     .filter((s) => s.alunoId === usuario.id && s.analisadaEm)
     .map((s) => ({ ...s, achado: buscarAchado(s.achadoId) }))
     .filter((s) => s.achado)
-    .sort((a, b) => b.analisadaEm.localeCompare(a.analisadaEm))
+    .toSorted((a, b) => b.analisadaEm.localeCompare(a.analisadaEm))
 
   const naoLidas = notificacoes.filter((n) => !ultimaLeitura || n.analisadaEm > ultimaLeitura).length
 
@@ -36,15 +36,15 @@ export function Notificacoes({ usuario }) {
   // Fecha com Esc ou clicando fora da caixa.
   useEffect(() => {
     if (!aberto) return
-    function fechar() {
+    function fecharCaixa() {
       setAberto(false)
       setUltimaLeitura(lerUltimaLeitura(usuario.id))
     }
     function aoClicarFora(evento) {
-      if (!caixa.current?.contains(evento.target)) fechar()
+      if (!caixa.current?.contains(evento.target)) fecharCaixa()
     }
     function aoApertarTecla(evento) {
-      if (evento.key === 'Escape') fechar()
+      if (evento.key === 'Escape') fecharCaixa()
     }
     document.addEventListener('mousedown', aoClicarFora)
     document.addEventListener('keydown', aoApertarTecla)
