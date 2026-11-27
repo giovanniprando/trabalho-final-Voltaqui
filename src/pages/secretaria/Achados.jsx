@@ -17,13 +17,24 @@ import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-achados.css'
 
+// O painel pode abrir esta página já filtrada: /secretaria/achados?local=cantina ou ?status=devolvido.
+// A "key" recomeça os filtros quando o endereço muda (clicar em "Achados" no menu limpa tudo).
 export default function Achados() {
   useTitulo('Achados')
+  const [parametros] = useSearchParams()
+  return <ListaAchados key={parametros.toString()} parametros={parametros} />
+}
+
+function ListaAchados({ parametros }) {
   const { achados, solicitacoes, removerAchado } = useDados()
   const avisar = useAviso()
-  // O painel pode abrir esta página já filtrada: /secretaria/achados?local=cantina
-  const [parametros] = useSearchParams()
-  const [filtros, setFiltros] = useState({ busca: '', categoria: '', local: parametros.get('local') ?? '', status: '' })
+  const statusDaUrl = parametros.get('status') ?? ''
+  const [filtros, setFiltros] = useState({
+    busca: '',
+    categoria: '',
+    local: parametros.get('local') ?? '',
+    status: statusDaUrl in NOMES_STATUS ? statusDaUrl : '',
+  })
   const [ordem, setOrdem] = useState('recentes')
   const [paraExcluir, setParaExcluir] = useState(null)
 

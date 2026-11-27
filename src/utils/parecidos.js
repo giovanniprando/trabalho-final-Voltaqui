@@ -24,7 +24,7 @@ export function pontuarAchado(achado, perdido) {
   const procurado = normalizar(perdido.local)
   if (procurado) {
     const local = normalizar(nomeDoLocal(achado.local))
-    if (local.includes(procurado) || procurado.includes(local)) pontos += 2
+    if (local && (local.includes(procurado) || procurado.includes(local))) pontos += 2
   }
 
   return pontos

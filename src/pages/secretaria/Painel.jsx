@@ -55,10 +55,10 @@ export default function Painel() {
 
   const indicadores = [
     // "tom" escolhe a cor do cartão (veja secretaria-painel.css).
-    { icone: 'pacote', numero: contar(STATUS_ACHADO.DISPONIVEL), rotulo: 'Achados disponíveis', tom: 'verde', para: '/secretaria/achados' },
-    { icone: 'relogio', numero: contar(STATUS_ACHADO.EM_ANALISE), rotulo: 'Em análise', tom: 'azul', para: '/secretaria/achados' },
+    { icone: 'pacote', numero: contar(STATUS_ACHADO.DISPONIVEL), rotulo: 'Achados disponíveis', tom: 'verde', para: '/secretaria/achados?status=disponivel' },
+    { icone: 'relogio', numero: contar(STATUS_ACHADO.EM_ANALISE), rotulo: 'Em análise', tom: 'azul', para: '/secretaria/achados?status=em_analise' },
     { icone: 'caixa_entrada', numero: pendentes.length, rotulo: 'Pedidos pendentes', tom: 'laranja', para: '/secretaria/solicitacoes' },
-    { icone: 'check_circulo', numero: contar(STATUS_ACHADO.DEVOLVIDO), rotulo: 'Devolvidos', tom: 'cinza', para: '/secretaria/achados' },
+    { icone: 'check_circulo', numero: contar(STATUS_ACHADO.DEVOLVIDO), rotulo: 'Devolvidos', tom: 'cinza', para: '/secretaria/achados?status=devolvido' },
   ]
 
   return (
@@ -153,7 +153,7 @@ export default function Painel() {
           <ul className="locais-barras">
             {porLocal.map((local) => (
               <li key={local.chave}>
-                <Link to={`/secretaria/achados?local=${local.chave}`}>
+                <Link to={`/secretaria/achados?local=${encodeURIComponent(local.chave)}`}>
                   <span className="locais-barras-nome">{local.nome}</span>
                   {/* A barra tem largura proporcional ao local com mais achados */}
                   <span className="locais-barras-trilho" aria-hidden="true">
