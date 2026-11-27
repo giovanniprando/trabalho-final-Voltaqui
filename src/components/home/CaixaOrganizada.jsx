@@ -12,7 +12,6 @@ const ITENS = [
 
 const MOLA = { type: 'spring', stiffness: 260, damping: 28 }
 
-// A caixa de achados da secretaria: começa bagunçada e se organiza quando aparece na tela.
 export function CaixaOrganizada() {
   const ref = useRef(null)
   const visivel = useInView(ref, { once: true, amount: 0.6 })

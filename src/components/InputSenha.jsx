@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { Icone } from './Icone'
 
-// Campo de senha com botão de olho para mostrar ou esconder o que foi digitado.
-// Recebe as mesmas props de um <input> (id, value, onChange...).
 export function InputSenha(props) {
   const [visivel, setVisivel] = useState(false)
 

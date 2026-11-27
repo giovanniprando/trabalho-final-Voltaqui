@@ -1,5 +1,3 @@
-// "icone" é o nome de um desenho em components/Icone.jsx
-
 export const CATEGORIAS = [
   { id: 'eletronicos', nome: 'Eletrônicos', icone: 'cel' },
   { id: 'documentos', nome: 'Documentos', icone: 'documento' },

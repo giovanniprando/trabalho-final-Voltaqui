@@ -1,5 +1,3 @@
-// Selo colorido de status: do achado ou da solicitação.
-
 const STATUS = {
   disponivel: { texto: 'Disponível', classe: 'selo-disponivel' },
   em_analise: { texto: 'Em análise', classe: 'selo-analise' },
@@ -9,7 +7,6 @@ const STATUS = {
   recusada: { texto: 'Recusada', classe: 'selo-recusada' },
 }
 
-// Nas telas do aluno, o status do achado diz o que ele pode fazer.
 const TEXTOS_ALUNO = {
   disponivel: 'Pode solicitar',
   em_analise: 'Em análise pela secretaria',

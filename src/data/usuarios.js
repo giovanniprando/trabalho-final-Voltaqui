@@ -1,6 +1,3 @@
-// Contas fixas para a demonstração (não há backend).
-// Contas de aluno criadas na tela "Criar conta" ficam no localStorage.
-
 export const PERFIS = {
   SECRETARIA: 'secretaria',
   ALUNO: 'aluno',

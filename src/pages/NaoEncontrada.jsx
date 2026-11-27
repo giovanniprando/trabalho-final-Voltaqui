@@ -5,12 +5,10 @@ import { BotaoTema } from '../components/BotaoTema'
 import { Logo } from '../components/Logo'
 import { useTitulo } from '../hooks/useTitulo'
 
-// Aparece quando o endereço digitado não existe (rota "*" no App.jsx).
 export default function NaoEncontrada() {
   useTitulo('Página não encontrada')
   const { usuario } = useAuth()
 
-  // Quem está logado volta para a própria página inicial; quem não está, para a homepage.
   const destino = usuario ? paginaInicial(usuario) : '/'
 
   return (
@@ -22,7 +20,6 @@ export default function NaoEncontrada() {
         <BotaoTema />
       </div>
 
-      {/* Uma etiqueta de achado, igual às da secretaria, com o número 404 */}
       <div className="nao-encontrada-etiqueta" aria-hidden="true">
         <span className="nao-encontrada-furo" />
         <span className="nao-encontrada-rotulo">Achado</span>

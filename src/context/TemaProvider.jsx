@@ -11,7 +11,6 @@ export function TemaProvider({ children }) {
     aplicarTema(tema)
   }, [tema])
 
-  // Enquanto a pessoa não escolhe, o site acompanha o sistema (Windows, celular).
   useEffect(() => {
     if (escolhido) return
     function aoMudarSistema(evento) {

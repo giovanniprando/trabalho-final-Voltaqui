@@ -361,8 +361,6 @@
   background: var(--cat-fundo, var(--cor-destaque-suave));
   border-radius: var(--raio-md);
 }
-
-/* Cada categoria troca as duas variáveis; quem usa --cat-* ganha a cor dela. */
 [data-categoria="eletronicos"] { --cat-fundo: var(--cat-eletronicos-fundo); --cat-texto: var(--cat-eletronicos-texto); }
 [data-categoria="documentos"] { --cat-fundo: var(--cat-documentos-fundo); --cat-texto: var(--cat-documentos-texto); }
 [data-categoria="roupas"] { --cat-fundo: var(--cat-roupas-fundo); --cat-texto: var(--cat-roupas-texto); }
@@ -450,8 +448,6 @@
 .chip:hover {
   border-color: var(--cor-borda-forte);
 }
-
-/* Selecionado: verde escuro da marca com texto branco (5,1:1). */
 .chip:has(input:checked) {
   color: var(--cor-texto-sobre-link);
   background: var(--cor-link);
@@ -507,8 +503,6 @@
   align-items: center;
   gap: var(--esp-2);
 }
-
-/* Caixa de confirmação (components/Modal.jsx). Só existe na tela quando está aberta. */
 .modal {
   position: fixed;
   inset: 0;
@@ -560,8 +554,6 @@
   margin-top: var(--esp-2);
   color: var(--cor-erro);
 }
-
-/* Etiqueta pendurada (login e homepage): barbante, impacto do tapa e balanço. */
 .barbante {
   position: absolute;
   inset: 0;
@@ -617,8 +609,6 @@
     animation-duration: 0.01s;
   }
 }
-
-/* Botão do modo escuro (sol e lua). */
 .botao-tema {
   display: inline-grid;
   place-items: center;
@@ -682,8 +672,6 @@
 .nao-encontrada .pagina-solta-topo {
   max-width: 480px;
 }
-
-/* Pontuação de semelhança: usada nas Solicitações e no exemplo da homepage. */
 .conferencia mark {
   padding: 0 2px;
   color: inherit;

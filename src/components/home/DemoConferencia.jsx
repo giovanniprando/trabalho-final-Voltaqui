@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Semelhanca, TextoDestacado } from '../Semelhanca'
 import { compararDescricoes } from '../../utils/semelhanca'
 
-// O mesmo achado do exemplo de segurança, agora visto pela secretaria.
 const DESCRICAO = 'Garrafa térmica azul, 500 ml'
 const DETALHE = 'Adesivo de banda na base e tampa azul arranhada'
 
@@ -12,8 +11,6 @@ const EXEMPLOS = [
   { nome: 'Copiou a descrição', texto: 'Garrafa térmica azul de 500 ml, tampa azul' },
 ]
 
-// Demonstração ao vivo da ajuda da secretaria. Usa a mesma função da tela
-// de Solicitações (utils/semelhanca.js): o que aparece aqui é o que ela vê.
 export function DemoConferencia() {
   const [pedido, setPedido] = useState(EXEMPLOS[0].texto)
   const comparacao = compararDescricoes(pedido, DETALHE, DESCRICAO)

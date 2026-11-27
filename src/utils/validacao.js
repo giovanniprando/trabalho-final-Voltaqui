@@ -1,9 +1,6 @@
 import { buscarEscola } from '../data/escolas'
 import { hojeISO } from './datas'
 
-// Cada função devolve um objeto { campo: 'mensagem de erro' }.
-// Objeto vazio = formulário válido.
-
 const EMAIL_VALIDO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function validarLogin({ email, senha }) {

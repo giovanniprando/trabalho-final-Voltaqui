@@ -21,7 +21,6 @@ function Lista({ copia }) {
   )
 }
 
-// Faixa que passa devagar com objetos esperando o dono. Para quando o mouse passa por cima.
 export function FaixaAchados() {
   return (
     <div className="faixa">

@@ -1,9 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Icone } from './Icone'
 
-// Caixa de confirmação. Fecha com Esc, com o botão Cancelar ou clicando fora.
-// Enquanto está aberta, o Tab só passa pelos botões dela; ao fechar, o foco
-// volta para o botão que abriu.
 export function Modal({ titulo, children, textoConfirmar, iconeConfirmar = 'lixeira', onConfirmar, onFechar }) {
   const caixaRef = useRef(null)
   const cancelarRef = useRef(null)

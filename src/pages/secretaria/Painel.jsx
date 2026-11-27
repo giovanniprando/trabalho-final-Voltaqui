@@ -14,7 +14,6 @@ import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-painel.css'
 
-// { nome: 'Cantina', quantidade: 3 }, ... ignorando acento e maiúscula no nome.
 function contarPorLocal(achados) {
   const contagem = {}
   for (const achado of achados) {
@@ -43,18 +42,15 @@ export default function Painel() {
     .toSorted((a, b) => a.criadaEm.localeCompare(b.criadaEm))
   const ultimos = achados.toSorted((a, b) => b.criadoEm.localeCompare(a.criadoEm)).slice(0, 4)
 
-  // Itens que ainda estão na secretaria, do que chegou há mais tempo para o mais novo.
   const parados = achados
     .filter((a) => a.status === STATUS_ACHADO.DISPONIVEL)
     .toSorted((a, b) => a.dataEncontrado.localeCompare(b.dataEncontrado))
     .slice(0, 4)
 
-  // Quantos achados apareceram em cada local, do maior para o menor.
   const porLocal = contarPorLocal(achados)
   const maiorQuantidade = porLocal[0]?.quantidade ?? 1
 
   const indicadores = [
-    // "tom" escolhe a cor do cartão (veja secretaria-painel.css).
     { icone: 'pacote', numero: contar(STATUS_ACHADO.DISPONIVEL), rotulo: 'Achados disponíveis', tom: 'verde', para: '/secretaria/achados?status=disponivel' },
     { icone: 'relogio', numero: contar(STATUS_ACHADO.EM_ANALISE), rotulo: 'Em análise', tom: 'azul', para: '/secretaria/achados?status=em_analise' },
     { icone: 'caixa_entrada', numero: pendentes.length, rotulo: 'Pedidos pendentes', tom: 'laranja', para: '/secretaria/solicitacoes' },
@@ -88,7 +84,6 @@ export default function Painel() {
         ))}
       </ul>
 
-      {/* Grade 2 x 2: os blocos da mesma linha ficam com a mesma altura. */}
       <div className="painel-colunas">
         <section className="cartao painel-bloco" aria-labelledby="titulo-pendentes">
           <header className="painel-bloco-topo">
@@ -155,7 +150,6 @@ export default function Painel() {
               <li key={local.chave}>
                 <Link to={`/secretaria/achados?local=${encodeURIComponent(local.chave)}`}>
                   <span className="locais-barras-nome">{local.nome}</span>
-                  {/* A barra tem largura proporcional ao local com mais achados */}
                   <span className="locais-barras-trilho" aria-hidden="true">
                     <span style={{ width: `${(local.quantidade / maiorQuantidade) * 100}%` }} />
                   </span>

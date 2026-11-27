@@ -24,8 +24,6 @@ const MENUS = {
   ],
 }
 
-// Barra lateral + área de conteúdo das páginas internas.
-// <Outlet /> é onde o React Router desenha a página da rota atual.
 export function LayoutApp() {
   const { usuario, sair } = useAuth()
   const { solicitacoes } = useDados()
@@ -49,7 +47,6 @@ export function LayoutApp() {
             <img src="/img/logo-horizontal-escura.svg" alt="voltAqui, início" width="114" height="40" />
           </Link>
           <div className="lateral-topo-acoes">
-            {/* O sino só existe para o aluno: é ele quem espera a resposta */}
             {!ehSecretaria && <Notificacoes usuario={usuario} />}
             <BotaoTema sobreMarca />
           </div>
@@ -93,7 +90,6 @@ export function LayoutApp() {
 
       <main id="conteudo" className="app-conteudo">
         <div className="app-pagina">
-          {/* A barra lateral fica na tela enquanto a página carrega. */}
           <Suspense fallback={<output className="carregando">Carregando...</output>}>
             <Outlet />
           </Suspense>

@@ -24,9 +24,6 @@
   flex: 1;
   min-width: 0;
 }
-
-/* Título com no máximo 2 linhas e o espaço das 2 sempre reservado:
-   assim a data e a mensagem começam na mesma altura em todos os cards. */
 .minha-achado h2 {
   display: -webkit-box;
   min-height: calc(2 * 1.35em);
@@ -44,8 +41,6 @@
   font-size: 0.875rem;
   color: var(--cor-texto-secundario);
 }
-
-/* A mensagem ocupa o resto do card: os cards de uma linha ficam com a mesma altura. */
 .mensagem {
   flex: 1;
   display: flex;

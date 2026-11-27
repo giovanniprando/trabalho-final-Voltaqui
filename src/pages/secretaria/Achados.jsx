@@ -17,8 +17,6 @@ import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/secretaria-achados.css'
 
-// O painel pode abrir esta página já filtrada: /secretaria/achados?local=cantina ou ?status=devolvido.
-// A "key" recomeça os filtros quando o endereço muda (clicar em "Achados" no menu limpa tudo).
 export default function Achados() {
   useTitulo('Achados')
   const [parametros] = useSearchParams()
@@ -52,7 +50,6 @@ function ListaAchados({ parametros }) {
 
   const temFiltro = Object.values(filtros).some(Boolean)
 
-  // Achado com pedido aprovado tem um aluno esperando para retirar: o modal avisa.
   const aprovadoDoExcluido = paraExcluir
     ? solicitacoes.find((s) => s.achadoId === paraExcluir.id && s.status === STATUS_SOLICITACAO.APROVADA)
     : null
@@ -151,7 +148,6 @@ function ListaAchados({ parametros }) {
                 <td>{nomeDoLocal(achado.local)}</td>
                 <td>
                   {formatarData(achado.dataEncontrado)}
-                  {/* Devolvido já saiu da secretaria: não conta mais os dias */}
                   {achado.status !== STATUS_ACHADO.DEVOLVIDO && <DiasParado data={achado.dataEncontrado} />}
                 </td>
                 <td><SeloStatus status={achado.status} /></td>

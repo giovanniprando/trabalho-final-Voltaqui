@@ -6,7 +6,6 @@ const VISOES = [
   { id: 'secretaria', texto: 'Tela da secretaria' },
 ]
 
-// Mostra o mesmo achado visto pelo aluno (detalhe escondido) e pela secretaria (detalhe aberto).
 export function ExemploSeguranca() {
   const [visao, setVisao] = useState('aluno')
   const aberto = visao === 'secretaria'

@@ -14,17 +14,14 @@ import { ordenarParecidos } from '../../utils/parecidos'
 import { useTitulo } from '../../hooks/useTitulo'
 import '../../styles/aluno-achados.css'
 
-// Espera o aluno parar de digitar antes de refazer a lista.
 const ESPERA_DIGITACAO = 250
 
-// Quanto mais pontos no "parecidos", mais perto do que o aluno perdeu.
 function textoParecido(pontos) {
   if (pontos >= 5) return 'Muito parecido'
   if (pontos >= 3) return 'Parecido'
   return 'Talvez'
 }
 
-// Um cartão de achado. "pontos" só existe quando o aluno preencheu Onde ou Quando.
 function CartaoAchado({ achado, pontos }) {
   const categoria = buscarCategoria(achado.categoria)
   return (
@@ -70,9 +67,7 @@ export default function BuscarAchados() {
   const [ordem, setOrdem] = useState('recentes')
   const [filtrosAbertos, setFiltrosAbertos] = useState(false)
 
-  // O que está nos campos (muda a cada tecla)...
   const [campos, setCampos] = useState({ busca: '', onde: '', quando: '' })
-  // ...e o que a lista usa (muda quando o aluno para de digitar ou aperta Enter).
   const [aplicado, setAplicado] = useState(campos)
 
   useEffect(() => {
@@ -89,7 +84,6 @@ export default function BuscarAchados() {
     setAplicado(campos)
   }
 
-  // O aluno não vê o que já foi devolvido.
   const termo = normalizar(aplicado.busca)
   const filtrados = achados
     .filter((a) => a.status !== STATUS_ACHADO.DEVOLVIDO)
@@ -101,8 +95,6 @@ export default function BuscarAchados() {
     })
   const visiveis = ordenarAchados(filtrados, ordem)
 
-  // Com Onde ou Quando preenchidos, os mais parecidos vêm primeiro.
-  // A categoria dos chips também conta pontos.
   const procurando = aplicado.onde.trim() || aplicado.quando
     ? { categoria, local: aplicado.onde, data: aplicado.quando }
     : null
@@ -206,7 +198,6 @@ export default function BuscarAchados() {
             Limpar filtros
           </button>
         ) : (
-          // Com os parecidos, a ordem é pelos pontos; por isso só aparece na lista normal.
           <div className="ordenar">
             <label htmlFor="ordem">Ordenar</label>
             <span className="select">

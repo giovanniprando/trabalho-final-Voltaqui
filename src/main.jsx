@@ -16,7 +16,6 @@ import './styles/app.css'
 
 inicializarDados()
 
-// Aplica o tema antes de desenhar a página, para não piscar branco no modo escuro.
 aplicarTema(temaInicial())
 
 createRoot(document.getElementById('root')).render(

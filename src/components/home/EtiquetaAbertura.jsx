@@ -7,7 +7,6 @@ const ETAPAS = [
   { texto: 'Devolvido', classe: 'selo-devolvido', local: 'Voltou para a dona em 16/10' },
 ]
 
-// Cartão pendurado da abertura. O status muda sozinho para mostrar o caminho do achado.
 export function EtiquetaAbertura() {
   const reduzir = useReducedMotion()
   const [etapa, setEtapa] = useState(0)

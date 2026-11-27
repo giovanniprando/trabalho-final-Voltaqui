@@ -30,7 +30,6 @@ export default function DetalheAchado() {
     )
   }
 
-  // Pode pedir? As regras ficam em services/storage.js (motivoParaNaoPedir).
   const motivo = motivoParaNaoPedir(achado, solicitacoes, usuario.id)
   const meuPedido = solicitacoes.find((s) => s.achadoId === achado.id && s.alunoId === usuario.id)
 
@@ -43,7 +42,6 @@ export default function DetalheAchado() {
 
       <div className="detalhe">
         <article className="cartao detalhe-achado">
-          {/* Igual ao cartão da lista: foto ou o ícone da categoria em cinza */}
           <span className="detalhe-imagem">
             {achado.foto
               ? <img src={achado.foto} alt="" />

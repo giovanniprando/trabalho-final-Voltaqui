@@ -1,7 +1,3 @@
-/* Fontes salvas no próprio projeto (public/fontes), em vez do Google Fonts:
- * o site abre sem internet externa e nenhum dado do visitante vai para o Google.
- * Só o alfabeto latino, que cobre o português com acentos. Licença: SIL Open Font License. */
-
 @font-face {
   font-family: 'Inter';
   font-style: normal;

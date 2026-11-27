@@ -1,6 +1,4 @@
-// Escolas que usam o voltAqui. O aluno digita o "codigo" ao criar a conta.
-
-export const ESCOLAS = [
+const ESCOLAS = [
   { codigo: 'SN7K2P', nome: 'SENAI' },
 ]
 

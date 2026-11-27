@@ -30,11 +30,8 @@ export default function SolicitarDevolucao() {
 
   const achado = buscarAchado(id)
 
-  // Depois de enviar, vai para Minhas solicitações.
   if (enviado) return <Navigate to="/minhas-solicitacoes" replace />
 
-  // Mesmo digitando o endereço, quem não pode pedir volta para o detalhe,
-  // que explica o motivo (já pediu, reservado, devolvido ou não existe).
   if (motivoParaNaoPedir(achado, solicitacoes, usuario.id)) {
     return <Navigate to={`/achados/${id}`} replace />
   }

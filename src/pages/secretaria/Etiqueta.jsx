@@ -9,8 +9,6 @@ import { formatarNumero } from '../../utils/formatar'
 import { formatarData } from '../../utils/datas'
 import { useTitulo } from '../../hooks/useTitulo'
 
-// Etiqueta para imprimir e colar no objeto. Aparece logo depois do cadastro
-// e também pelo botão de impressora na lista de achados.
 export default function Etiqueta() {
   useTitulo('Etiqueta')
   const { id } = useParams()

@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router'
 import { iniciarEtiquetaFisica } from '../lib/etiquetaFisica'
 
-// Painel azul da esquerda no login e no criar conta, com a etiqueta que voa.
 export function PainelMarca({ etiqueta, descricao }) {
   const painelRef = useRef(null)
 

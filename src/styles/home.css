@@ -154,7 +154,6 @@ html {
   gap: var(--esp-12);
 }
 
-
 .hero-titulo {
   margin-bottom: var(--esp-6);
   font-size: clamp(2.5rem, 5.5vw, 4rem);
@@ -324,8 +323,6 @@ html {
     transform-origin: 50% -40px;
   }
 }
-
-/* Seção curta: menos espaço em cima e embaixo, para não parecer vazia. */
 .problema {
   padding: var(--esp-16) 0;
   background: var(--cor-fundo);
@@ -974,8 +971,6 @@ html {
     padding: 0 var(--esp-4);
   }
 }
-
-/* Ajuda na conferência: demonstração ao vivo da semelhança */
 .conferencia-secao {
   background: var(--cor-fundo);
 }

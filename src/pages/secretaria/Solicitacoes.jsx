@@ -123,7 +123,6 @@ export default function Solicitacoes() {
     .filter((item) => item.solicitacao.status === aba)
     .toSorted((a, b) => b.solicitacao.criadaEm.localeCompare(a.solicitacao.criadaEm))
 
-  // Aprovar recusa os outros pedidos pendentes do mesmo achado (regra em storage.js).
   function aoAprovar(solicitacao) {
     const outros = solicitacoes.filter(
       (s) => s.achadoId === solicitacao.achadoId && s.id !== solicitacao.id && s.status === STATUS_SOLICITACAO.PENDENTE,
@@ -137,7 +136,6 @@ export default function Solicitacoes() {
     avisar(`Pedido de ${solicitacao.alunoNome} aprovado.${extra}`)
   }
 
-  // Recusar não tem volta (o aluno não pode pedir de novo), então pede confirmação.
   function confirmarRecusa() {
     if (recusar(paraRecusar.id)) avisar(`Pedido de ${paraRecusar.alunoNome} recusado.`)
     setParaRecusar(null)
@@ -149,7 +147,6 @@ export default function Solicitacoes() {
     navigate(`/secretaria/comprovante/${solicitacao.id}`)
   }
 
-  // Setas do teclado trocam de aba (padrão de acessibilidade para abas).
   function aoApertarTecla(evento) {
     const indice = ABAS.findIndex((a) => a.status === aba)
     let novo = null

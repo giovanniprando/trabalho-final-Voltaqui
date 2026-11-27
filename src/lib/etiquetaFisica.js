@@ -1,9 +1,3 @@
-// Etiqueta pendurada num barbante: clique = "tapa", o barbante arrebenta,
-// ela voa, quica nos obstáculos e nas paredes e o barbante a recolhe.
-// Usada no painel azul do login e na abertura da homepage.
-// Recebe o painel e devolve uma função que desliga tudo.
-// O Matter.js (uns 84 KB) só é baixado quando a tela é larga.
-// Com "reduzir movimento" ligado, ela não se mexe sozinha: só quando a pessoa clica.
 export function iniciarEtiquetaFisica(painel, opcoes = {}) {
   const {
     seletor = '.etiqueta',

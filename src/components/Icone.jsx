@@ -1,5 +1,3 @@
-// Ícones Lucide (lucide.dev) em SVG. Uso: <Icone nome="busca" tamanho={20} />
-
 const DESENHOS = {
   painel: (
     <>

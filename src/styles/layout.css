@@ -81,8 +81,6 @@
   min-width: 0;
   padding: var(--esp-12);
 }
-
-/* Em telas muito largas o conteúdo não se estica até a borda. */
 .app-pagina {
   max-width: var(--largura-app);
 }
@@ -152,8 +150,6 @@
   gap: var(--esp-2);
   margin-top: auto;
 }
-
-/* "Ver como secretaria": item discreto, só para as contas de teste */
 .lateral-demo {
   display: flex;
   align-items: center;
@@ -245,8 +241,6 @@
     display: none;
   }
 }
-
-/* Logo + sino no topo da barra lateral */
 .lateral-topo {
   display: flex;
   align-items: center;

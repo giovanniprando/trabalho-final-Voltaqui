@@ -1,4 +1,3 @@
-// Páginas do aluno, carregadas juntas só depois que um aluno entra.
 export { default as BuscarAchados } from './BuscarAchados'
 export { default as DetalheAchado } from './DetalheAchado'
 export { default as MinhasSolicitacoes } from './MinhasSolicitacoes'

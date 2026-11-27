@@ -119,8 +119,6 @@
   outline: none;
   box-shadow: var(--anel-foco);
 }
-
-/* Em tela larga os pedidos ficam lado a lado, sem sobrar espaço vazio. */
 .abas-painel {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
@@ -424,8 +422,6 @@ button.lateral-sair {
   font-size: 0.875rem;
   color: var(--cor-texto-secundario);
 }
-
-/* Senha com botão de olho dentro do campo */
 .input-senha {
   position: relative;
 }
@@ -460,8 +456,6 @@ button.lateral-sair {
   outline: none;
   box-shadow: var(--anel-foco);
 }
-
-/* Contador de caracteres embaixo das descrições */
 .campo-contador {
   align-self: flex-end;
   margin-top: calc(var(--esp-1) * -1);
@@ -474,8 +468,6 @@ button.lateral-sair {
   font-weight: 600;
   color: var(--tom-laranja-texto);
 }
-
-/* Página 404 */
 .nao-encontrada {
   display: flex;
   flex-direction: column;
@@ -547,8 +539,6 @@ button.lateral-sair {
     transform: none;
   }
 }
-
-/* Dias na secretaria */
 .dias-parado {
   display: flex;
   align-items: center;
@@ -570,8 +560,6 @@ button.lateral-sair {
 .dias-tom-parado {
   color: var(--tom-vermelho-texto);
 }
-
-/* Comprovante de devolução */
 .comprovante {
   display: flex;
   flex-direction: column;
@@ -695,8 +683,6 @@ button.lateral-sair {
     text-align: left;
   }
 }
-
-/* Fica no fim do arquivo para vencer as regras de tela do comprovante */
 @media print {
   .comprovante {
     max-width: none;
@@ -704,8 +690,6 @@ button.lateral-sair {
     box-shadow: none;
   }
 }
-
-/* Escolha de ordem da lista */
 .ordenar {
   display: flex;
   align-items: center;
@@ -716,8 +700,6 @@ button.lateral-sair {
 .ordenar label {
   color: var(--cor-texto-secundario);
 }
-
-/* Mesmo visual dos campos: 44px, borda de campo, raio 8px e seta desenhada. */
 .ordenar select {
   height: 44px;
   padding: 0 var(--esp-8) 0 var(--esp-3);
@@ -761,8 +743,6 @@ button.lateral-sair {
   justify-content: flex-end;
   margin: calc(var(--esp-2) * -1) 0 var(--esp-3);
 }
-
-/* Miniatura da foto do achado */
 .foto-achado {
   flex-shrink: 0;
   object-fit: cover;
@@ -811,7 +791,7 @@ button.lateral-sair {
 }
 
 .campo-foto-acoes {
-  position: relative; /* segura o input escondido dentro do bloco */
+  position: relative;
   display: flex;
   flex: 1 1 220px;
   flex-direction: column;

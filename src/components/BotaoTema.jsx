@@ -1,8 +1,6 @@
 import { useTema } from '../context/useTema'
 import { Icone } from './Icone'
 
-// Botão de lua e sol que liga e desliga o modo escuro em qualquer página.
-// "sobreMarca" = o botão fica em cima do azul da marca (barra lateral do sistema).
 export function BotaoTema({ sobreMarca = false }) {
   const { tema, alternarTema } = useTema()
   const escuro = tema === 'escuro'
