@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router'
 import { Campo } from '../components/Campo'
+import { BotaoTema } from '../components/BotaoTema'
 import { InputSenha } from '../components/InputSenha'
 import { PainelMarca } from '../components/PainelMarca'
 import { useAuth } from '../context/useAuth'
@@ -68,7 +69,10 @@ export default function CriarConta() {
 
       <main className="autenticacao-conteudo">
         <form className="formulario formulario-largo" onSubmit={aoEnviar} noValidate>
-          <Link className="link formulario-voltar" to="/">← Voltar ao início</Link>
+          <div className="formulario-topo">
+            <Link className="link formulario-voltar" to="/">← Voltar ao início</Link>
+            <BotaoTema />
+          </div>
 
           <header className="formulario-cabecalho">
             <h1>Criar conta</h1>
@@ -169,7 +173,7 @@ export default function CriarConta() {
 
           <p className="aviso-secretaria">
             É da secretaria? Sua conta é criada pela escola.
-            Fale com o responsável pelo Voltaqui na sua instituição.
+            Fale com o responsável pelo voltAqui na sua instituição.
           </p>
         </form>
       </main>

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 
-const PADRAO = 'Voltaqui | Achados e perdidos da escola'
+const PADRAO = 'voltAqui | Achados e perdidos da escola'
 
-// Troca o título da aba do navegador conforme a página: "Achados | Voltaqui".
+// Troca o título da aba do navegador conforme a página: "Achados | voltAqui".
 // Ajuda quem tem várias abas abertas a achar a certa.
 export function useTitulo(titulo) {
   useEffect(() => {
-    document.title = titulo ? `${titulo} | Voltaqui` : PADRAO
+    document.title = titulo ? `${titulo} | voltAqui` : PADRAO
   }, [titulo])
 }

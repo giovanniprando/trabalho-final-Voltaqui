@@ -6,6 +6,7 @@ import { PERFIS, paginaInicial } from '../data/usuarios'
 import { STATUS_SOLICITACAO } from '../services/storage'
 import { iniciais } from '../utils/formatar'
 import { Icone } from './Icone'
+import { BotaoTema } from './BotaoTema'
 import { Notificacoes } from './Notificacoes'
 import { TrocaDemonstracao } from './TrocaDemonstracao'
 import '../styles/layout.css'
@@ -45,10 +46,13 @@ export function LayoutApp() {
       <aside className="lateral">
         <div className="lateral-topo">
           <Link className="lateral-logo" to={paginaInicial(usuario)}>
-            <img src="/img/logo-horizontal-escura.svg" alt="Voltaqui, início" width="114" height="40" />
+            <img src="/img/logo-horizontal-escura.svg" alt="voltAqui, início" width="114" height="40" />
           </Link>
-          {/* O sino só existe para o aluno: é ele quem espera a resposta */}
-          {!ehSecretaria && <Notificacoes usuario={usuario} />}
+          <div className="lateral-topo-acoes">
+            {/* O sino só existe para o aluno: é ele quem espera a resposta */}
+            {!ehSecretaria && <Notificacoes usuario={usuario} />}
+            <BotaoTema sobreMarca />
+          </div>
         </div>
 
         <nav aria-label={ehSecretaria ? 'Menu da secretaria' : 'Menu do aluno'}>

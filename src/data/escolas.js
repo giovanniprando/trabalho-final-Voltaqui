@@ -1,4 +1,4 @@
-// Escolas que usam o Voltaqui. O aluno digita o "codigo" ao criar a conta.
+// Escolas que usam o voltAqui. O aluno digita o "codigo" ao criar a conta.
 
 export const ESCOLAS = [
   { codigo: 'SN7K2P', nome: 'SENAI' },

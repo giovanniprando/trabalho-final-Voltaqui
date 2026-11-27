@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink, Navigate, useNavigate } from 'react-router'
 import { Campo } from '../components/Campo'
+import { BotaoTema } from '../components/BotaoTema'
 import { InputSenha } from '../components/InputSenha'
 import { Icone } from '../components/Icone'
 import { PainelMarca } from '../components/PainelMarca'
@@ -82,7 +83,10 @@ export default function Login({ perfil }) {
 
       <main className="autenticacao-conteudo">
         <form className="formulario" onSubmit={aoEnviar} noValidate>
-          <Link className="link formulario-voltar" to="/">← Voltar ao início</Link>
+          <div className="formulario-topo">
+            <Link className="link formulario-voltar" to="/">← Voltar ao início</Link>
+            <BotaoTema />
+          </div>
 
           <nav className="acesso-abas" aria-label="Tipo de acesso">
             <NavLink className="acesso-aba" to="/login" end>Aluno</NavLink>

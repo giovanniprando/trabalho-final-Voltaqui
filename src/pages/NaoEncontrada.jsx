@@ -1,6 +1,8 @@
 import { Link } from 'react-router'
 import { useAuth } from '../context/useAuth'
 import { paginaInicial } from '../data/usuarios'
+import { BotaoTema } from '../components/BotaoTema'
+import { Logo } from '../components/Logo'
 import { useTitulo } from '../hooks/useTitulo'
 
 // Aparece quando o endereço digitado não existe (rota "*" no App.jsx).
@@ -13,9 +15,12 @@ export default function NaoEncontrada() {
 
   return (
     <main className="nao-encontrada">
-      <Link className="nao-encontrada-logo" to="/">
-        <img src="/img/logo-horizontal.svg" alt="Voltaqui, início" width="114" height="40" />
-      </Link>
+      <div className="pagina-solta-topo">
+        <Link className="nao-encontrada-logo" to="/">
+          <Logo alt="voltAqui, início" />
+        </Link>
+        <BotaoTema />
+      </div>
 
       {/* Uma etiqueta de achado, igual às da secretaria, com o número 404 */}
       <div className="nao-encontrada-etiqueta" aria-hidden="true">

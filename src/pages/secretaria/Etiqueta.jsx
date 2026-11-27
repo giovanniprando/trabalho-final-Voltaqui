@@ -1,6 +1,7 @@
 import { Link, useParams, useSearchParams } from 'react-router'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
+import { Logo } from '../../components/Logo'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
 import { nomeDoLocal } from '../../data/locais'
@@ -51,7 +52,7 @@ export default function Etiqueta() {
 
         <div className="etiqueta-impressao">
           <div className="etiqueta-impressao-topo">
-            <img src="/img/logo-horizontal.svg" alt="Voltaqui" width="91" height="32" />
+            <Logo alt="voltAqui" largura={91} altura={32} />
             <span className="selo selo-devolvido">Achados e perdidos</span>
           </div>
           <p className="etiqueta-impressao-numero">{formatarNumero(achado.numero)}</p>
@@ -63,7 +64,7 @@ export default function Etiqueta() {
             <dd>{nomeDoLocal(achado.local)}, {formatarData(achado.dataEncontrado)}</dd>
           </dl>
           <p className="etiqueta-impressao-rodape">
-            É seu? Entre no Voltaqui e peça a devolução. Se é seu, merece voltar.
+            É seu? Entre no voltAqui e peça a devolução. Se é seu, merece voltar.
           </p>
         </div>
 

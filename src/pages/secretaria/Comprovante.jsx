@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router'
 import { EstadoVazio } from '../../components/EstadoVazio'
 import { Icone } from '../../components/Icone'
+import { Logo } from '../../components/Logo'
 import { useDados } from '../../context/useDados'
 import { buscarCategoria } from '../../data/categorias'
 import { USUARIOS } from '../../data/usuarios'
@@ -46,7 +47,7 @@ export default function Comprovante() {
 
       <article className="comprovante">
         <header className="comprovante-topo">
-          <img src="/img/logo-horizontal.svg" alt="Voltaqui" width="114" height="40" />
+          <Logo alt="voltAqui" />
           <div className="comprovante-protocolo">
             <span>Protocolo</span>
             <strong>{protocoloDevolucao(achado.numero, entregueEm)}</strong>
