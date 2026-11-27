@@ -9,15 +9,10 @@ import Login from './pages/Login'
 import NaoEncontrada from './pages/NaoEncontrada'
 import Termos from './pages/Termos'
 
-// As páginas do aluno e as da secretaria viram arquivos separados no build:
-// quem só abre a homepage ou o login não baixa o código delas.
-// As páginas públicas ficam no arquivo principal. Carregadas aos poucos, o botão
-// Voltar do navegador depois de sair ficava com a tela em branco (o redirecionamento
-// para o login não acontecia enquanto o login ainda carregava).
+
 const aluno = () => import('./pages/aluno')
 const secretaria = () => import('./pages/secretaria')
 
-// lazy espera um módulo com "default"; aqui escolhemos qual página do grupo usar.
 function pagina(grupo, nome) {
   return lazy(() => grupo().then((modulo) => ({ default: modulo[nome] })))
 }
@@ -63,7 +58,7 @@ export default function App() {
           <Route path="/minhas-solicitacoes" element={<MinhasSolicitacoes />} />
         </Route>
 
-        {/* Só secretaria */}
+        {}
         <Route
           element={
             <RotaProtegida perfil={PERFIS.SECRETARIA}>
