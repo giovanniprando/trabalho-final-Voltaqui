@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router'
 import { LayoutApp } from './components/LayoutApp'
 import { RotaProtegida } from './components/RotaProtegida'
+import { TrocaTema } from './components/TrocaTema'
 import { PERFIS } from './data/usuarios'
 import CriarConta from './pages/CriarConta'
 import Home from './pages/Home'
@@ -41,6 +42,8 @@ function Carregando() {
 export default function App() {
   return (
     <Suspense fallback={<Carregando />}>
+      {/* Um botão só, fixo no canto superior direito de todas as telas */}
+      <TrocaTema />
       <Routes>
         {/* Públicas */}
         <Route path="/" element={<Home />} />
