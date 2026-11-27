@@ -4,11 +4,12 @@ import { LayoutApp } from './components/LayoutApp'
 import { RotaProtegida } from './components/RotaProtegida'
 import { PERFIS } from './data/usuarios'
 import CriarConta from './pages/CriarConta'
-import Home from './pages/Home'
 import Login from './pages/Login'
 import NaoEncontrada from './pages/NaoEncontrada'
 import Termos from './pages/Termos'
 
+
+const Home = lazy(() => import('./pages/Home'))
 
 const aluno = () => import('./pages/aluno')
 const secretaria = () => import('./pages/secretaria')
